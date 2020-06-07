@@ -2,3 +2,6 @@ node_modules
 .git
 .idea
 build
+test-credentials.config.json
+yarn-error.log
+coverage

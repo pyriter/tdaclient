@@ -1,0 +1,43 @@
+{
+  "name": "TdaClient",
+  "version": "1.0.0",
+  "description": "TD Ameritrade Client",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "jest --silent --detectOpenHandles --coverage --runInBand",
+    "test-dev": "jest --watch --silent --detectOpenHandles --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/pyriter/tdaclient.git"
+  },
+  "author": "Phong Vuong",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "axios": "^0.19.2",
+    "https": "^1.0.0",
+    "qs": "^6.9.4",
+    "querystring": "^0.2.0"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.10.2",
+    "babel-jest": "^26.0.1",
+    "jest": "^26.0.1"
+  },
+  "jest": {
+    "collectCoverage": true,
+    "clearMocks": true,
+    "resetMocks": true,
+    "resetModules": true,
+    "testEnvironment": "node",
+    "coverageReporters": [
+      "html"
+    ]
+  },
+  "bugs": {
+    "url": "https://github.com/pyriter/tdaclient/issues"
+  },
+  "homepage": "https://github.com/pyriter/tdaclient#readme",
+  "keywords": []
+}

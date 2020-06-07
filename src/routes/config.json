@@ -1,0 +1,6 @@
+{
+  "hostname": "https://api.tdameritrade.com",
+  "endpoints": {
+    "authenticate": "/oauth2/token"
+  }
+}
