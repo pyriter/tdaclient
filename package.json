@@ -1,5 +1,5 @@
 {
-  "name": "TdaClient",
+  "name": "tdaclient",
   "version": "1.0.0",
   "description": "TD Ameritrade Client",
   "main": "src/index.js",

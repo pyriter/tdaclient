@@ -5,3 +5,4 @@ build
 test-credentials.config.json
 yarn-error.log
 coverage
+.gradle
