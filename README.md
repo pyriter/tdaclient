@@ -17,3 +17,5 @@ NA
 ## How to use
 NA
 
+## License
+tdaclient is [MIT licensed](./LICENSE).
