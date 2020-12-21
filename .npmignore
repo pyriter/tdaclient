@@ -1,0 +1,12 @@
+src
+.babelrc
+credentials.json
+jest.config.js
+yarn.lock
+.git
+.idea
+yarn-error.log
+coverage
+.gradle
+package-lock.json
+.gitignore

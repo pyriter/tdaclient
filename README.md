@@ -1,4 +1,4 @@
-# TD Ameritrade Client for Nodejs and Browser
+# TD Ameritrade Client for Nodejs
 
 ## Overview
 
