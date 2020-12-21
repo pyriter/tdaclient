@@ -13,14 +13,15 @@ export async function oauth({
                               redirect_uri,
                               refresh_token,
                               code,
-                              grant_type
+                              grant_type,
+                              access_type = "offline" // TODO: should change this because you always get a refresh token for every call which is bad
                             }) {
   const response = await post({
     url: OAUTH2_TOKEN,
     data: {
       grant_type,
       refresh_token,
-      access_type: getAccessType(grant_type),
+      access_type,
       code,
       client_id,
       redirect_uri
@@ -28,9 +29,4 @@ export async function oauth({
     responseType: ResponseType.URL_FORM_ENCODED
   });
   return response.data;
-}
-
-function getAccessType(grant_type) {
-  // return grant_type === GrantType.AUTHORIZATION_CODE ? "offline" : undefined;
-  return "offline"
 }

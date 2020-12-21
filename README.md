@@ -17,7 +17,7 @@ $ yarn add tdaclient
 
 ### Setup if you want to do development on this package
 
-#### This setup is only good for testing the package. If you want to use it for your own application you will need to figure out how to pass to this client the required code, access token or refresh token
+#### This setup is only good for testing the package. If you want to use it for your own application you will need to figure out how to pass to this client the required code, access token or refresh token. I will eventually add the documentation for using this package in your own application but for now you'll need to follow the instructions below.
 
 1. First you'll need follow all the instructions on
    this [page](https://developer.tdameritrade.com/content/getting-started)
