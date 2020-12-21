@@ -1,11 +1,19 @@
-import {getAccessToken} from "./authenticate";
+import {describe, it} from "@jest/globals";
+import {getCredentials} from "../utils/credentialsProvider";
+import {GrantType, oauth} from "./authenticate";
 
 describe("Authenticate", () => {
-  describe("getAccessToken", () => {
-    it("should return successfully 1", async () => {
-      const response = await getAccessToken({});
-      console.log(response);
-      expect(response).toBeTruthy();
+  it("should be able to get an new access token and refresh token", async () => {
+    const {client_id, redirect_uri, refresh_token} = getCredentials();
+
+    const response = await oauth({
+      client_id,
+      redirect_uri,
+      refresh_token,
+      grant_type: GrantType.REFRESH_TOKEN
     });
+
+    expect(response["access_token"]);
+    expect(response["refresh_token"]);
   });
 });

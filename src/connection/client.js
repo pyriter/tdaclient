@@ -1,9 +1,12 @@
-/**
- * Copyright © 2020
- * Author: Phong Vuong (pyriter.io@gmail.com)
- */
 import axios from "axios";
+import addInterceptor from "../utils/credentialsInterceptor";
 
-export default function createClient() {
-  return axios.create();
+function createClient() {
+  const client = axios.create();
+  addInterceptor(client);
+  return client;
 }
+
+const client = createClient();
+
+export default client;

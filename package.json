@@ -15,6 +15,7 @@
   "license": "MIT",
   "private": false,
   "dependencies": {
+    "@jest/globals": "^26.6.2",
     "axios": "^0.19.2",
     "https": "^1.0.0",
     "qs": "^6.9.4",

@@ -2,7 +2,8 @@ node_modules
 .git
 .idea
 build
-test-credentials.config.json
+credentials.json
 yarn-error.log
 coverage
 .gradle
+package-lock.json

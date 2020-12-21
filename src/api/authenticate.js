@@ -1,27 +1,36 @@
 import {hostname, endpoints} from "../routes/config.json";
-import {post} from "../connection/connect";
+import {post, ResponseType} from "../connection/connect";
 
-const PATH = `${hostname}${endpoints.authenticate}`;
+const OAUTH2_TOKEN = `${hostname}${endpoints.oauth2Token}`;
 
-export async function getAccessToken({
-                                       code,
-                                       clientId,
-                                       redirectUri
-                                     }) {
-  return await post({
-    url: PATH,
+export const GrantType = {
+  AUTHORIZATION_CODE: "authorization_code",
+  REFRESH_TOKEN: "refresh_token"
+};
+
+export async function oauth({
+                              client_id,
+                              redirect_uri,
+                              refresh_token,
+                              code,
+                              grant_type
+                            }) {
+  const response = await post({
+    url: OAUTH2_TOKEN,
     data: {
-      "grant_type": "authorization_code",
-      "refresh_token": "",
-      "access_type": "offline",
-      "code": code,
-      "client_id": clientId,
-      "redirect_uri": redirectUri
+      grant_type,
+      refresh_token,
+      access_type: getAccessType(grant_type),
+      code,
+      client_id,
+      redirect_uri
     },
-    responseType: "form"
+    responseType: ResponseType.URL_FORM_ENCODED
   });
+  return response.data;
 }
 
-export async function getRefreshToken({}) {
-
+function getAccessType(grant_type) {
+  // return grant_type === GrantType.AUTHORIZATION_CODE ? "offline" : undefined;
+  return "offline"
 }
