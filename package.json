@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest --silent --detectOpenHandles --coverage --runInBand",
     "test-dev": "jest --watch --silent --detectOpenHandles --coverage",
-    "build": "rimraf lib && npx babel src --out-dir lib --presets=@babel/preset-env --ignore \"src/**/*.test.js\" --source-maps inline"
+    "build": "rimraf lib && npx babel src --out-dir lib --ignore \"src/**/*.test.js\" --source-maps inline"
   },
   "repository": {
     "type": "git",
@@ -16,8 +16,11 @@
   "license": "MIT",
   "private": false,
   "dependencies": {
+    "@babel/polyfill": "^7.12.1",
+    "@babel/runtime": "^7.12.5",
     "@jest/globals": "^26.6.2",
     "axios": "^0.19.2",
+    "core-js": "2",
     "https": "^1.0.0",
     "qs": "^6.9.4",
     "querystring": "^0.2.0"
@@ -25,6 +28,9 @@
   "devDependencies": {
     "@babel/cli": "^7.12.10",
     "@babel/core": "^7.12.10",
+    "@babel/plugin-transform-modules-amd": "^7.12.1",
+    "@babel/plugin-transform-modules-commonjs": "^7.12.1",
+    "@babel/plugin-transform-runtime": "^7.12.10",
     "@babel/preset-env": "^7.12.11",
     "babel-jest": "^26.0.1",
     "jest": "^26.0.1"

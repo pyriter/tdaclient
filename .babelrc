@@ -5,8 +5,20 @@
       {
         "targets": {
           "node": "current"
-        }
+        },
+        "useBuiltIns": "usage",
+        "corejs": "2",
+        "modules": "commonjs"
       }
     ]
+  ],
+  "plugins": [
+    [
+      "@babel/plugin-transform-runtime",
+      {
+        "regenerator": true
+      }
+    ],
+    "@babel/plugin-transform-modules-commonjs"
   ]
 }
