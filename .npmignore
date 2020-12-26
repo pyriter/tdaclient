@@ -1,7 +1,7 @@
 src
 .babelrc
 credentials.json
-jest.routes.config.js
+jest.config.js
 yarn.lock
 .git
 .idea
