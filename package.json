@@ -2,11 +2,11 @@
   "name": "tdaclient",
   "version": "1.1.0",
   "description": "TD Ameritrade Client",
-  "main": "lib/tdaclient.js",
+  "main": "lib/main.js",
   "scripts": {
     "test": "jest --silent --detectOpenHandles --coverage --runInBand",
     "test-dev": "jest --watch --silent --detectOpenHandles --coverage",
-    "build": "rimraf lib && npx babel src --out-file lib/tdaclient.js --presets=@babel/preset-env --ignore \"src/**/*.test.js\" --source-maps inline"
+    "build": "rimraf lib && npx babel src --out-dir lib --presets=@babel/preset-env --ignore \"src/**/*.test.js\" --source-maps inline"
   },
   "repository": {
     "type": "git",

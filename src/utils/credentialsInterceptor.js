@@ -1,8 +1,8 @@
 import {GrantType, oauth} from "../api/authenticate";
-import {endpoints, hostname} from "../routes/config.json";
+import routes from "../connection/routes.config.js";
 import {getCredentials, updateCredentials} from "./credentialsProvider";
 
-const AUTHENTICATION = `${hostname}${endpoints.oauth2Token}`;
+const AUTHENTICATION = `${routes.hostname}${routes.endpoints.oauth2Token}`;
 
 export default function addInterceptor(client) {
   client.interceptors.request.use(requestSuccessInterceptor);

@@ -1,7 +1,7 @@
-import {hostname, endpoints} from "../routes/config.json";
+import routes from "../connection/routes.config.js";
 import {post, ResponseType} from "../connection/connect";
 
-const OAUTH2_TOKEN = `${hostname}${endpoints.oauth2Token}`;
+const OAUTH2_TOKEN = `${routes.hostname}${routes.endpoints.oauth2Token}`;
 
 export const GrantType = {
   AUTHORIZATION_CODE: "authorization_code",

@@ -1,7 +1,7 @@
 import {get, ResponseType} from "../connection/connect";
-import {endpoints, hostname} from "../routes/config.json";
+import routes from "../connection/routes.config.js";
 
-const ACCOUNTS = `${hostname}${endpoints.accounts}`;
+const ACCOUNTS = `${routes.hostname}${routes.endpoints.accounts}`;
 
 export async function getAccount({
                                    accountId,
