@@ -1,7 +1,9 @@
 import * as authenticate from "./api/authenticate";
 import * as accounts from "./api/accounts";
 
-export {
+const tdaClient = {
   authenticate,
   accounts
-};
+}
+
+export default tdaClient;

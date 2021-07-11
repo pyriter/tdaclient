@@ -1,4 +1,3 @@
-import {describe, it} from "@jest/globals";
 import {getCredentials, updateCredentials} from "./credentialsProvider";
 
 describe("CredentialsProvider", () => {

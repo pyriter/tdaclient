@@ -1,5 +1,5 @@
-import {GrantType, oauth} from "../api/authenticate";
-import routes from "../connection/routes.config.js";
+import {GrantType, oauth, OAuthData} from "../api/authenticate";
+import routes from '../connection/routes.config';
 import {getCredentials, updateCredentials} from "./credentialsProvider";
 
 const AUTHENTICATION = `${routes.hostname}${routes.endpoints.oauth2Token}`;
@@ -32,6 +32,6 @@ async function checkAndRefreshAccessToken() {
     redirect_uri,
     refresh_token,
     grant_type: GrantType.REFRESH_TOKEN
-  });
+  } as OAuthData);
   updateCredentials(credentials);
 }

@@ -1,6 +1,5 @@
-import {describe, it} from "@jest/globals";
 import {getCredentials} from "../utils/credentialsProvider";
-import {GrantType, oauth} from "./authenticate";
+import {GrantType, oauth, OAuthData} from "./authenticate";
 
 describe("Authenticate", () => {
   it("should be able to get an new access token and refresh token", async () => {
@@ -11,7 +10,7 @@ describe("Authenticate", () => {
       redirect_uri,
       refresh_token,
       grant_type: GrantType.REFRESH_TOKEN
-    });
+    } as OAuthData);
 
     expect(response["access_token"]);
     expect(response["refresh_token"]);
