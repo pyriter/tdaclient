@@ -1,6 +1,7 @@
 src
 .babelrc
 credentials.json
+credential.json
 jest.config.js
 yarn.lock
 .git
@@ -10,3 +11,7 @@ coverage
 .gradle
 package-lock.json
 .gitignore
+index.html
+tsconfig.json
+webpack.config.js
+generateAuthUrl.js
