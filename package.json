@@ -1,6 +1,6 @@
 {
   "name": "tdaclient",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "TD Ameritrade Client",
   "main": "dist/main.js",
   "scripts": {
