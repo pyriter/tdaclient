@@ -1,5 +1,5 @@
 import axios from "axios";
-import addInterceptor from "../utils/credentialsInterceptor";
+import addInterceptor from "./credentialsInterceptor";
 
 function createClient() {
   const client = axios.create();

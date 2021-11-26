@@ -1,6 +1,6 @@
 import {GrantType, oauth, OAuthData} from "../api/authenticate";
-import routes from '../connection/routes.config';
-import {getCredentials, updateCredentials} from "./credentialsProvider";
+import routes from './routes.config';
+import {getCredentials, updateCredentials} from "../providers/credentialsProvider";
 
 const AUTHENTICATION = `${routes.hostname}${routes.endpoints.oauth2Token}`;
 

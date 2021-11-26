@@ -1,4 +1,4 @@
-import {getCredentials} from "../utils/credentialsProvider";
+import {getCredentials} from "../providers/credentialsProvider";
 import {GrantType, oauth, OAuthData} from "./authenticate";
 
 describe("Authenticate", () => {

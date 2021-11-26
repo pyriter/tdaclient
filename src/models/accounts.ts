@@ -1,10 +1,6 @@
-export class AccountConfig {
-  constructor(public accountId?: string, public fields?: any) {
-  }
-
-  get accountIdUrlString(): string {
-    return this.accountId ? "/" + this.accountId : "";
-  }
+export interface AccountConfig {
+  accountId?: string,
+  fields?: any
 }
 
 export interface InitialBalances {
@@ -65,5 +61,4 @@ export interface SecuritiesAccount {
   initialBalances: InitialBalances,
   currentBalances: CurrentBalances,
   projectBalances: ProjectBalances
-
 }
