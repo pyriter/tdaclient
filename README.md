@@ -54,6 +54,13 @@ $ yarn add tdaclient
 7. The test will keep updating the access_token so you can keep running the tests. If you happen to not run the tests
    within 90 days, then you will have to manually login and get a new refesh_token and repeat step 4.
 
+
+### Publishing to npm
+This command will update the package version and then publish to the public npm repo
+```bash
+$ npm version [patch | minor major]
+$ npm publish
+```
 ## How to use
 
 Refer to this [page](https://developer.tdameritrade.com/account-access/apis) for more info on apis
