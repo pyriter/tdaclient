@@ -50,7 +50,18 @@
     "testEnvironment": "node",
     "coverageReporters": [
       "html"
-    ]
+    ],
+    "testTimeout": 300000,
+    "roots": [
+      "<rootDir>/src"
+    ],
+    "testMatch": [
+      "**/__tests__/**/*.+(ts|tsx|js)",
+      "**/?(*.)+(spec|test).+(ts|tsx|js)"
+    ],
+    "transform": {
+      "^.+\\.(ts|tsx)$": "ts-jest"
+    }
   },
   "bugs": {
     "url": "https://github.com/pyriter/tdaclient/issues"

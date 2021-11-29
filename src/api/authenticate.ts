@@ -1,7 +1,5 @@
-import routes from "../connection/routes.config";
 import {post, Request, ResponseType} from "../connection/connect";
-
-const OAUTH2_TOKEN = `${routes.hostname}${routes.endpoints.oauth2Token}`;
+import {OAUTH2_TOKEN} from "../connection/routes.config";
 
 export enum GrantType {
   AUTHORIZATION_CODE = "authorization_code",

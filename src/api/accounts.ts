@@ -1,8 +1,6 @@
 import {get, Request, ResponseType} from "../connection/connect";
-import routes from "../connection/routes.config";
 import {AccountConfig, SecuritiesAccount} from "../models/accounts";
-
-const ACCOUNTS = `${routes.hostname}${routes.endpoints.accounts}`;
+import {ACCOUNTS} from "../connection/routes.config";
 
 export async function getAccount(config: AccountConfig = {}): Promise<SecuritiesAccount[]> {
   const url = generateAccountUrl({accountId: config.accountId});

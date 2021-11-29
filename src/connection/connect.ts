@@ -4,7 +4,8 @@ import client from "./client";
 // Axios document can be found here: https://github.com/axios/axios
 export enum RestMethod {
   GET = "get",
-  POST = "post"
+  POST = "post",
+  DELETE = "delete"
 }
 
 export enum ResponseType {
@@ -52,6 +53,17 @@ export async function post(request: Request) {
   return await connect(config);
 }
 
+export async function del(request: Request) {
+  const config = {
+    ...request,
+    method: RestMethod.DELETE
+  };
+
+  handleResponseType(config);
+
+  return await connect(config);
+}
+
 function handleResponseType(config) {
   const {responseType: requestType} = config;
   switch (requestType) {
@@ -78,6 +90,8 @@ export async function connect(config) {
       message += `\nResponse from server ${JSON.stringify(error.response.data, null, "\t")}`;
     message += `\nRequest config: ${JSON.stringify(config, null, "\t")}`;
     console.error(message);
-    return Promise.reject(error);
+
+    // @ts-ignore
+    return Promise.reject(new Error(message, {cause: error}));
   }
 }
