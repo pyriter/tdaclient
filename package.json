@@ -25,12 +25,8 @@
   "dependencies": {
     "@jest/globals": "^26.6.2",
     "axios": "^0.24.0",
-    "core-js": "2",
     "https": "^1.0.0",
-    "qs": "^6.9.4",
-    "querystring": "^0.2.0",
-    "source-map-loader": "^3.0.0",
-    "ts-loader": "^9.2.3"
+    "qs": "^6.9.4"
   },
   "devDependencies": {
     "@types/jest": "^27.0.3",
