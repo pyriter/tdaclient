@@ -1,14 +1,13 @@
-import {del, get, post, Request, ResponseType} from "../connection/connect";
-import {ACCOUNTS, ORDERS} from "../connection/routes.config";
+import { ArrayFormatType, del, get, post, Request, ResponseType } from '../connection/connect';
+import { ACCOUNTS, ORDERS } from '../connection/routes.config';
 import {
   CancelOrderConfig,
   GetOrdersResponse,
   OrdersByQueryConfig,
   OrdersConfig,
-  PlaceOrdersResponse
-} from "../models/order";
+  PlaceOrdersResponse,
+} from '../models/order';
 import Any = jasmine.Any;
-
 
 /*
 All orders for a specific account or, if account ID isn't specified, orders will be returned for all linked accounts.
@@ -17,10 +16,11 @@ export async function getOrdersByQuery(config?: OrdersByQueryConfig): Promise<Ge
   const url = ORDERS;
   const response = await get({
     url,
+    params: config,
     responseType: ResponseType.JSON,
-    params: config
+    arrayFormat: ArrayFormatType.COMMA,
   } as Request);
-  return response.data
+  return response.data;
 }
 
 /*
@@ -35,22 +35,24 @@ export async function placeOrder(config: OrdersConfig): Promise<PlaceOrdersRespo
   const response = await post({
     url,
     data: config.order,
-    responseType: ResponseType.JSON
+    responseType: ResponseType.JSON,
+    arrayFormat: ArrayFormatType.COMMA,
   } as Request);
-  let orderId = extractOrderIdFromUrl(response.headers.location)
+  const orderId = extractOrderIdFromUrl(response.headers.location);
   return {
-    orderId
+    orderId,
   };
 }
 
 export async function cancelOrder(config: CancelOrderConfig): Promise<Any> {
-  if (!config.accountId) throw new Error("accountId is required");
-  const url = generateOrderUrl(config.accountId, config.orderId)
+  if (!config.accountId) throw new Error('accountId is required');
+  const url = generateOrderUrl(config.accountId, config.orderId);
   const response = await del({
     url,
-    responseType: ResponseType.JSON
+    responseType: ResponseType.JSON,
+    arrayFormat: ArrayFormatType.COMMA,
   } as Request);
-  return response.data
+  return response.data;
 }
 
 function generateOrderUrl(accountId: string, orderId?: string): string {
@@ -58,9 +60,11 @@ function generateOrderUrl(accountId: string, orderId?: string): string {
 }
 
 function generateOrderIdUrl(orderId?: string) {
-  return orderId ? `/${orderId}` : ""
+  return orderId ? `/${orderId}` : '';
 }
 
 function extractOrderIdFromUrl(url: string): string {
-  return url.split("/").pop()
+  const orderId = url.split('/').pop();
+  if (!orderId || orderId.trim().length === 0) throw new Error('Unable to extract order Id');
+  return orderId;
 }

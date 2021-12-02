@@ -1,9 +1,9 @@
-import * as authenticate from "./api/authenticate";
-import * as accounts from "./api/accounts";
+import * as authenticate from './api/authenticate';
+import * as accounts from './api/accounts';
 
 const tdaClient = {
   authenticate,
-  accounts
-}
+  accounts,
+};
 
 export default tdaClient;
