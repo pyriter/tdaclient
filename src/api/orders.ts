@@ -1,4 +1,4 @@
-import { ArrayFormatType, del, get, post, Request, ResponseType } from '../connection/connect';
+import { ArrayFormatType, Request, ResponseType } from '../models/connect';
 import { ACCOUNTS, ORDERS } from '../connection/routes.config';
 import {
   CancelOrderConfig,
@@ -8,13 +8,14 @@ import {
   PlaceOrdersResponse,
 } from '../models/order';
 import Any = jasmine.Any;
+import client from "../connection/client";
 
 /*
 All orders for a specific account or, if account ID isn't specified, orders will be returned for all linked accounts.
  */
 export async function getOrdersByQuery(config?: OrdersByQueryConfig): Promise<GetOrdersResponse> {
   const url = ORDERS;
-  const response = await get({
+  const response = await client.get({
     url,
     params: config,
     responseType: ResponseType.JSON,
@@ -32,7 +33,7 @@ throttles and examples of orders.
  */
 export async function placeOrder(config: OrdersConfig): Promise<PlaceOrdersResponse> {
   const url = generateOrderUrl(config.accountId);
-  const response = await post({
+  const response = await client.post({
     url,
     data: config.order,
     responseType: ResponseType.JSON,
@@ -47,7 +48,7 @@ export async function placeOrder(config: OrdersConfig): Promise<PlaceOrdersRespo
 export async function cancelOrder(config: CancelOrderConfig): Promise<Any> {
   if (!config.accountId) throw new Error('accountId is required');
   const url = generateOrderUrl(config.accountId, config.orderId);
-  const response = await del({
+  const response = await client.del({
     url,
     responseType: ResponseType.JSON,
     arrayFormat: ArrayFormatType.COMMA,

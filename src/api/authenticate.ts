@@ -1,5 +1,6 @@
-import { ArrayFormatType, post, Request, ResponseType } from '../connection/connect';
-import { OAUTH2_TOKEN } from '../connection/routes.config';
+import {ArrayFormatType, Request, ResponseType} from '../models/connect';
+import {OAUTH2_TOKEN} from '../connection/routes.config';
+import client from "../connection/client";
 
 export enum GrantType {
   AUTHORIZATION_CODE = 'authorization_code',
@@ -19,8 +20,15 @@ export interface OAuthData {
   redirect_uri: string;
 }
 
+/*
+The token endpoint returns an access token along with an optional refresh token.
+
+The purpose of this function is to get an access token which can be used to authorize calls
+Or if you have a refresh token, it can be used to get another access token
+ */
+
 export async function oauth(oAuthData: OAuthData) {
-  const response = await post({
+  const response = await client.post({
     url: OAUTH2_TOKEN,
     data: oAuthData,
     responseType: ResponseType.URL_FORM_ENCODED,
