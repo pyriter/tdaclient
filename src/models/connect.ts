@@ -1,4 +1,3 @@
-
 import client from '../connection/client';
 
 // Axios document can be found here: https://github.com/axios/axios

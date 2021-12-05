@@ -8,7 +8,7 @@ import {
   PlaceOrdersResponse,
 } from '../models/order';
 import Any = jasmine.Any;
-import client from "../connection/client";
+import client from '../connection/client';
 
 /*
 All orders for a specific account or, if account ID isn't specified, orders will be returned for all linked accounts.

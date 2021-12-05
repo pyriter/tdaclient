@@ -1,5 +1,5 @@
-import {getWatchList} from './watchlist';
-import {setupLocalFileCredentialProvider} from "../utils/testUtils";
+import { getWatchList } from './watchlist';
+import { setupLocalFileCredentialProvider } from '../utils/testUtils';
 
 describe('WatchLists', () => {
   beforeAll(async () => {

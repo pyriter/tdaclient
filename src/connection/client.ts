@@ -1,7 +1,7 @@
-import axios, {AxiosInstance} from 'axios';
-import {Request, ResponseType, RestMethod} from "../models/connect";
+import axios, { AxiosInstance } from 'axios';
+import { Request, ResponseType, RestMethod } from '../models/connect';
 import * as qs from 'qs';
-import {Interceptor} from "./interceptor";
+import { Interceptor } from './interceptor';
 
 class Client {
   private readonly client: AxiosInstance;
@@ -24,8 +24,14 @@ class Client {
   }
 
   addInterceptor(interceptor: Interceptor) {
-    this.client.interceptors.request.use(interceptor.onSuccessRequestHandler.bind(interceptor), interceptor.onErrorRequestHandler.bind(interceptor));
-    this.client.interceptors.response.use(interceptor.onSuccessResponseHandler.bind(interceptor), interceptor.onErrorResponseHandler.bind(interceptor));
+    this.client.interceptors.request.use(
+      interceptor.onSuccessRequestHandler.bind(interceptor),
+      interceptor.onErrorRequestHandler.bind(interceptor),
+    );
+    this.client.interceptors.response.use(
+      interceptor.onSuccessResponseHandler.bind(interceptor),
+      interceptor.onErrorResponseHandler.bind(interceptor),
+    );
     return this;
   }
 
@@ -33,7 +39,7 @@ class Client {
     const config = {
       ...request,
       method: RestMethod.GET,
-      paramsSerializer: (params) => qs.stringify(params, {arrayFormat: request.arrayFormat}),
+      paramsSerializer: (params) => qs.stringify(params, { arrayFormat: request.arrayFormat }),
     };
     return await this.connect(config);
   }
@@ -71,12 +77,12 @@ class Client {
       message += `\nRequest config: ${JSON.stringify(config, null, '\t')}`;
 
       // @ts-ignore
-      return Promise.reject(new Error(message, {cause: error}));
+      return Promise.reject(new Error(message, { cause: error }));
     }
   }
 
   private static handleResponseType(config) {
-    const {responseType: requestType} = config;
+    const { responseType: requestType } = config;
     switch (requestType) {
       case ResponseType.URL_FORM_ENCODED:
         const header = {

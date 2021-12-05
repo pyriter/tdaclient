@@ -1,4 +1,4 @@
-import {AxiosError, AxiosRequestConfig, AxiosResponse} from "axios";
+import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 
 export abstract class Interceptor {
   async onSuccessRequestHandler(config: AxiosRequestConfig): Promise<AxiosRequestConfig> {
@@ -6,7 +6,7 @@ export abstract class Interceptor {
   }
 
   async onErrorRequestHandler(error: AxiosError): Promise<AxiosError> {
-    return error
+    return error;
   }
 
   async onSuccessResponseHandler(response: AxiosResponse): Promise<AxiosResponse> {

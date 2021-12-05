@@ -1,5 +1,5 @@
-import {LocalFileCredentialProvider} from "./localFileCredentialProvider";
-import {CREDENTIALS_FILE_NAME} from "../utils/constants";
+import { LocalFileCredentialProvider } from './localFileCredentialProvider';
+import { CREDENTIALS_FILE_NAME } from '../utils/constants';
 
 describe('CredentialsProvider', () => {
   const provider = new LocalFileCredentialProvider(CREDENTIALS_FILE_NAME);

@@ -1,8 +1,8 @@
-import {AccessType, GrantType, oauth, OAuthData} from '../api/authenticate';
-import {AUTHENTICATION} from './routes.config';
-import {CredentialProvider} from "../providers/credentialsProvider";
-import {AxiosRequestConfig} from "axios";
-import {Interceptor} from "./interceptor";
+import { AccessType, GrantType, oauth, OAuthData } from '../api/authenticate';
+import { AUTHENTICATION } from './routes.config';
+import { CredentialProvider } from '../providers/credentialsProvider';
+import { AxiosRequestConfig } from 'axios';
+import { Interceptor } from './interceptor';
 
 export class AuthorizationTokenInterceptor extends Interceptor {
   constructor(private readonly credentialProvider: CredentialProvider) {
@@ -14,16 +14,16 @@ export class AuthorizationTokenInterceptor extends Interceptor {
     const accessToken = await this.getAccessToken();
     config.headers.Authorization = `Bearer ${accessToken}`;
     return config;
-  };
+  }
 
   private async getAccessToken(): Promise<string> {
     await this.checkAndRefreshAccessToken();
-    const {access_token} = await this.credentialProvider.getCredential();
+    const { access_token } = await this.credentialProvider.getCredential();
     return access_token;
   }
 
   private async checkAndRefreshAccessToken() {
-    const {client_id, redirect_uri, refresh_token} = await this.credentialProvider.getCredential();
+    const { client_id, redirect_uri, refresh_token } = await this.credentialProvider.getCredential();
     const credentials = await oauth({
       client_id,
       redirect_uri,

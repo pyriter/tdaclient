@@ -1,5 +1,5 @@
-import {getAccount} from './accounts';
-import {setupLocalFileCredentialProvider} from "../utils/testUtils";
+import { getAccount } from './accounts';
+import { setupLocalFileCredentialProvider } from '../utils/testUtils';
 
 describe('Accounts', () => {
   beforeAll(async () => {

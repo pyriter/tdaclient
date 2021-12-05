@@ -1,11 +1,10 @@
 import * as fs from 'fs';
-import {CredentialProvider, TdaCredential} from "./credentialsProvider";
+import { CredentialProvider, TdaCredential } from './credentialsProvider';
 
 const ENCODING = 'utf8';
 
 export class LocalFileCredentialProvider implements CredentialProvider {
-  constructor(private fileName: string) {
-  }
+  constructor(private fileName: string) {}
 
   async updateCredential(tdaCredential: TdaCredential): Promise<void> {
     const originalCredential = await this.getCredential();
