@@ -1,8 +1,10 @@
-import { Interceptor } from './interceptor';
+import {Interceptor} from './interceptor';
 import client from './client';
-import { getAccount } from '../api/accounts';
-import { CredentialProvider } from '../providers/credentialsProvider';
-import { TdaClientBuilder } from './TdaClientBuilder';
+import {getAccount} from '../api/accounts';
+import {CredentialProvider} from '../providers/credentialsProvider';
+import {TdaClientBuilder} from './TdaClientBuilder';
+import {placeOrder} from '../api/orders';
+import {OrdersConfig, PlaceOrdersResponse} from "../models/order";
 
 export interface TdaClientConfig {
   authorizationInterceptor: Interceptor;
@@ -23,11 +25,15 @@ export class TdaClient {
     client.addInterceptor(config.authorizationInterceptor);
   }
 
+  static from(config: TdaClientBuilderConfig): TdaClient {
+    return new TdaClientBuilder(config).build();
+  }
+
   async getAccount(): Promise<any> {
     return await getAccount();
   }
 
-  static from(config: TdaClientBuilderConfig): TdaClient {
-    return new TdaClientBuilder(config).build();
+  async placeOrder(config: OrdersConfig): Promise<PlaceOrdersResponse> {
+    return await placeOrder(config);
   }
 }
