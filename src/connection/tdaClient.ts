@@ -1,10 +1,10 @@
-import {Interceptor} from './interceptor';
+import { Interceptor } from './interceptor';
 import client from './client';
-import {getAccount} from '../api/accounts';
-import {CredentialProvider} from '../providers/credentialsProvider';
-import {TdaClientBuilder} from './TdaClientBuilder';
-import {placeOrder} from '../api/orders';
-import {OrdersConfig, PlaceOrdersResponse} from "../models/order";
+import { getAccount } from '../api/accounts';
+import { CredentialProvider } from '../providers/credentialsProvider';
+import { TdaClientBuilder } from './TdaClientBuilder';
+import { placeOrder } from '../api/orders';
+import { OrdersConfig, PlaceOrdersResponse } from '../models/order';
 
 export interface TdaClientConfig {
   authorizationInterceptor: Interceptor;
