@@ -1,8 +1,8 @@
-import {Interceptor} from './interceptor';
+import { Interceptor } from './interceptor';
 import client from './client';
-import {getAccount} from '../api/accounts';
-import {CredentialProvider} from "../providers/credentialsProvider";
-import {TdaClientBuilder} from "./TdaClientBuilder";
+import { getAccount } from '../api/accounts';
+import { CredentialProvider } from '../providers/credentialsProvider';
+import { TdaClientBuilder } from './TdaClientBuilder';
 
 export interface TdaClientConfig {
   authorizationInterceptor: Interceptor;

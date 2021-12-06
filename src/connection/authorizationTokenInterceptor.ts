@@ -1,9 +1,9 @@
-import {AccessType, GrantType, oauth, OAuthData} from '../api/authenticate';
-import {AUTHENTICATION, OAUTH2_TOKEN} from './routes.config';
-import {CredentialProvider} from '../providers/credentialsProvider';
-import {AxiosError, AxiosRequestConfig} from 'axios';
-import {Interceptor} from './interceptor';
-import client from "./client";
+import { AccessType, GrantType, oauth, OAuthData } from '../api/authenticate';
+import { AUTHENTICATION, OAUTH2_TOKEN } from './routes.config';
+import { CredentialProvider } from '../providers/credentialsProvider';
+import { AxiosError, AxiosRequestConfig } from 'axios';
+import { Interceptor } from './interceptor';
+import client from './client';
 
 const MAX_RETRIES = 1;
 
@@ -22,7 +22,7 @@ export class AuthorizationTokenInterceptor extends Interceptor {
   }
 
   async onErrorResponseHandler(error: AxiosError): Promise<any> {
-    const {config, response} = error;
+    const { config, response } = error;
 
     if (config.url?.includes(OAUTH2_TOKEN) || config.url?.includes(AUTHENTICATION)) return error;
 
@@ -42,12 +42,12 @@ export class AuthorizationTokenInterceptor extends Interceptor {
   }
 
   private async getAccessToken(): Promise<string> {
-    const {access_token} = await this.credentialProvider.getCredential();
+    const { access_token } = await this.credentialProvider.getCredential();
     return access_token;
   }
 
   private async refreshAccessToken() {
-    const {client_id, redirect_uri, refresh_token} = await this.credentialProvider.getCredential();
+    const { client_id, redirect_uri, refresh_token } = await this.credentialProvider.getCredential();
     const credentials = await oauth({
       client_id,
       redirect_uri,

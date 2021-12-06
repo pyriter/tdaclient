@@ -1,1 +1,1 @@
-export {TdaClient} from "./connection/tdaClient"
+export { TdaClient } from './connection/tdaClient';

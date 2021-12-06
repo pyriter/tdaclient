@@ -1,7 +1,7 @@
-import {TdaClient} from './tdaClient';
-import {AuthorizationTokenInterceptor} from './authorizationTokenInterceptor';
-import {LocalFileCredentialProvider} from '../providers/localFileCredentialProvider';
-import {CREDENTIALS_FILE_NAME} from '../utils/constants';
+import { TdaClient } from './tdaClient';
+import { AuthorizationTokenInterceptor } from './authorizationTokenInterceptor';
+import { LocalFileCredentialProvider } from '../providers/localFileCredentialProvider';
+import { CREDENTIALS_FILE_NAME } from '../utils/constants';
 
 describe('TdaClient', () => {
   it('should be able to build a tdaClient from interceptor', async () => {
@@ -18,21 +18,7 @@ describe('TdaClient', () => {
 
   it('should be able to create tdaClient from filename and work as expected', async () => {
     const tdaClient = TdaClient.from({
-      fileName: CREDENTIALS_FILE_NAME
-    });
-
-    const response = await tdaClient.getAccount()
-
-    expect(response);
-  });
-
-  it('should be able to create tdaclient from access token and work as expected', async () => {
-    const localFileCredentialProvider = new LocalFileCredentialProvider(CREDENTIALS_FILE_NAME);
-    const {access_token, client_id, refresh_token} = await localFileCredentialProvider.getCredential();
-    const tdaClient = TdaClient.from({
-      access_token,
-      client_id,
-      refresh_token
+      fileName: CREDENTIALS_FILE_NAME,
     });
 
     const response = await tdaClient.getAccount();
@@ -40,6 +26,19 @@ describe('TdaClient', () => {
     expect(response);
   });
 
+  it('should be able to create tdaclient from access token and work as expected', async () => {
+    const localFileCredentialProvider = new LocalFileCredentialProvider(CREDENTIALS_FILE_NAME);
+    const { access_token, client_id, refresh_token } = await localFileCredentialProvider.getCredential();
+    const tdaClient = TdaClient.from({
+      access_token,
+      client_id,
+      refresh_token,
+    });
+
+    const response = await tdaClient.getAccount();
+
+    expect(response);
+  });
 
   /*
   it('given an invalid access token, it should use a valid refresh token to get a new access token', async () => {
@@ -56,5 +55,4 @@ describe('TdaClient', () => {
     expect(response);
   });
    */
-
 });
