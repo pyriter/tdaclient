@@ -29,9 +29,9 @@ export class AuthorizationTokenInterceptor extends Interceptor {
     if (response?.status === 401 && this.authTokenRefreshRetries > 0) {
       this.authTokenRefreshRetries--;
       await this.refreshAccessToken();
-      const response = await client.connect(config);
+      const secondResponse = await client.connect(config);
       this.resetAuthTokenRefreshRetries();
-      return response;
+      return secondResponse;
     }
 
     return error;
