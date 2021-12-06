@@ -66,7 +66,7 @@ class Client {
     return await this.connect(config);
   }
 
-  private async connect(config: any) {
+  async connect(config: any) {
     config = config || {};
     try {
       return await this.client(config);

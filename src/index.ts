@@ -1,2 +1,1 @@
-export * as api from './api/index';
-export * as models from './models/index';
+export {TdaClient} from "./connection/tdaClient"
