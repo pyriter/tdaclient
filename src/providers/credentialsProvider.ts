@@ -1,12 +1,12 @@
 export interface TdaCredential {
-  access_token?: string;
-  refresh_token?: string;
+  access_token: string;
+  refresh_token: string;
   scope?: string;
-  expires_in?: number;
-  refresh_token_expires_in?: number;
+  expires_in: number;
+  refresh_token_expires_in: number;
   token_type?: string;
   modified_date?: number;
-  client_id?: string;
+  client_id: string;
   redirect_uri?: string;
 }
 
