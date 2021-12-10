@@ -5,6 +5,7 @@ import { CredentialProvider } from '../providers/credentialsProvider';
 import { TdaClientBuilder } from './TdaClientBuilder';
 import { placeOrder } from '../api/orders';
 import { OrdersConfig, PlaceOrdersResponse } from '../models/order';
+import {AuthorizationTokenInterceptor} from "./authorizationTokenInterceptor";
 
 export interface TdaClientConfig {
   authorizationInterceptor: Interceptor;
@@ -17,7 +18,7 @@ export interface TdaClientBuilderConfig {
   redirect_uri?: string;
   fileName?: string;
   credentialProvider?: CredentialProvider;
-  authorizationInterceptor?: Interceptor;
+  authorizationInterceptor?: AuthorizationTokenInterceptor;
 }
 
 export class TdaClient {
