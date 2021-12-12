@@ -15,19 +15,19 @@ export abstract class CredentialProvider {
   private cachedCredential?: TdaCredential;
 
   async fetch(): Promise<TdaCredential> {
-    throw Error("You must implement a function to get the credential information and return it")
+    throw Error('You must implement a function to get the credential information and return it');
   }
 
   async update(tdaCredential: TdaCredential): Promise<void> {
-    throw Error("You must implement a function to store the given credential")
+    throw Error('You must implement a function to store the given credential');
   }
 
   async getCredential(): Promise<TdaCredential> {
     if (!this.cachedCredential) {
       const credential = await this.fetch();
       this.cachedCredential = {
-        ...credential
-      }
+        ...credential,
+      };
     }
     return this.cachedCredential;
   }

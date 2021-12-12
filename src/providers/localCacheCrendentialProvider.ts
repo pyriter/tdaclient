@@ -1,4 +1,4 @@
-import {CredentialProvider, TdaCredential} from './credentialsProvider';
+import { CredentialProvider, TdaCredential } from './credentialsProvider';
 
 export class LocalCacheCredentialProvider extends CredentialProvider {
   constructor(private tdaCredential: TdaCredential) {

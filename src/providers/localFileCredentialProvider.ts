@@ -1,5 +1,5 @@
 import * as fs from 'fs';
-import {CredentialProvider, TdaCredential} from './credentialsProvider';
+import { CredentialProvider, TdaCredential } from './credentialsProvider';
 
 const ENCODING = 'utf8';
 
@@ -12,7 +12,7 @@ export class LocalFileCredentialProvider extends CredentialProvider {
     const originalCredential = await this.getCredential();
     const credentials = {
       ...originalCredential,
-      ...tdaCredential
+      ...tdaCredential,
     };
     fs.writeFileSync(this.fileName, JSON.stringify(credentials, null, 2), ENCODING);
   }

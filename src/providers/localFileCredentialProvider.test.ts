@@ -1,7 +1,7 @@
-import {LocalFileCredentialProvider} from './localFileCredentialProvider';
-import {CREDENTIALS_FILE_NAME} from '../utils/constants';
-import {TdaCredential} from "./credentialsProvider";
-import exp = require("constants");
+import { LocalFileCredentialProvider } from './localFileCredentialProvider';
+import { CREDENTIALS_FILE_NAME } from '../utils/constants';
+import { TdaCredential } from './credentialsProvider';
+import exp = require('constants');
 
 describe('CredentialsProvider', () => {
   const provider = new LocalFileCredentialProvider(CREDENTIALS_FILE_NAME);
@@ -17,7 +17,7 @@ describe('CredentialsProvider', () => {
     const previousCredential = await provider.getCredential(); // We don't want to modified the credentials so getting them from LIVE
     const expectedCredential = {
       ...previousCredential,
-      access_token: "test-access-token"
+      access_token: 'test-access-token',
     };
     await provider.updateCredential(expectedCredential);
 

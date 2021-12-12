@@ -1,5 +1,5 @@
-import {cancelOrder, getOrdersByQuery, placeOrder} from './orders';
-import {getAccount} from './accounts';
+import { cancelOrder, getOrdersByQuery, placeOrder } from './orders';
+import { getAccount } from './accounts';
 import {
   AssetType,
   DurationType,
@@ -10,7 +10,7 @@ import {
   OrderType,
   SessionType,
 } from '../models/order';
-import {setupLocalFileCredentialProvider} from '../utils/testUtils';
+import { setupLocalFileCredentialProvider } from '../utils/testUtils';
 
 describe('Orders', () => {
   beforeAll(async () => {
@@ -27,7 +27,7 @@ describe('Orders', () => {
     // Get account
     const accountResponse = await getAccount();
     const accountId = accountResponse[0].accountId;
-    const response = await getOrdersByQuery({accountId});
+    const response = await getOrdersByQuery({ accountId });
 
     expect(response);
   });
@@ -36,7 +36,7 @@ describe('Orders', () => {
     const accountResponse = await getAccount();
     const validAccount = accountResponse.filter((r) => r.initialBalances.cashAvailableForTrading > 10).pop();
     if (!validAccount) {
-      console.debug("Since there is no money in account, we cannot run this test")
+      console.debug('Since there is no money in account, we cannot run this test');
       return;
     }
 
