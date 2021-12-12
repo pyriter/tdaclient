@@ -1,5 +1,7 @@
-import { LocalFileCredentialProvider } from './localFileCredentialProvider';
-import { CREDENTIALS_FILE_NAME } from '../utils/constants';
+import {LocalFileCredentialProvider} from './localFileCredentialProvider';
+import {CREDENTIALS_FILE_NAME} from '../utils/constants';
+import {TdaCredential} from "./credentialsProvider";
+import exp = require("constants");
 
 describe('CredentialsProvider', () => {
   const provider = new LocalFileCredentialProvider(CREDENTIALS_FILE_NAME);
@@ -11,15 +13,19 @@ describe('CredentialsProvider', () => {
     expect(credentials.refresh_token);
   });
 
-  it('should update the credentials', async () => {
-    const credential = await provider.getCredential(); // We don't want to modified the credentials so getting them from LIVE
+  xit('should update the credentials', async () => {
+    const previousCredential = await provider.getCredential(); // We don't want to modified the credentials so getting them from LIVE
+    const expectedCredential = {
+      ...previousCredential,
+      access_token: "test-access-token"
+    };
+    await provider.updateCredential(expectedCredential);
 
-    await provider.updateCredential(credential);
     const actualCredentials = await provider.getCredential();
 
-    expect(actualCredentials.access_token).toEqual(credential.access_token);
-    expect(actualCredentials.refresh_token).toEqual(credential.refresh_token);
-    expect(actualCredentials.modified_date).toBeLessThan(Date.now());
-    expect(actualCredentials.modified_date).not.toEqual(credential.modified_date);
+    expect(actualCredentials.access_token).toEqual(expectedCredential.access_token);
+    expect(actualCredentials.refresh_token).toEqual(expectedCredential.refresh_token);
+    expect(actualCredentials.refresh_token_expires_in).toEqual(expectedCredential.refresh_token_expires_in);
+    expect(actualCredentials.access_token_modified_date).toEqual(expectedCredential.access_token_modified_date);
   });
 });

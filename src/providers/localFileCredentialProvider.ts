@@ -1,17 +1,18 @@
 import * as fs from 'fs';
-import { CredentialProvider, TdaCredential } from './credentialsProvider';
+import {CredentialProvider, TdaCredential} from './credentialsProvider';
 
 const ENCODING = 'utf8';
 
-export class LocalFileCredentialProvider implements CredentialProvider {
-  constructor(private fileName: string) {}
+export class LocalFileCredentialProvider extends CredentialProvider {
+  constructor(private fileName: string) {
+    super();
+  }
 
   async updateCredential(tdaCredential: TdaCredential): Promise<void> {
     const originalCredential = await this.getCredential();
     const credentials = {
       ...originalCredential,
-      ...tdaCredential,
-      modified_date: Date.now(),
+      ...tdaCredential
     };
     fs.writeFileSync(this.fileName, JSON.stringify(credentials, null, 2), ENCODING);
   }

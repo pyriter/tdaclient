@@ -9,6 +9,7 @@ export enum GrantType {
 
 export enum AccessType {
   OFFLINE = 'offline',
+  NONE = ''
 }
 
 export interface OAuthData {

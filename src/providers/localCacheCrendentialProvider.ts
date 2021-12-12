@@ -1,7 +1,9 @@
-import { CredentialProvider, TdaCredential } from './credentialsProvider';
+import {CredentialProvider, TdaCredential} from './credentialsProvider';
 
-export class LocalCacheCredentialProvider implements CredentialProvider {
-  constructor(private tdaCredential: TdaCredential) {}
+export class LocalCacheCredentialProvider extends CredentialProvider {
+  constructor(private tdaCredential: TdaCredential) {
+    super();
+  }
 
   async updateCredential(tdaCredential: TdaCredential): Promise<void> {
     this.tdaCredential = tdaCredential;
