@@ -19,7 +19,7 @@ export async function getOptionChain(config?: OptionChainConfig): Promise<Option
 }
 
 function processResponse(response: OptionChainResponse): OptionChainResponse {
-  if(response.status == "FAILED") {
+  if(response.status === "FAILED") {
     throw new Error("Unable to get option chain. This is usually caused by an incorrect OptionChainConfig property");
   } else {
     return response;
