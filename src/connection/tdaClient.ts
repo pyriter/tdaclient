@@ -1,13 +1,13 @@
-import {Interceptor} from './interceptor';
+import { Interceptor } from './interceptor';
 import client from './client';
-import {getAccount} from '../api/accounts';
-import {CredentialProvider} from '../providers/credentialsProvider';
-import {TdaClientBuilder} from './tdaClientBuilder';
-import {placeOrder} from '../api/orders';
-import {OrdersConfig, PlaceOrdersResponse} from '../models/order';
-import {AuthorizationTokenInterceptor} from './authorizationTokenInterceptor';
-import {OptionChainConfig, OptionChainResponse} from "../models/optionChain";
-import {getOptionChain} from "../api/optionChain";
+import { getAccount } from '../api/accounts';
+import { CredentialProvider } from '../providers/credentialsProvider';
+import { TdaClientBuilder } from './tdaClientBuilder';
+import { placeOrder } from '../api/orders';
+import { OrdersConfig, PlaceOrdersResponse } from '../models/order';
+import { AuthorizationTokenInterceptor } from './authorizationTokenInterceptor';
+import { OptionChainConfig, OptionChainResponse } from '../models/optionChain';
+import { getOptionChain } from '../api/optionChain';
 
 export interface TdaClientConfig {
   authorizationInterceptor: Interceptor;

@@ -5,7 +5,7 @@ const ROUTES = {
     auth: '/auth',
     accounts: '/v1/accounts',
     orders: '/v1/orders',
-    optionChain: '/v1/marketdata/chains'
+    optionChain: '/v1/marketdata/chains',
   },
 };
 

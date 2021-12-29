@@ -1,8 +1,8 @@
-import {ArrayFormatType, Request, ResponseType} from '../models/connect';
-import {OPTION_CHAIN} from '../connection/routes.config';
+import { ArrayFormatType, Request, ResponseType } from '../models/connect';
+import { OPTION_CHAIN } from '../connection/routes.config';
 
 import client from '../connection/client';
-import {OptionChainConfig, OptionChainResponse} from "../models/optionChain";
+import { OptionChainConfig, OptionChainResponse } from '../models/optionChain';
 
 /*
 All orders for a specific account or, if account ID isn't specified, orders will be returned for all linked accounts.
@@ -19,8 +19,8 @@ export async function getOptionChain(config?: OptionChainConfig): Promise<Option
 }
 
 function processResponse(response: OptionChainResponse): OptionChainResponse {
-  if(response.status === "FAILED") {
-    throw new Error("Unable to get option chain. This is usually caused by an incorrect OptionChainConfig property");
+  if (response.status === 'FAILED') {
+    throw new Error('Unable to get option chain. This is usually caused by an incorrect OptionChainConfig property');
   } else {
     return response;
   }
