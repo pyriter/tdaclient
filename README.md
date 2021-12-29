@@ -12,10 +12,11 @@ instead of looking at the TDA documentation.
 2. Credentials can be fetched and stored using these providers
     1. Local cache
     2. Local file
-    3. Customizable (e.g connect to datastore such as S3 or DynamoDB)
+    3. Customizable (e.g. connect to datastore such as S3 or DynamoDB)
 3. Get user account information
-4. Execute Trades
+4. Execute trades
 5. Get watchlist
+6. Get option chain.
 
 ## Install
 
@@ -35,17 +36,13 @@ API [documentation](https://developer.tdameritrade.com/content/getting-started).
 
 ### Instantiate TdaClient object
 
-You will need an access token in order to connect to TDA. There is no way around this. For info as to how to get your
-own access token and client id, refer to the office
-TDA [documentation](https://developer.tdameritrade.com/content/getting-started)
-
 ```typescript
 import {TdaClient} from "tdaclient";
 
 const tdaClient = TdaClient.from({
   access_token: "MY-ACCESS-TOKEN",
   client_id: "MY-CLIENT-ID",
-  REFRESH_TOKEN: "MY-REFRESH-TOKEN" // OPTIONAL VALUE, ENABLES AUTO REFRESH OF ACCESS TOKEN
+  refresh_token: "MY-REFRESH-TOKEN" // Optional: Refresh token is used to renew the access_token
 });
 
 const accounts = await tdaClient.getAccount();
@@ -57,7 +54,6 @@ console.log(accounts[0]);
 ### Place An Order
 
 ```typescript
-import {TdaClient} from "tdaclient";
 import {
   AssetType,
   DurationType,
@@ -91,9 +87,27 @@ const orderConfig = {
   order,
 } as OrdersConfig;
 
-const placeOrdersResponse = await placeOrder(orderConfig);
+const placeOrdersResponse = await tdaClient.placeOrder(orderConfig);
 const orderId = placeOrdersResponse.orderId;
 console.log(orderId);
+```
+
+### Get Option Chain
+
+```typescript
+import {getOptionChain} from "tdaclient/dist/optionChain";
+import {
+  ContractType,
+  OptionChainConfig,
+  OptionStrategyType
+} from "tdaClient/dist/models/optionChain";
+
+const optionChainResponse = await tdaClient.getOptionChain({
+  symbol,
+  strike: 470,
+  strikeCount: 10
+} as OptionChainConfig)
+console.log(optionChainResponse);
 ```
 
 ## Setup if you want to contribute to this package
