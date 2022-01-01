@@ -23,7 +23,7 @@ function convertToValidSymbol(config?: OptionChainConfig) {
   if (config) {
     const {symbol} = config;
     if (symbolMap.has(symbol)) {
-      config.symbol = <string>symbolMap.get(symbol);
+      config.symbol = symbolMap.get(symbol) as string;
     }
   }
 }
