@@ -146,3 +146,8 @@ export interface Option {
   strikePrice: number;
   totalVolume: string;
 }
+
+// https://www.wintick.com/members/symbolGuide/tda
+export const symbolMap = new Map([
+  ["SPX", "$SPX.X"]
+]);
