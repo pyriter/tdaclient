@@ -1,6 +1,6 @@
-import {setupLocalFileCredentialProvider} from '../utils/testUtils';
-import {getOptionChain} from './optionChain';
-import {ContractType, OptionChainConfig, OptionStrategyType, OptionType} from '../models/optionChain';
+import { setupLocalFileCredentialProvider } from '../utils/testUtils';
+import { getOptionChain } from './optionChain';
+import { ContractType, OptionChainConfig, OptionStrategyType, OptionType } from '../models/optionChain';
 
 describe('OptionChain', () => {
   const symbol = 'SPX';
@@ -14,7 +14,7 @@ describe('OptionChain', () => {
       symbol,
       strike: 4770,
       strikeCount: 10,
-      optionType: OptionType.ALL
+      optionType: OptionType.ALL,
     } as OptionChainConfig);
     let options = values(values(response.callExpDateMap).pop());
 

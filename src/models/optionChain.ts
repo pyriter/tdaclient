@@ -148,6 +148,4 @@ export interface Option {
 }
 
 // https://www.wintick.com/members/symbolGuide/tda
-export const symbolMap = new Map([
-  ["SPX", "$SPX.X"]
-]);
+export const symbolMap = new Map([['SPX', '$SPX.X']]);

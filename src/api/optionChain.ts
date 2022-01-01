@@ -1,8 +1,8 @@
-import {ArrayFormatType, Request, ResponseType} from '../models/connect';
-import {OPTION_CHAIN} from '../connection/routes.config';
+import { ArrayFormatType, Request, ResponseType } from '../models/connect';
+import { OPTION_CHAIN } from '../connection/routes.config';
 
 import client from '../connection/client';
-import {OptionChainConfig, OptionChainResponse, symbolMap} from '../models/optionChain';
+import { OptionChainConfig, OptionChainResponse, symbolMap } from '../models/optionChain';
 
 /*
 All orders for a specific account or, if account ID isn't specified, orders will be returned for all linked accounts.
@@ -21,7 +21,7 @@ export async function getOptionChain(config?: OptionChainConfig): Promise<Option
 
 function convertToValidSymbol(config?: OptionChainConfig) {
   if (config) {
-    const {symbol} = config;
+    const { symbol } = config;
     if (symbolMap.has(symbol)) {
       config.symbol = symbolMap.get(symbol) as string;
     }
