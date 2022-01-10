@@ -1,5 +1,5 @@
 export interface QuotesConfig {
-  symbols: string[]
+  symbols: string[];
 }
 
 export interface QuotesIndex {
@@ -48,8 +48,8 @@ export interface QuotesEtf {
   shortable: boolean;
   volatility: number;
   digits: number;
-  "52WkHigh": number;
-  "52WkLow": number;
+  '52WkHigh': number;
+  '52WkLow': number;
   peRatio: number;
   divAmount: number;
   divYield: number;
@@ -58,5 +58,5 @@ export interface QuotesEtf {
   regularMarketLastPrice: number;
   regularMarketLastSize: number;
   regularMarketNetChange: number;
-  regularMarketTradeTimeInLong: number
+  regularMarketTradeTimeInLong: number;
 }

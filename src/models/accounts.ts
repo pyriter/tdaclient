@@ -45,25 +45,25 @@ interface CurrentBalances {
   bondValue: number;
   cashDebitCallValue: number;
   unsettledCash: number;
-  availableFunds: number,
-  availableFundsNonMarginableTrade: number,
-  buyingPower: number,
-  buyingPowerNonMarginableTrade: number,
-  dayTradingBuyingPower: number,
-  dayTradingBuyingPowerCall: number,
-  equity: number,
-  equityPercentage: number,
-  longMarginValue: number,
-  maintenanceCall: number,
-  maintenanceRequirement: number,
-  marginBalance: number,
-  regTCall: number,
-  shortBalance: number,
-  shortMarginValue: number,
-  sma: number,
-  isInCall: boolean,
-  stockBuyingPower: number,
-  optionBuyingPower: number
+  availableFunds: number;
+  availableFundsNonMarginableTrade: number;
+  buyingPower: number;
+  buyingPowerNonMarginableTrade: number;
+  dayTradingBuyingPower: number;
+  dayTradingBuyingPowerCall: number;
+  equity: number;
+  equityPercentage: number;
+  longMarginValue: number;
+  maintenanceCall: number;
+  maintenanceRequirement: number;
+  marginBalance: number;
+  regTCall: number;
+  shortBalance: number;
+  shortMarginValue: number;
+  sma: number;
+  isInCall: boolean;
+  stockBuyingPower: number;
+  optionBuyingPower: number;
 }
 
 interface ProjectBalances {

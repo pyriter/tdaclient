@@ -1,10 +1,10 @@
-import {ArrayFormatType, Request, ResponseType} from '../models/connect';
-import {OPTION_CHAIN} from '../connection/routes.config';
+import { ArrayFormatType, Request, ResponseType } from '../models/connect';
+import { OPTION_CHAIN } from '../connection/routes.config';
 
 import client from '../connection/client';
-import {OptionChainConfig, OptionChainResponse} from '../models/optionChain';
-import {convertToValidSymbol} from "../utils/symbol";
-import {round} from "../utils/round";
+import { OptionChainConfig, OptionChainResponse } from '../models/optionChain';
+import { convertToValidSymbol } from '../utils/symbol';
+import { round } from '../utils/round';
 
 /*
 All orders for a specific account or, if account ID isn't specified, orders will be returned for all linked accounts.
@@ -23,8 +23,8 @@ export async function getOptionChain(config?: OptionChainConfig): Promise<Option
 
 function processConfig(config?: OptionChainConfig) {
   if (!config) return;
-  const {symbol} = config;
-  config.symbol = convertToValidSymbol(symbol)
+  const { symbol } = config;
+  config.symbol = convertToValidSymbol(symbol);
   if (config.interval) {
     // @ts-ignore
     config.strike = round(config.strike, config.interval);

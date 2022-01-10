@@ -1,9 +1,9 @@
-import {ArrayFormatType, Request, ResponseType} from '../models/connect';
-import {QUOTES} from '../connection/routes.config';
+import { ArrayFormatType, Request, ResponseType } from '../models/connect';
+import { QUOTES } from '../connection/routes.config';
 
 import client from '../connection/client';
-import {QuotesConfig, QuotesEtf, QuotesIndex} from "../models/quotes";
-import {convertToValidSymbol, convertToValidSymbols} from "../utils/symbol";
+import { QuotesConfig, QuotesEtf, QuotesIndex } from '../models/quotes';
+import { convertToValidSymbol, convertToValidSymbols } from '../utils/symbol';
 
 /*
 All orders for a specific account or, if account ID isn't specified, orders will be returned for all linked accounts.
@@ -21,11 +21,11 @@ export async function getQuotes(config?: QuotesConfig): Promise<(QuotesIndex | Q
 }
 
 function processConfig(config?: QuotesConfig) {
-  if (!config) return
-  const {symbols} = config;
+  if (!config) return;
+  const { symbols } = config;
   return {
-    symbol: convertToValidSymbols(symbols).join(",")
-  }
+    symbol: convertToValidSymbols(symbols).join(','),
+  };
 }
 
 function processResponse(data: any): (QuotesIndex | QuotesEtf)[] {

@@ -1,5 +1,5 @@
 // https://www.wintick.com/members/symbolGuide/tda
-import {OptionChainConfig} from "../models/optionChain";
+import { OptionChainConfig } from '../models/optionChain';
 
 export const symbolMap = new Map([['SPX', '$SPX.X']]);
 
@@ -12,7 +12,7 @@ export function convertToValidSymbol(symbol: string) {
 }
 
 export function convertToValidSymbols(symbols: string[]) {
-  return symbols.map(symbol => {
-    return convertToValidSymbol(symbol)
+  return symbols.map((symbol) => {
+    return convertToValidSymbol(symbol);
   });
 }

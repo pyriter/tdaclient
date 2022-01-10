@@ -6,7 +6,7 @@ const ROUTES = {
     accounts: '/v1/accounts',
     orders: '/v1/orders',
     optionChain: '/v1/marketdata/chains',
-    quotes: '/v1/marketdata/quotes'
+    quotes: '/v1/marketdata/quotes',
   },
 };
 

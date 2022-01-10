@@ -1,4 +1,4 @@
-import {Month} from "../models/optionChain";
+import { Month } from '../models/optionChain';
 
 export function convertToMonth(month: number) {
   switch (month) {
