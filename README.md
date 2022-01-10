@@ -8,7 +8,7 @@ instead of looking at the TDA documentation.
 
 ## Features
 
-1. Auto fetch refresh token when access token expires and updates credentials.
+1. Auto fetch refresh token when access token expires.
 2. Credentials can be fetched and stored using these providers
     1. Local cache
     2. Local file
@@ -16,7 +16,8 @@ instead of looking at the TDA documentation.
 3. Get user account information
 4. Execute trades
 5. Get watchlist
-6. Get option chain.
+6. Get option chain
+7. Get quote
 
 ## Install
 
@@ -34,7 +35,12 @@ API [documentation](https://developer.tdameritrade.com/content/getting-started).
 
 ## How to use it
 
-### Instantiate TdaClient object
+### Instantiate the TdaClient object
+
+At the bare minimum, you need to provide the access token and client id to instantiate the tdaClient. This information
+can be provided in a few ways.
+
+#### 1. Local cache
 
 ```typescript
 import {TdaClient} from "tdaclient";
@@ -44,12 +50,54 @@ const tdaClient = TdaClient.from({
   client_id: "MY-CLIENT-ID",
   refresh_token: "MY-REFRESH-TOKEN" // Optional: Refresh token is used to renew the access_token
 });
-
-const accounts = await tdaClient.getAccount();
-
-console.log(accounts[0]);
-
 ```
+
+#### 2. Local file
+
+The tdaClient will read the credentials from this file. In addition, when the access token expires, it will
+automatically fetch a new refresh token using the existing valid refresh token. When the refresh token expires, it will
+automatically fetch a new one. Make sure that the tdaClient is able to read and write to this file.
+
+```typescript
+import {TdaClient} from "tdaclient";
+
+/* Example CREDENTIAL_FILE.json file
+{ 
+  "access_token": "MY-ACCESS-TOKEN",
+  "refresh_token": "MY-REFRESH-TOKEN",
+  "client_id": "MY-CLIENT-ID"
+}
+ */
+
+const tdaClient = TdaClient.from({
+  fileName: PATH_TO_CREDENTIAL_FILE_NAME,
+});
+```
+
+#### 3. Custom credential provider
+
+You can specify your own way of providing the credential information. Here is an example of reading and writing to a
+credential file stored in S3. The basic idea here is to create a class that extends the CredentialProvider abstract
+class. You need to override the `getCredential` and the `updateCredential` member functions. You then pass that provider
+when you instantiate the tdaClient.
+
+```typescript
+export class S3CredentialProvider extends CredentialProvider {
+  async updateCredential(tdaCredential: TdaCredential): Promise<void> {
+    // do something
+  }
+
+  async getCredential(): Promise<TdaCredential> {
+    // do something
+  }
+}
+
+const tdaClient = TdaClient.from({
+  authorizationInterceptor: new AuthorizationTokenInterceptor(new S3CredentialProvider())
+});
+```
+
+## Interacting with TDA
 
 ### Place An Order
 
@@ -103,10 +151,11 @@ import {
 } from "tdaClient/dist/models/optionChain";
 
 const optionChainResponse = await tdaClient.getOptionChain({
-  symbol,
+  symbol: 'SPY',
   strike: 470,
   strikeCount: 10
 } as OptionChainConfig)
+
 console.log(optionChainResponse);
 ```
 

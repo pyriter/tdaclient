@@ -1,13 +1,15 @@
-import { Interceptor } from './interceptor';
+import {Interceptor} from './interceptor';
 import client from './client';
-import { getAccount } from '../api/accounts';
-import { CredentialProvider } from '../providers/credentialsProvider';
-import { TdaClientBuilder } from './tdaClientBuilder';
-import { placeOrder } from '../api/orders';
-import { OrdersConfig, PlaceOrdersResponse } from '../models/order';
-import { AuthorizationTokenInterceptor } from './authorizationTokenInterceptor';
-import { OptionChainConfig, OptionChainResponse } from '../models/optionChain';
-import { getOptionChain } from '../api/optionChain';
+import {getAccount} from '../api/accounts';
+import {CredentialProvider} from '../providers/credentialsProvider';
+import {TdaClientBuilder} from './tdaClientBuilder';
+import {placeOrder} from '../api/orders';
+import {OrdersConfig, PlaceOrdersResponse} from '../models/order';
+import {AuthorizationTokenInterceptor} from './authorizationTokenInterceptor';
+import {OptionChainConfig, OptionChainResponse} from '../models/optionChain';
+import {getOptionChain} from '../api/optionChain';
+import {QuotesConfig, QuotesEtf, QuotesIndex} from "../models/quotes";
+import {getQuotes} from "../api/quotes";
 
 export interface TdaClientConfig {
   authorizationInterceptor: Interceptor;
@@ -42,5 +44,9 @@ export class TdaClient {
 
   async getOptionChain(config: OptionChainConfig): Promise<OptionChainResponse> {
     return await getOptionChain(config);
+  }
+
+  async getQuotes(config: QuotesConfig): Promise<(QuotesIndex | QuotesEtf)[]> {
+    return await getQuotes(config);
   }
 }

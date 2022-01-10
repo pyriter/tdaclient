@@ -34,7 +34,7 @@ export class AuthorizationTokenInterceptor extends Interceptor {
       return secondResponse;
     }
 
-    return error;
+    throw error;
   }
 
   private resetAuthTokenRefreshRetries() {

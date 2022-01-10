@@ -12,6 +12,64 @@ export interface CancelOrderConfig {
   orderId: string;
 }
 
+export interface CancelTime {
+  date: string;
+  shortFormat: boolean;
+}
+
+export enum RequestedDestination {
+  INET = "INET",
+  ECN_ARCA = "ECN_ARCA",
+  CBOE = "CBOE",
+  AMEX = "AMEX",
+  PHLX = "PHLX",
+  ISE = "ISE",
+  BOX = "BOX",
+  NYSE = "NYSE",
+  NASDAQ = "NASDAQ",
+  BATS = "BATS",
+  C2 = "C2",
+  AUTO = "AUTO"
+}
+
+export enum StopPriceLinkBasis {
+  MANUAL = "MANUAL",
+  BASE = "BASE",
+  TRIGGER = "TRIGGER",
+  LAST = "LAST",
+  BID = "BID",
+  ASK = "ASK",
+  ASK_BID = "ASK_BID",
+  MARK = "MARK",
+  AVERAGE = "AVERAGE"
+}
+
+export enum StopPriceLinkType {
+  VALUE = "VALUE",
+  PERCENT = "PERCENT",
+  TICK = "TICK"
+}
+
+export enum StopType {
+  STANDARD = "STANDARD",
+  BID = "BID",
+  ASK = "ASK",
+  LAST = "LAST",
+  MARK = "MARK"
+}
+
+export enum PriceLinkBasis {
+  MANUAL = "MANUAL",
+  BASE = "BASE",
+  TRIGGER = "TRIGGER",
+  LAST = "LAST",
+  BID = "BID",
+  ASK = "ASK",
+  ASK_BID = "ASK_BID",
+  MARK = "MARK",
+  AVERAGE = "AVERAGE"
+}
+
 export interface Order {
   orderType: OrderType;
   price: number;
@@ -19,6 +77,37 @@ export interface Order {
   duration: DurationType;
   orderStrategyType: OrderStrategyType;
   orderLegCollection: OrderLeg[];
+  cancelTime?: CancelTime;
+  complexOrderStrategyType: ComplexOrderStrategyType;
+  quantity?: number;
+  filledQuantity?: number;
+  remainingQuantity?: number;
+  requestedDestination?: RequestedDestination;
+  destinationLinkName?: string;
+  releaseTime?: string;
+  stopPrice?: number;
+  stopPriceLinkBasis?: StopPriceLinkBasis;
+  stopPriceLinkType?: StopPriceLinkType;
+  stopPriceOffset?: number;
+  stopType?: StopType;
+  priceLinkBasis?: PriceLinkBasis;
+  priceLinkType?: PriceLinkType;
+  taxLotMethod?: TaxLotMethod;
+}
+
+export enum TaxLotMethod {
+  FIFO = "",
+  LIFO = "",
+  HIGH_COST = "",
+  LOW_COST = "",
+  AVERAGE_COST = "",
+  SPECIFIC_LOT = ""
+}
+
+export enum PriceLinkType {
+  VALUE = "VALUE",
+  PERCENT = "PERCENT",
+  TICK = "TICK"
 }
 
 export enum OrderType {
@@ -54,10 +143,83 @@ export enum OrderStrategyType {
   TRIGGER = 'TRIGGER',
 }
 
+export enum OrderLegType {
+  EQUITY = "EQUITY",
+  OPTION = "OPTION",
+  INDEX = "INDEX",
+  MUTUAL_FUND = "MUTUAL_FUND",
+  CASH_EQUIVALENT = "CASH_EQUIVALENT",
+  FIXED_INCOME = "FIXED_INCOME",
+  CURRENCY = "CURRENCY"
+}
+
 export interface OrderLeg {
+  orderLegType: OrderLegType;
+  legId?: number;
   instruction: InstructionType;
   quantity: number;
-  instrument: Instrument;
+  positionEffect: PositionEffect;
+  quantityType?: QuantityType;
+  instrument: Instrument | OptionInstrument; // TODO
+}
+
+export enum AssetType {
+  EQUITY = "EQUITY",
+  OPTION = "OPTION",
+  INDEX = "INDEX",
+  MUTUAL_FUND = "MUTUAL_FUND",
+  CASH_EQUIVALENT = "CASH_EQUIVALENT",
+  FIXED_INCOME = "FIXED_INCOME",
+  CURRENCY = "CURRENCY",
+}
+
+export enum OptionInstrumentType {
+  VANILLA = "VANILLA",
+  BINARY = "BINARY",
+  BARRIER = "BARRIER"
+}
+
+export enum PutCall {
+  PUT = "PUT",
+  CALL = "CALL"
+}
+
+export interface OptionInstrument {
+  assetType: AssetType;
+  cusip?: string;
+  symbol: string;
+  description: string;
+  type?: OptionInstrumentType;
+  putCall: PutCall;
+  underlyingSymbol: string;
+  optionMultiplier: number;
+  optionDeliverables: OptionDeliverable[]
+}
+
+export interface OptionDeliverable {
+  symbol: string;
+  deliverableUnits: number;
+  currencyType: CurrencyType;
+  assetType: AssetType;
+}
+
+export enum CurrencyType {
+  USD = "USD",
+  CAD = "CAD",
+  EUR = "EUR",
+  JPY = "JPY"
+}
+
+export enum QuantityType {
+  ALL_SHARES = "ALL_SHARES",
+  DOLLARS = "DOLLARS",
+  SHARES = "SHARES"
+}
+
+export enum PositionEffect {
+  OPENING = "OPENING",
+  CLOSING = "CLOSING",
+  AUTOMATIC = "AUTOMATIC"
 }
 
 export enum InstructionType {
@@ -77,16 +239,6 @@ export interface Instrument {
   assetType: AssetType;
 }
 
-export enum AssetType {
-  EQUITY = 'EQUITY',
-  OPTION = 'OPTION',
-  INDEX = 'INDEX',
-  MUTUAL_FUND = 'MUTUAL_FUND',
-  CASH_EQUIVALENT = 'CASH_EQUIVALENT',
-  FIXED_INCOME = 'FIXED_INCOME',
-  CURRENCY = 'CURRENCY',
-}
-
 export interface OrdersByQueryConfig {
   accountId?: string;
   maxResults?: number;
@@ -99,4 +251,27 @@ export interface GetOrdersResponse {
   session: SessionType;
   duration: DurationType;
   orderType: OrderType;
+}
+
+export enum ComplexOrderStrategyType {
+  NONE = "NONE",
+  COVERED = "COVERED",
+  VERTICAL = "VERTICAL",
+  BACK_RATIO = "BACK_RATIO",
+  CALENDAR = "CALENDAR",
+  DIAGONAL = "DIAGONAL",
+  STRADDLE = "STRADDLE",
+  STRANGLE = "STRANGLE",
+  COLLAR_SYNTHETIC = "COLLAR_SYNTHETIC",
+  BUTTERFLY = "BUTTERFLY",
+  CONDOR = "CONDOR",
+  IRON_CONDOR = "IRON_CONDOR",
+  VERTICAL_ROLL = "VERTICAL_ROLL",
+  COLLAR_WITH_STOCK = "COLLAR_WITH_STOCK",
+  DOUBLE_DIAGONAL = "DOUBLE_DIAGONAL",
+  UNBALANCED_BUTTERFLY = "UNBALANCED_BUTTERFLY",
+  UNBALANCED_CONDOR = "UNBALANCED_CONDOR",
+  UNBALANCED_IRON_CONDOR = "UNBALANCED_IRON_CONDOR",
+  UNBALANCED_VERTICAL_ROLL = "UNBALANCED_VERTICAL_ROLL",
+  CUSTOM = "CUSTOM"
 }

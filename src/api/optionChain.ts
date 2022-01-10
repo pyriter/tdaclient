@@ -1,14 +1,16 @@
-import { ArrayFormatType, Request, ResponseType } from '../models/connect';
-import { OPTION_CHAIN } from '../connection/routes.config';
+import {ArrayFormatType, Request, ResponseType} from '../models/connect';
+import {OPTION_CHAIN} from '../connection/routes.config';
 
 import client from '../connection/client';
-import { OptionChainConfig, OptionChainResponse, symbolMap } from '../models/optionChain';
+import {OptionChainConfig, OptionChainResponse} from '../models/optionChain';
+import {convertToValidSymbol} from "../utils/symbol";
+import {round} from "../utils/round";
 
 /*
 All orders for a specific account or, if account ID isn't specified, orders will be returned for all linked accounts.
  */
 export async function getOptionChain(config?: OptionChainConfig): Promise<OptionChainResponse> {
-  convertToValidSymbol(config);
+  processConfig(config);
   const url = OPTION_CHAIN;
   const response = await client.get({
     url,
@@ -19,12 +21,13 @@ export async function getOptionChain(config?: OptionChainConfig): Promise<Option
   return processResponse(response.data);
 }
 
-function convertToValidSymbol(config?: OptionChainConfig) {
-  if (config) {
-    const { symbol } = config;
-    if (symbolMap.has(symbol)) {
-      config.symbol = symbolMap.get(symbol) as string;
-    }
+function processConfig(config?: OptionChainConfig) {
+  if (!config) return;
+  const {symbol} = config;
+  config.symbol = convertToValidSymbol(symbol)
+  if (config.interval) {
+    // @ts-ignore
+    config.strike = round(<number>config.strike, config.interval);
   }
 }
 
