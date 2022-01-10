@@ -27,7 +27,7 @@ function processConfig(config?: OptionChainConfig) {
   config.symbol = convertToValidSymbol(symbol)
   if (config.interval) {
     // @ts-ignore
-    config.strike = round(<number>config.strike, config.interval);
+    config.strike = round(config.strike, config.interval);
   }
 }
 

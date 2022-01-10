@@ -11,7 +11,7 @@ export function round(value: number, interval?: undefined | 5 | 10): number {
 }
 
 function roundIntervalFive(tenth: number): number {
-  return <number>intervalFive.get(tenth);
+  return intervalFive.get(tenth) as number;
 }
 
 const intervalFive = new Map([
