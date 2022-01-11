@@ -24,7 +24,7 @@ export interface InitialBalances {
   accountValue: number;
 }
 
-interface CurrentBalances {
+export interface CurrentBalances {
   accruedInterest: number;
   cashBalance: number;
   cashReceipts: number;
@@ -66,7 +66,7 @@ interface CurrentBalances {
   optionBuyingPower: number;
 }
 
-interface ProjectBalances {
+export interface ProjectBalances {
   cashAvailableForTrading: number;
   cashAvailableForWithdrawal: number;
 }

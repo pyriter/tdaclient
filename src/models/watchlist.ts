@@ -1,9 +1,9 @@
-interface Instrument {
+export interface Instrument {
   symbol: string;
   assetType: string;
 }
 
-interface WatchlistItem {
+export interface WatchlistItem {
   sequenceId: number;
   quantity: number;
   averagePrice: number;
