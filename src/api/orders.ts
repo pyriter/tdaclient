@@ -1,15 +1,16 @@
-import {ArrayFormatType, Request, ResponseType} from '../models/connect';
-import {ACCOUNTS, ORDERS} from '../connection/routes.config';
+import { ArrayFormatType, Request, ResponseType } from '../models/connect';
+import { ACCOUNTS, ORDERS } from '../connection/routes.config';
 import {
   CancelOrderConfig,
-  GetOrdersResponse, Order,
+  GetOrdersResponse,
+  Order,
   OrdersByQueryConfig,
   OrdersConfig,
   PlaceOrdersResponse,
 } from '../models/order';
 import Any = jasmine.Any;
 import client from '../connection/client';
-import {round} from "../utils/round";
+import { round } from '../utils/round';
 
 /*
 All orders for a specific account or, if account ID isn't specified, orders will be returned for all linked accounts.

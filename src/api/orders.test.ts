@@ -1,5 +1,5 @@
-import {cancelOrder, getOrdersByQuery, placeOrder} from './orders';
-import {getAccount} from './accounts';
+import { cancelOrder, getOrdersByQuery, placeOrder } from './orders';
+import { getAccount } from './accounts';
 import {
   AssetType,
   ComplexOrderStrategyType,
@@ -14,13 +14,13 @@ import {
   PutCall,
   SessionType,
 } from '../models/order';
-import {setupLocalFileCredentialProvider} from '../utils/testUtils';
-import {SecuritiesAccount} from '../models/accounts';
-import {getOptionChain} from './optionChain';
-import {ContractType, Month, OptionChainConfig, OptionStrategyType, RangeType} from '../models/optionChain';
-import {getQuotes} from './quotes';
-import {QuotesIndex} from '../models/quotes';
-import {convertToMonth} from '../utils/month';
+import { setupLocalFileCredentialProvider } from '../utils/testUtils';
+import { SecuritiesAccount } from '../models/accounts';
+import { getOptionChain } from './optionChain';
+import { ContractType, Month, OptionChainConfig, OptionStrategyType, RangeType } from '../models/optionChain';
+import { getQuotes } from './quotes';
+import { QuotesIndex } from '../models/quotes';
+import { convertToMonth } from '../utils/month';
 
 describe('Orders', () => {
   let validAccount;
@@ -39,7 +39,7 @@ describe('Orders', () => {
     // Get account
     const accountResponse = await getAccount();
     const accountId = accountResponse[0].accountId;
-    const response = await getOrdersByQuery({accountId});
+    const response = await getOrdersByQuery({ accountId });
 
     expect(response);
   });
@@ -99,9 +99,9 @@ describe('Orders', () => {
       range: RangeType.OTM,
       expMonth: convertToMonth(new Date().getMonth()),
     } as OptionChainConfig);
-    const {optionStrategyList} = optionChainResponse.monthlyStrategyList[0];
+    const { optionStrategyList } = optionChainResponse.monthlyStrategyList[0];
 
-    const {primaryLeg, secondaryLeg, strategyBid, strategyAsk} = optionStrategyList[0];
+    const { primaryLeg, secondaryLeg, strategyBid, strategyAsk } = optionStrategyList[0];
 
     const price = (strategyBid + strategyAsk) / 2;
     const order = {

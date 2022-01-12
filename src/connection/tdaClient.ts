@@ -10,7 +10,7 @@ import { OptionChainConfig, OptionChainResponse } from '../models/optionChain';
 import { getOptionChain } from '../api/optionChain';
 import { QuotesConfig, QuotesEtf, QuotesIndex } from '../models/quotes';
 import { getQuotes } from '../api/quotes';
-import {SecuritiesAccount} from "../models/accounts";
+import { SecuritiesAccount } from '../models/accounts';
 
 export interface TdaClientConfig {
   authorizationInterceptor: Interceptor;
