@@ -1,5 +1,5 @@
-import { cancelOrder, getOrdersByQuery, placeOrder } from './orders';
-import { getAccount } from './accounts';
+import {cancelOrder, getOrdersByQuery, placeOrder} from './orders';
+import {getAccount} from './accounts';
 import {
   AssetType,
   ComplexOrderStrategyType,
@@ -14,13 +14,13 @@ import {
   PutCall,
   SessionType,
 } from '../models/order';
-import { setupLocalFileCredentialProvider } from '../utils/testUtils';
-import { SecuritiesAccount } from '../models/accounts';
-import { getOptionChain } from './optionChain';
-import { ContractType, Month, OptionChainConfig, OptionStrategyType, RangeType } from '../models/optionChain';
-import { getQuotes } from './quotes';
-import { QuotesIndex } from '../models/quotes';
-import { convertToMonth } from '../utils/month';
+import {setupLocalFileCredentialProvider} from '../utils/testUtils';
+import {SecuritiesAccount} from '../models/accounts';
+import {getOptionChain} from './optionChain';
+import {ContractType, Month, OptionChainConfig, OptionStrategyType, RangeType} from '../models/optionChain';
+import {getQuotes} from './quotes';
+import {QuotesIndex} from '../models/quotes';
+import {convertToMonth} from '../utils/month';
 
 describe('Orders', () => {
   let validAccount;
@@ -39,7 +39,7 @@ describe('Orders', () => {
     // Get account
     const accountResponse = await getAccount();
     const accountId = accountResponse[0].accountId;
-    const response = await getOrdersByQuery({ accountId });
+    const response = await getOrdersByQuery({accountId});
 
     expect(response);
   });
@@ -92,21 +92,21 @@ describe('Orders', () => {
     const accountId = validAccount.accountId;
     const optionChainResponse = await getOptionChain({
       symbol,
-      strike: spx.lastPrice, // TODO: Get the price by querying the market
+      strike: spx.closePrice - 20, // TODO: Get the price by querying the market
       interval: 5,
       contractType: ContractType.PUT,
       strategy: OptionStrategyType.VERTICAL,
       range: RangeType.OTM,
       expMonth: convertToMonth(new Date().getMonth()),
     } as OptionChainConfig);
-    const { optionStrategyList } = optionChainResponse.monthlyStrategyList[0];
+    const {optionStrategyList} = optionChainResponse.monthlyStrategyList[0];
 
-    const { primaryLeg, secondaryLeg, strategyBid, strategyAsk } = optionStrategyList[0];
+    const {primaryLeg, secondaryLeg, strategyBid, strategyAsk} = optionStrategyList[0];
 
     const price = (strategyBid + strategyAsk) / 2;
     const order = {
       orderType: OrderType.NET_CREDIT,
-      price: Number(price.toFixed(2)),
+      price: price,
       session: SessionType.NORMAL,
       duration: DurationType.DAY,
       orderStrategyType: OrderStrategyType.SINGLE,
@@ -142,13 +142,12 @@ describe('Orders', () => {
     const placeOrdersResponse = await placeOrder(orderConfig);
     const orderId = placeOrdersResponse.orderId;
 
-    const cancelOrderResponse = await cancelOrder({
+    await cancelOrder({
       accountId,
       orderId,
     });
 
-    expect(placeOrdersResponse);
-    expect(cancelOrderResponse);
+    expect(placeOrdersResponse.orderId).toBeTruthy();
   });
 
   async function checkForValidAccount(): Promise<SecuritiesAccount> {

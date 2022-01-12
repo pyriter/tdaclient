@@ -1,14 +1,15 @@
-import { ArrayFormatType, Request, ResponseType } from '../models/connect';
-import { ACCOUNTS, ORDERS } from '../connection/routes.config';
+import {ArrayFormatType, Request, ResponseType} from '../models/connect';
+import {ACCOUNTS, ORDERS} from '../connection/routes.config';
 import {
   CancelOrderConfig,
-  GetOrdersResponse,
+  GetOrdersResponse, Order,
   OrdersByQueryConfig,
   OrdersConfig,
   PlaceOrdersResponse,
 } from '../models/order';
 import Any = jasmine.Any;
 import client from '../connection/client';
+import {round} from "../utils/round";
 
 /*
 All orders for a specific account or, if account ID isn't specified, orders will be returned for all linked accounts.
@@ -33,9 +34,10 @@ throttles and examples of orders.
  */
 export async function placeOrder(config: OrdersConfig): Promise<PlaceOrdersResponse> {
   const url = generateOrderUrl(config.accountId);
+  const order = processOrder(config.order);
   const response = await client.post({
     url,
-    data: config.order,
+    data: order,
     responseType: ResponseType.JSON,
     arrayFormat: ArrayFormatType.COMMA,
   } as Request);
@@ -43,6 +45,13 @@ export async function placeOrder(config: OrdersConfig): Promise<PlaceOrdersRespo
   return {
     orderId,
   };
+}
+
+function processOrder(order: Order): Order {
+  if (!order.price) return order;
+  const price = Number(order.price.toFixed(2)) * 100;
+  order.price = round(price, 5) / 100;
+  return order;
 }
 
 export async function cancelOrder(config: CancelOrderConfig): Promise<Any> {
