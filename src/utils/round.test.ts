@@ -1,7 +1,7 @@
-import {round} from "./round";
+import { round } from './round';
 
-describe("helper", () => {
-  describe("round", () => {
+describe('helper', () => {
+  describe('round', () => {
     const testValues = [
       [undefined, 10, 10],
       [undefined, 12.123, 12],
@@ -16,9 +16,9 @@ describe("helper", () => {
       [5, 4781.32, 4780],
       [5, 4782.5, 4785],
       [10, 4782.5, 4780],
-      [10, 4785, 4790]
-    ]
-    it("should round a whole number correctly", () => {
+      [10, 4785, 4790],
+    ];
+    it('should round a whole number correctly', () => {
       for (const value of testValues) {
         const [interval, input, actual] = value;
         // @ts-ignore
