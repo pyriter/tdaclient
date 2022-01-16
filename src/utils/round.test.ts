@@ -1,4 +1,4 @@
-import {round} from './round';
+import { round } from './round';
 
 describe('round', () => {
   const testValues = [
