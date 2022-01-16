@@ -2,9 +2,7 @@
 
 ## Overview
 
-A client that knows how to call the TD-Ameritrade Restful API written for nodejs. The library is written in Typescript.
-This means you can use your favorite IDE to do code complete. This allows you to focus on writing your trading strategy
-instead of looking at the TDA documentation.
+A Javascript thick client for the TD-Ameritrade Restful API written in Typescript for nodejs.
 
 ## Features
 
@@ -27,18 +25,20 @@ $ yarn add tdaclient
 
 ## Getting a TD Ameritrade Access Token
 
-To gain access to the TDA APIs, you will need to get an access token. You cannot simply use your username and password
-to call the APIs. What you'll need to do is use your login to get an access token.
+To gain access to the Td-Ameritrade (TDA) APIs, you will need to get an access token from your trading account.
 
-You can get an access token by following this tutorial found on the official TDA
-API [documentation](https://developer.tdameritrade.com/content/getting-started).
+You can get an access token by:
+
+1. Following this tutorial found on the official TDA
+   API [documentation](https://developer.tdameritrade.com/content/getting-started).
+2. Or you can follow the steps in this [section](##Guide to Getting an Access Token).
 
 ## How to use it
 
 ### Instantiate the TdaClient object
 
-At the bare minimum, you need to provide the access token and client id to instantiate the tdaClient. This information
-can be provided in a few ways.
+At the bare minimum, you will need to provide an access token and client id in order to instantiate the tdaClient. This
+can be done in a few ways:
 
 #### 1. Local cache
 
@@ -49,14 +49,16 @@ const tdaClient = TdaClient.from({
   access_token: "MY-ACCESS-TOKEN",
   client_id: "MY-CLIENT-ID",
   refresh_token: "MY-REFRESH-TOKEN" // Optional: Refresh token is used to renew the access_token
+  /*
+
+   */
 });
 ```
 
 #### 2. Local file
 
-The tdaClient will read the credentials from this file. In addition, when the access token expires, it will
-automatically fetch a new refresh token using the existing valid refresh token. When the refresh token expires, it will
-automatically fetch a new one. Make sure that the tdaClient is able to read and write to this file.
+The tdaClient will read the credentials from this file. Make sure that the tdaClient is able to read and write to this
+file.
 
 ```typescript
 import {TdaClient} from "tdaclient";
@@ -96,6 +98,12 @@ const tdaClient = TdaClient.from({
   authorizationInterceptor: new AuthorizationTokenInterceptor(new S3CredentialProvider())
 });
 ```
+
+### Refresh Token
+
+If you provide a refresh token to the tdaClient, when the access token expires, the tdaClient will automatically fetch a
+new access token using the existing valid refresh token. When the refresh token expires, the tdaClient will
+automatically refresh the credential information.
 
 ## Interacting with TDA
 
@@ -159,29 +167,30 @@ const optionChainResponse = await tdaClient.getOptionChain({
 console.log(optionChainResponse);
 ```
 
-## Setup if you want to contribute to this package
+## Guide to Getting an Access Token
 
 For more info refer to this [page](https://developer.tdameritrade.com/content/getting-started)
 
-1. Create a file calls `credentials.json` and put it in the package root directory.
-2. Put the following information in that file you just created:
+1. Clone this github repo
+2. Create a file calls `credentials.json` and put it in the package root directory.
+3. Put the following information in that file you just created:
    ```json
    {
       "client_id": "example-client-id",
       "redirect_uri": "example-redirect-uri"      
    }
    ```
-3. Run this command and open the output URL from the console.
+4. Run this command and open the output URL from the console.
     ```bash
     node generateAuthUrl.js
     ```
-4. Login and click allow.
-5. You will then see a blank page load. Take a look at the URL bar on your browser.
+5. Login and click allow.
+6. You will then see a blank page load. Take a look at the URL bar on your browser.
     1. You will see a URL query string with a value for `code`.
     2. Copy this value.
     3. Open up the developer's console on the browser and type this in: ```decodeURIComponent("MY_CODE")```
     4. Keep this decoded code. This is your access_token.
-6. Go to this [page](https://developer.tdameritrade.com/authentication/apis/post/token-0) to get the access token and
+7. Go to this [page](https://developer.tdameritrade.com/authentication/apis/post/token-0) to get the access token and
    refresh token
     1. Fill in the form with the follow values:
         1. grant_type: authorization_code
@@ -189,8 +198,8 @@ For more info refer to this [page](https://developer.tdameritrade.com/content/ge
         3. code: [The value that you receive from following step]
         4. client_id: [Your app consumer key]
         5. redirect_uri: [Your app redirect uri]
-7. Create a file in this directory (at the same level as this README.md) and name it ```credentials.json```
-8. Paste the response from that page to the file create in step 3. Also add the client_id and redirect_uri attributes at
+8. Create a file in this directory (at the same level as this README.md) and name it ```credentials.json```
+9. Paste the response from that page to the file create in step 3. Also add the client_id and redirect_uri attributes at
    the end.
     ```json
     {
@@ -204,8 +213,8 @@ For more info refer to this [page](https://developer.tdameritrade.com/content/ge
         "redirect_uri": "example-redirect-uri"
     }
     ```
-9. Now you can run the command ```yarn test``` and it will run the integration tests
-10. The test will keep updating the access_token so you can keep running the tests. If you happen to not run the tests
+10. Now you can run the command ```yarn test``` and it will run the integration tests
+11. The test will keep updating the access_token so you can keep running the tests. If you happen to not run the tests
     within 90 days, then you will have to manually login and repeat these steps.
 
 ### Publishing to npm
@@ -223,4 +232,4 @@ Refer to this [page](https://developer.tdameritrade.com/account-access/apis) for
 
 ## License
 
-tdaclient is [MIT licensed](./LICENSE).
+tdaClient is [MIT licensed](./LICENSE).
