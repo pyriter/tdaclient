@@ -12,10 +12,12 @@ A Javascript thick client for the TD-Ameritrade Restful API written in Typescrip
     2. Local file
     3. Customizable (e.g. connect to datastore such as S3 or DynamoDB)
 3. Get user account information
-4. Execute trades
-5. Get watchlist
-6. Get option chain
-7. Get quote
+4. Get watchlist
+5. Get option chain
+6. Get quote
+7. Get order
+4. Place order
+9. Cancel order
 
 ## Install
 
@@ -49,9 +51,6 @@ const tdaClient = TdaClient.from({
   access_token: "MY-ACCESS-TOKEN",
   client_id: "MY-CLIENT-ID",
   refresh_token: "MY-REFRESH-TOKEN" // Optional: Refresh token is used to renew the access_token
-  /*
-
-   */
 });
 ```
 

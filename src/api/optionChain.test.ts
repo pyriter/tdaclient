@@ -36,8 +36,8 @@ describe('OptionChain', () => {
     expect(response.monthlyStrategyList.pop());
   });
 
-  it('should get put spreads that are at a specific dte and price', async () => {
-    const dte = 3;
+  xit('should get put spreads that are at a specific dte and price', async () => {
+    const dte = 1;
     const response = await getOptionChain({
       symbol,
       strikeCount: 20,
