@@ -1,21 +1,20 @@
-import { ArrayFormatType, Request, ResponseType } from '../models/connect';
-import { ACCOUNTS, ORDERS } from '../connection/routes.config';
+import {ArrayFormatType, Request, ResponseType} from '../models/connect';
+import {ACCOUNTS, ORDERS} from '../connection/routes.config';
 import {
   CancelOrderConfig,
-  GetOrdersResponse,
   Order,
+  OrderGet,
   OrdersByQueryConfig,
   OrdersConfig,
   PlaceOrdersResponse,
 } from '../models/order';
-import Any = jasmine.Any;
 import client from '../connection/client';
-import { round } from '../utils/round';
+import {round} from '../utils/round';
 
 /*
 All orders for a specific account or, if account ID isn't specified, orders will be returned for all linked accounts.
  */
-export async function getOrdersByQuery(config?: OrdersByQueryConfig): Promise<GetOrdersResponse> {
+export async function getOrdersByQuery(config?: OrdersByQueryConfig): Promise<OrderGet[]> {
   const url = ORDERS;
   const response = await client.get({
     url,
@@ -55,7 +54,7 @@ function processOrder(order: Order): Order {
   return order;
 }
 
-export async function cancelOrder(config: CancelOrderConfig): Promise<Any> {
+export async function cancelOrder(config: CancelOrderConfig): Promise<any> {
   if (!config.accountId) throw new Error('accountId is required');
   const url = generateOrderUrl(config.accountId, config.orderId);
   const response = await client.del({

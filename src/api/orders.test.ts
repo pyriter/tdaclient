@@ -29,10 +29,15 @@ describe('Orders', () => {
     validAccount = await checkForValidAccount();
   });
 
-  it('should be able to get all orders for all linked accounts', async () => {
-    const response = await getOrdersByQuery();
+  it('should be able to get orders after a certain date', async () => {
+    const response = await getOrdersByQuery({
+      fromEnteredTime: "2022-02-22"
+    });
 
-    expect(response);
+    expect(response.length).toBeGreaterThanOrEqual(0);
+    response.forEach(order => {
+      expect(order.orderId).toBeDefined()
+    })
   });
 
   it('should be able to get orders for a specific account given an account id', async () => {

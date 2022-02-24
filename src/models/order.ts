@@ -244,13 +244,7 @@ export interface OrdersByQueryConfig {
   maxResults?: number;
   fromEnteredTime?: string; // yyyy-MM-dd,
   toEnteredTime?: string; // yyyy-MM-dd
-  status?: 'AWAITING_PARENT_ORDER' | 'AWAITING_CONDITION';
-}
-
-export interface GetOrdersResponse {
-  session: SessionType;
-  duration: DurationType;
-  orderType: OrderType;
+  status?: StatusType;
 }
 
 export enum ComplexOrderStrategyType {
@@ -274,4 +268,80 @@ export enum ComplexOrderStrategyType {
   UNBALANCED_IRON_CONDOR = 'UNBALANCED_IRON_CONDOR',
   UNBALANCED_VERTICAL_ROLL = 'UNBALANCED_VERTICAL_ROLL',
   CUSTOM = 'CUSTOM',
+}
+
+export interface OrderGet {
+  session: SessionType,
+  duration: DurationType,
+  orderType: OrderType,
+  cancelTime: {
+    date: string,
+    shortFormat: boolean
+  },
+  complexOrderStrategyType: ComplexOrderStrategyType,
+  quantity: number,
+  filledQuantity: number,
+  remainingQuantity: number,
+  requestedDestination: RequestedDestination,
+  destinationLinkName: string,
+  releaseTime: string,
+  stopPrice: number,
+  stopPriceLinkBasis: StopPriceLinkBasis,
+  stopPriceLinkType: StopPriceLinkType,
+  stopPriceOffset: number,
+  stopType: StopType,
+  priceLinkBasis: PriceLinkBasis,
+  priceLinkType: PriceLinkType,
+  price: number,
+  taxLotMethod: TaxLotMethod,
+  orderLegCollection: OrderLeg[],
+  activationPrice: number,
+  specialInstruction: 'ALL_OR_NONE' | 'DO_NOT_REDUCE' | 'ALL_OR_NONE_DO_NOT_REDUCE',
+  orderStrategyType: OrderStrategyType,
+  orderId: number,
+  cancelable: boolean,
+  editable: boolean,
+  status: StatusType,
+  enteredTime: string,
+  closeTime: string,
+  tag: string,
+  accountId: number,
+  orderActivityCollection: Execution[],
+  replacingOrderCollection: object[],
+  childOrderStrategies: object[],
+  statusDescription: string
+}
+
+export enum StatusType {
+  AWAITING_PARENT_ORDER = 'AWAITING_PARENT_ORDER',
+  AWAITING_CONDITION = 'AWAITING_CONDITION',
+  AWAITING_MANUAL_REVIEW = 'AWAITING_MANUAL_REVIEW',
+  ACCEPTED = 'ACCEPTED',
+  AWAITING_UR_OUT = 'AWAITING_UR_OUT',
+  PENDING_ACTIVATION = 'PENDING_ACTIVATION',
+  QUEUED = 'QUEUED',
+  WORKING = 'WORKING',
+  REJECTED = 'REJECTED',
+  PENDING_CANCEL = 'PENDING_CANCEL',
+  CANCELED = 'CANCELED',
+  PENDING_REPLACE = 'PENDING_REPLACE',
+  REPLACED = 'REPLACED',
+  FILLED = 'FILLED',
+  EXPIRED = 'EXPIRED'
+}
+
+export interface Execution {
+  activityType: 'EXECUTION' | 'ORDER_ACTION',
+  executionType: 'FILL',
+  quantity: number,
+  orderRemainingQuantity: number,
+  executionLegs: [
+    {
+      legId: number,
+      quantity: number,
+      mismarkedQuantity: number,
+      price: number,
+      time: string
+    }
+  ]
 }
