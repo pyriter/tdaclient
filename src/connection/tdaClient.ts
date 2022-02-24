@@ -1,16 +1,16 @@
-import {Interceptor} from './interceptor';
+import { Interceptor } from './interceptor';
 import client from './client';
-import {getAccount} from '../api/accounts';
-import {CredentialProvider} from '../providers/credentialsProvider';
-import {TdaClientBuilder} from './tdaClientBuilder';
-import {cancelOrder, getOrdersByQuery, placeOrder} from '../api/orders';
-import {CancelOrderConfig, OrderGet, OrdersByQueryConfig, OrdersConfig, PlaceOrdersResponse,} from '../models/order';
-import {AuthorizationTokenInterceptor} from './authorizationTokenInterceptor';
-import {OptionChainConfig, OptionChainResponse} from '../models/optionChain';
-import {getOptionChain} from '../api/optionChain';
-import {QuotesConfig, QuotesEtf, QuotesIndex} from '../models/quotes';
-import {getQuotes} from '../api/quotes';
-import {SecuritiesAccount} from '../models/accounts';
+import { getAccount } from '../api/accounts';
+import { CredentialProvider } from '../providers/credentialsProvider';
+import { TdaClientBuilder } from './tdaClientBuilder';
+import { cancelOrder, getOrdersByQuery, placeOrder } from '../api/orders';
+import { CancelOrderConfig, OrderGet, OrdersByQueryConfig, OrdersConfig, PlaceOrdersResponse } from '../models/order';
+import { AuthorizationTokenInterceptor } from './authorizationTokenInterceptor';
+import { OptionChainConfig, OptionChainResponse } from '../models/optionChain';
+import { getOptionChain } from '../api/optionChain';
+import { QuotesConfig, QuotesEtf, QuotesIndex } from '../models/quotes';
+import { getQuotes } from '../api/quotes';
+import { SecuritiesAccount } from '../models/accounts';
 
 export interface TdaClientConfig {
   authorizationInterceptor: Interceptor;

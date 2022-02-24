@@ -271,45 +271,45 @@ export enum ComplexOrderStrategyType {
 }
 
 export interface OrderGet {
-  session: SessionType,
-  duration: DurationType,
-  orderType: OrderType,
+  session: SessionType;
+  duration: DurationType;
+  orderType: OrderType;
   cancelTime: {
-    date: string,
-    shortFormat: boolean
-  },
-  complexOrderStrategyType: ComplexOrderStrategyType,
-  quantity: number,
-  filledQuantity: number,
-  remainingQuantity: number,
-  requestedDestination: RequestedDestination,
-  destinationLinkName: string,
-  releaseTime: string,
-  stopPrice: number,
-  stopPriceLinkBasis: StopPriceLinkBasis,
-  stopPriceLinkType: StopPriceLinkType,
-  stopPriceOffset: number,
-  stopType: StopType,
-  priceLinkBasis: PriceLinkBasis,
-  priceLinkType: PriceLinkType,
-  price: number,
-  taxLotMethod: TaxLotMethod,
-  orderLegCollection: OrderLeg[],
-  activationPrice: number,
-  specialInstruction: 'ALL_OR_NONE' | 'DO_NOT_REDUCE' | 'ALL_OR_NONE_DO_NOT_REDUCE',
-  orderStrategyType: OrderStrategyType,
-  orderId: number,
-  cancelable: boolean,
-  editable: boolean,
-  status: StatusType,
-  enteredTime: string,
-  closeTime: string,
-  tag: string,
-  accountId: number,
-  orderActivityCollection: Execution[],
-  replacingOrderCollection: object[],
-  childOrderStrategies: object[],
-  statusDescription: string
+    date: string;
+    shortFormat: boolean;
+  };
+  complexOrderStrategyType: ComplexOrderStrategyType;
+  quantity: number;
+  filledQuantity: number;
+  remainingQuantity: number;
+  requestedDestination: RequestedDestination;
+  destinationLinkName: string;
+  releaseTime: string;
+  stopPrice: number;
+  stopPriceLinkBasis: StopPriceLinkBasis;
+  stopPriceLinkType: StopPriceLinkType;
+  stopPriceOffset: number;
+  stopType: StopType;
+  priceLinkBasis: PriceLinkBasis;
+  priceLinkType: PriceLinkType;
+  price: number;
+  taxLotMethod: TaxLotMethod;
+  orderLegCollection: OrderLeg[];
+  activationPrice: number;
+  specialInstruction: 'ALL_OR_NONE' | 'DO_NOT_REDUCE' | 'ALL_OR_NONE_DO_NOT_REDUCE';
+  orderStrategyType: OrderStrategyType;
+  orderId: number;
+  cancelable: boolean;
+  editable: boolean;
+  status: StatusType;
+  enteredTime: string;
+  closeTime: string;
+  tag: string;
+  accountId: number;
+  orderActivityCollection: Execution[];
+  replacingOrderCollection: object[];
+  childOrderStrategies: object[];
+  statusDescription: string;
 }
 
 export enum StatusType {
@@ -327,21 +327,21 @@ export enum StatusType {
   PENDING_REPLACE = 'PENDING_REPLACE',
   REPLACED = 'REPLACED',
   FILLED = 'FILLED',
-  EXPIRED = 'EXPIRED'
+  EXPIRED = 'EXPIRED',
 }
 
 export interface Execution {
-  activityType: 'EXECUTION' | 'ORDER_ACTION',
-  executionType: 'FILL',
-  quantity: number,
-  orderRemainingQuantity: number,
+  activityType: 'EXECUTION' | 'ORDER_ACTION';
+  executionType: 'FILL';
+  quantity: number;
+  orderRemainingQuantity: number;
   executionLegs: [
     {
-      legId: number,
-      quantity: number,
-      mismarkedQuantity: number,
-      price: number,
-      time: string
-    }
-  ]
+      legId: number;
+      quantity: number;
+      mismarkedQuantity: number;
+      price: number;
+      time: string;
+    },
+  ];
 }
