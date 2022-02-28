@@ -3,8 +3,15 @@ import client from './client';
 import { getAccount } from '../api/accounts';
 import { CredentialProvider } from '../providers/credentialsProvider';
 import { TdaClientBuilder } from './tdaClientBuilder';
-import { cancelOrder, getOrdersByQuery, placeOrder } from '../api/orders';
-import { CancelOrderConfig, OrderGet, OrdersByQueryConfig, OrdersConfig, PlaceOrdersResponse } from '../models/order';
+import { cancelOrder, getOrder, getOrdersByQuery, placeOrder } from '../api/orders';
+import {
+  CancelOrderConfig,
+  GetOrderConfig,
+  OrderGet,
+  OrdersByQueryConfig,
+  OrdersConfig,
+  PlaceOrdersResponse
+} from '../models/order';
 import { AuthorizationTokenInterceptor } from './authorizationTokenInterceptor';
 import { OptionChainConfig, OptionChainResponse } from '../models/optionChain';
 import { getOptionChain } from '../api/optionChain';
@@ -57,5 +64,9 @@ export class TdaClient {
 
   async getOrdersByQuery(config?: OrdersByQueryConfig): Promise<OrderGet[]> {
     return await getOrdersByQuery(config);
+  }
+
+  async getOrder(config: GetOrderConfig): Promise<OrderGet> {
+    return await getOrder(config);
   }
 }

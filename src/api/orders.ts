@@ -1,7 +1,8 @@
-import { ArrayFormatType, Request, ResponseType } from '../models/connect';
-import { ACCOUNTS, ORDERS } from '../connection/routes.config';
+import {ArrayFormatType, Request, ResponseType} from '../models/connect';
+import {ACCOUNTS, ORDERS} from '../connection/routes.config';
 import {
   CancelOrderConfig,
+  GetOrderConfig,
   Order,
   OrderGet,
   OrdersByQueryConfig,
@@ -9,7 +10,18 @@ import {
   PlaceOrdersResponse,
 } from '../models/order';
 import client from '../connection/client';
-import { round } from '../utils/round';
+import {round} from '../utils/round';
+
+export async function getOrder(config: GetOrderConfig): Promise<OrderGet> {
+  const {accountId, orderId} = config;
+  const url = `${ACCOUNTS}/${accountId}/orders/${orderId}`;
+  const response = await client.get({
+    url,
+    responseType: ResponseType.JSON,
+    arrayFormat: ArrayFormatType.COMMA,
+  } as Request);
+  return response.data;
+}
 
 /*
 All orders for a specific account or, if account ID isn't specified, orders will be returned for all linked accounts.
