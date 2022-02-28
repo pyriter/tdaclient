@@ -1,6 +1,6 @@
 export interface GetOrderConfig {
-  accountId: string,
-  orderId: string
+  accountId: string;
+  orderId: string;
 }
 
 export interface PlaceOrdersResponse {

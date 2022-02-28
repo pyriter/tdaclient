@@ -1,5 +1,5 @@
-import {ArrayFormatType, Request, ResponseType} from '../models/connect';
-import {ACCOUNTS, ORDERS} from '../connection/routes.config';
+import { ArrayFormatType, Request, ResponseType } from '../models/connect';
+import { ACCOUNTS, ORDERS } from '../connection/routes.config';
 import {
   CancelOrderConfig,
   GetOrderConfig,
@@ -10,10 +10,10 @@ import {
   PlaceOrdersResponse,
 } from '../models/order';
 import client from '../connection/client';
-import {round} from '../utils/round';
+import { round } from '../utils/round';
 
 export async function getOrder(config: GetOrderConfig): Promise<OrderGet> {
-  const {accountId, orderId} = config;
+  const { accountId, orderId } = config;
   const url = `${ACCOUNTS}/${accountId}/orders/${orderId}`;
   const response = await client.get({
     url,

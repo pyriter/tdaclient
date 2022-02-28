@@ -1,5 +1,5 @@
-import {cancelOrder, getOrdersByQuery, placeOrder} from './orders';
-import {getAccount} from './accounts';
+import { cancelOrder, getOrdersByQuery, placeOrder } from './orders';
+import { getAccount } from './accounts';
 import {
   AssetType,
   ComplexOrderStrategyType,
@@ -14,13 +14,13 @@ import {
   PutCall,
   SessionType,
 } from '../models/order';
-import {setupLocalFileCredentialProvider} from '../utils/testUtils';
-import {SecuritiesAccount} from '../models/accounts';
-import {getOptionChain} from './optionChain';
-import {ContractType, OptionChainConfig, OptionStrategyType, RangeType} from '../models/optionChain';
-import {getQuotes} from './quotes';
-import {QuotesIndex} from '../models/quotes';
-import {convertToMonth} from '../utils/month';
+import { setupLocalFileCredentialProvider } from '../utils/testUtils';
+import { SecuritiesAccount } from '../models/accounts';
+import { getOptionChain } from './optionChain';
+import { ContractType, OptionChainConfig, OptionStrategyType, RangeType } from '../models/optionChain';
+import { getQuotes } from './quotes';
+import { QuotesIndex } from '../models/quotes';
+import { convertToMonth } from '../utils/month';
 
 describe('Orders', () => {
   let validAccount;

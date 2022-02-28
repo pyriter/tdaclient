@@ -10,7 +10,7 @@ import {
   OrderGet,
   OrdersByQueryConfig,
   OrdersConfig,
-  PlaceOrdersResponse
+  PlaceOrdersResponse,
 } from '../models/order';
 import { AuthorizationTokenInterceptor } from './authorizationTokenInterceptor';
 import { OptionChainConfig, OptionChainResponse } from '../models/optionChain';
