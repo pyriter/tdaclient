@@ -15,9 +15,8 @@ A Javascript thick client for the TD-Ameritrade Restful API written in Typescrip
 4. Get watchlist
 5. Get option chain
 6. Get quote
-7. Get order
-4. Place order
-9. Cancel order
+7. Manage orders
+8. Get transactions
 
 ## Install
 
