@@ -1,9 +1,9 @@
-import { Interceptor } from './interceptor';
+import {Interceptor} from './interceptor';
 import client from './client';
-import { getAccount } from '../api/accounts';
-import { CredentialProvider } from '../providers/credentialsProvider';
-import { TdaClientBuilder } from './tdaClientBuilder';
-import { cancelOrder, getOrder, getOrdersByQuery, placeOrder } from '../api/orders';
+import {getAccount} from '../api/accounts';
+import {CredentialProvider} from '../providers/credentialsProvider';
+import {TdaClientBuilder} from './tdaClientBuilder';
+import {cancelOrder, getOrder, getOrdersByQuery, placeOrder} from '../api/orders';
 import {
   CancelOrderConfig,
   GetOrderConfig,
@@ -12,12 +12,14 @@ import {
   OrdersConfig,
   PlaceOrdersResponse,
 } from '../models/order';
-import { AuthorizationTokenInterceptor } from './authorizationTokenInterceptor';
-import { OptionChainConfig, OptionChainResponse } from '../models/optionChain';
-import { getOptionChain } from '../api/optionChain';
-import { QuotesConfig, QuotesEtf, QuotesIndex } from '../models/quotes';
-import { getQuotes } from '../api/quotes';
-import { SecuritiesAccount } from '../models/accounts';
+import {AuthorizationTokenInterceptor} from './authorizationTokenInterceptor';
+import {OptionChainConfig, OptionChainResponse} from '../models/optionChain';
+import {getOptionChain} from '../api/optionChain';
+import {QuotesConfig, QuotesEtf, QuotesIndex} from '../models/quotes';
+import {getQuotes} from '../api/quotes';
+import {SecuritiesAccount} from '../models/accounts';
+import {getTransactions, getTransactionsByQuery} from '../api/transactions';
+import {GetTransactionsConfig, Transaction} from "../models/transaction";
 
 export interface TdaClientConfig {
   authorizationInterceptor: Interceptor;
@@ -62,11 +64,19 @@ export class TdaClient {
     return await cancelOrder(config);
   }
 
-  async getOrdersByQuery(config?: OrdersByQueryConfig): Promise<OrderGet[]> {
+  async getOrdersByQuery(config: OrdersByQueryConfig): Promise<OrderGet[]> {
     return await getOrdersByQuery(config);
   }
 
   async getOrder(config: GetOrderConfig): Promise<OrderGet> {
     return await getOrder(config);
+  }
+
+  async getTransactionsByQuery(config: GetTransactionsConfig): Promise<Transaction[]> {
+    return await getTransactionsByQuery(config);
+  }
+
+  async getTransactions(config: GetTransactionsConfig): Promise<Transaction[]> {
+    return await getTransactions(config);
   }
 }

@@ -97,7 +97,7 @@ describe('Orders', () => {
     const accountId = validAccount.accountId;
     const optionChainResponse = await getOptionChain({
       symbol,
-      strike: spx.closePrice - 20, // TODO: Get the price by querying the market
+      strike: spx.closePrice - 50, // TODO: Get the price by querying the market
       interval: 5,
       contractType: ContractType.PUT,
       strategy: OptionStrategyType.VERTICAL,
