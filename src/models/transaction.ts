@@ -13,7 +13,7 @@ export enum QueryTransactionType {
   DIVIDEND = 'DIVIDEND',
   INTEREST = 'INTEREST',
   OTHER = 'OTHER',
-  ADVISOR_FEES = 'ADVISOR_FEES'
+  ADVISOR_FEES = 'ADVISOR_FEES',
 }
 
 export interface GetTransactionsByQueryConfig {
@@ -39,14 +39,14 @@ export enum TransactionType {
   MEMORANDUM = 'MEMORANDUM',
   MARGIN_CALL = 'MARGIN_CALL',
   MONEY_MARKET = 'MONEY_MARKET',
-  SMA_ADJUSTMENT = 'SMA_ADJUSTMENT'
+  SMA_ADJUSTMENT = 'SMA_ADJUSTMENT',
 }
 
 export enum AchStatusType {
   Approved = 'Approved',
   Rejected = 'Rejected',
   Cancel = 'Cancel',
-  Error = 'Error'
+  Error = 'Error',
 }
 
 export interface Transaction {
@@ -80,7 +80,7 @@ export interface TransactionItem {
   parentChildIndicator: string;
   instruction: string;
   positionEffect: string;
-  instrument: TransactionInstrument
+  instrument: TransactionInstrument;
 }
 
 export interface TransactionInstrument {

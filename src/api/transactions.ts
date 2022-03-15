@@ -1,10 +1,10 @@
-import {ArrayFormatType, Request, ResponseType} from '../models/connect';
-import {ACCOUNTS} from '../connection/routes.config';
+import { ArrayFormatType, Request, ResponseType } from '../models/connect';
+import { ACCOUNTS } from '../connection/routes.config';
 import client from '../connection/client';
-import {GetTransactionsByQueryConfig, GetTransactionsConfig, Transaction} from "../models/transaction";
+import { GetTransactionsByQueryConfig, GetTransactionsConfig, Transaction } from '../models/transaction';
 
 export async function getTransactions(config: GetTransactionsConfig): Promise<Transaction[]> {
-  const url = generateTransactionsUrl({accountId: config.accountId, transactionId: config.transactionId});
+  const url = generateTransactionsUrl({ accountId: config.accountId, transactionId: config.transactionId });
   const response = await client.get({
     url,
     responseType: ResponseType.JSON,
@@ -14,7 +14,7 @@ export async function getTransactions(config: GetTransactionsConfig): Promise<Tr
 }
 
 export async function getTransactionsByQuery(config: GetTransactionsByQueryConfig): Promise<Transaction[]> {
-  const url = generateTransactionsUrl({accountId: config.accountId});
+  const url = generateTransactionsUrl({ accountId: config.accountId });
   // @ts-ignore
   delete config.accountId;
   const response = await client.get({
@@ -27,12 +27,12 @@ export async function getTransactionsByQuery(config: GetTransactionsByQueryConfi
 }
 
 interface TransactionUrl {
-  accountId: string,
-  transactionId?: string
+  accountId: string;
+  transactionId?: string;
 }
 
 function generateTransactionsUrl(config: TransactionUrl) {
-  const {accountId, transactionId} = config;
+  const { accountId, transactionId } = config;
   const transactionIdUrlString = transactionId ? '/' + transactionId : '';
   return `${ACCOUNTS}/${accountId}/transactions${transactionIdUrlString}`;
 }
