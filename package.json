@@ -64,7 +64,22 @@
     "url": "https://github.com/pyriter/tdaclient/issues"
   },
   "homepage": "https://github.com/pyriter/tdaclient#readme",
-  "keywords": [],
+  "keywords": [
+    "td ameritrade client",
+    "td",
+    "ameritrade",
+    "client",
+    "tda client",
+    "tda",
+    "TD-Ameritrade",
+    "ta ameritrade api",
+    "tda api",
+    "api",
+    "stock client",
+    "stock",
+    "trade",
+    "trade stocks"
+  ],
   "files": [
     "dist/**/*"
   ]
