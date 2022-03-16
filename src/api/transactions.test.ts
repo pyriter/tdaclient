@@ -12,7 +12,7 @@ describe('Transactions', () => {
     validAccount = await checkForValidAccount();
   });
 
-  it('should be able to get transactions given an account id', async () => {
+  xit('should be able to get transactions given an account id', async () => {
     const response = await getTransactions({
       accountId: validAccount.accountId,
     });
