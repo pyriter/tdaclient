@@ -1,5 +1,4 @@
-import { cancelOrder, getOrdersByQuery, placeOrder } from './orders';
-import { getAccount } from './accounts';
+import {OrdersApi} from './orders';
 import {
   AssetType,
   ComplexOrderStrategyType,
@@ -14,23 +13,29 @@ import {
   PutCall,
   SessionType,
 } from '../models/order';
-import { setupLocalFileCredentialProvider } from '../utils/testUtils';
-import { SecuritiesAccount } from '../models/accounts';
-import { getOptionChain } from './optionChain';
-import { ContractType, OptionChainConfig, OptionStrategyType, RangeType } from '../models/optionChain';
-import { getQuotes } from './quotes';
-import { QuotesIndex } from '../models/quotes';
-import { convertToMonth } from '../utils/month';
+import {provideClientWithLocalFileCredentialProvider} from '../utils/testUtils';
+import {SecuritiesAccount} from '../models/accounts';
+import {ContractType, OptionChainConfig, OptionStrategyType, RangeType} from '../models/optionChain';
+import {QuotesIndex} from '../models/quotes';
+import {convertToMonth} from '../utils/month';
+import {AccountApi} from "./accounts";
+import {OptionChainApi} from "./optionChain";
+import {QuotesApi} from "./quotes";
 
 describe('Orders', () => {
   let validAccount;
+  const client = provideClientWithLocalFileCredentialProvider();
+  const ordersApi = new OrdersApi(client)
+  const accountApi = new AccountApi(client)
+  const optionChainApi = new OptionChainApi(client)
+  const quotesApi = new QuotesApi(client)
+
   beforeAll(async () => {
-    await setupLocalFileCredentialProvider();
     validAccount = await checkForValidAccount();
   });
 
   it('should be able to get orders after a certain date', async () => {
-    const response = await getOrdersByQuery({
+    const response = await ordersApi.getOrdersByQuery({
       fromEnteredTime: '2022-02-22',
     });
 
@@ -42,9 +47,9 @@ describe('Orders', () => {
 
   it('should be able to get orders for a specific account given an account id', async () => {
     // Get account
-    const accountResponse = await getAccount();
+    const accountResponse = await accountApi.getAccount();
     const accountId = accountResponse[0].accountId;
-    const response = await getOrdersByQuery({ accountId });
+    const response = await ordersApi.getOrdersByQuery({accountId});
 
     expect(response);
   });
@@ -73,10 +78,10 @@ describe('Orders', () => {
       order,
     } as OrdersConfig;
 
-    const placeOrdersResponse = await placeOrder(orderConfig);
+    const placeOrdersResponse = await ordersApi.placeOrder(orderConfig);
     const orderId = placeOrdersResponse.orderId;
 
-    const cancelOrderResponse = await cancelOrder({
+    const cancelOrderResponse = await ordersApi.cancelOrder({
       accountId,
       orderId,
     });
@@ -87,7 +92,7 @@ describe('Orders', () => {
 
   it('should be able to place a put credit spread and then cancel it', async () => {
     const symbol = 'SPX';
-    const quotesResponse = await getQuotes({
+    const quotesResponse = await quotesApi.getQuotes({
       symbols: [symbol],
     });
 
@@ -95,7 +100,7 @@ describe('Orders', () => {
 
     console.log(spx.lastPrice);
     const accountId = validAccount.accountId;
-    const optionChainResponse = await getOptionChain({
+    const optionChainResponse = await optionChainApi.getOptionChain({
       symbol,
       strike: spx.closePrice - 50, // TODO: Get the price by querying the market
       interval: 5,
@@ -104,9 +109,9 @@ describe('Orders', () => {
       range: RangeType.OTM,
       expMonth: convertToMonth(new Date().getMonth()),
     } as OptionChainConfig);
-    const { optionStrategyList } = optionChainResponse.monthlyStrategyList[0];
+    const {optionStrategyList} = optionChainResponse.monthlyStrategyList[0];
 
-    const { primaryLeg, secondaryLeg, strategyBid, strategyAsk } = optionStrategyList[0];
+    const {primaryLeg, secondaryLeg, strategyBid, strategyAsk} = optionStrategyList[0];
 
     const price = (strategyBid + strategyAsk) / 2;
     const order = {
@@ -144,10 +149,10 @@ describe('Orders', () => {
       order,
     } as OrdersConfig;
 
-    const placeOrdersResponse = await placeOrder(orderConfig);
+    const placeOrdersResponse = await ordersApi.placeOrder(orderConfig);
     const orderId = placeOrdersResponse.orderId;
 
-    await cancelOrder({
+    await ordersApi.cancelOrder({
       accountId,
       orderId,
     });
@@ -156,7 +161,7 @@ describe('Orders', () => {
   });
 
   async function checkForValidAccount(): Promise<SecuritiesAccount> {
-    const accountResponse = await getAccount();
+    const accountResponse = await accountApi.getAccount();
     const validAccount = accountResponse.filter((r) => r.currentBalances.buyingPower > 10).pop();
     if (!validAccount) {
       throw Error('Since there is no money in account, we cannot run this test');

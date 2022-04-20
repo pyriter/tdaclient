@@ -1,6 +1,7 @@
 import { AccessType, GrantType, oauth, OAuthData } from './authenticate';
 import { LocalFileCredentialProvider } from '../providers/localFileCredentialProvider';
 import { CREDENTIALS_FILE_NAME } from '../utils/constants';
+import {Client} from "../connection/client";
 
 describe('Authenticate', () => {
   it('should be able to get an new access token and refresh token', async () => {
@@ -13,7 +14,7 @@ describe('Authenticate', () => {
       refresh_token,
       grant_type: GrantType.REFRESH_TOKEN,
       access_type: AccessType.OFFLINE,
-    } as OAuthData);
+    } as OAuthData, new Client());
 
     expect(response.access_token);
     expect(response.refresh_token);

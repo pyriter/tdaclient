@@ -1,9 +1,6 @@
 import { Interceptor } from './interceptor';
-import client from './client';
-import { getAccount } from '../api/accounts';
 import { CredentialProvider } from '../providers/credentialsProvider';
 import { TdaClientBuilder } from './tdaClientBuilder';
-import { cancelOrder, getOrder, getOrdersByQuery, placeOrder } from '../api/orders';
 import {
   CancelOrderConfig,
   GetOrderConfig,
@@ -14,12 +11,15 @@ import {
 } from '../models/order';
 import { AuthorizationTokenInterceptor } from './authorizationTokenInterceptor';
 import { OptionChainConfig, OptionChainResponse } from '../models/optionChain';
-import { getOptionChain } from '../api/optionChain';
 import { QuotesConfig, QuotesEtf, QuotesIndex } from '../models/quotes';
-import { getQuotes } from '../api/quotes';
 import { SecuritiesAccount } from '../models/accounts';
-import { getTransactions, getTransactionsByQuery } from '../api/transactions';
 import { GetTransactionsByQueryConfig, GetTransactionsConfig, Transaction } from '../models/transaction';
+import {Client} from "./client";
+import {AccountApi} from "../api/accounts";
+import {OrdersApi} from "../api/orders";
+import {OptionChainApi} from "../api/optionChain";
+import {QuotesApi} from "../api/quotes";
+import {TransactionsApi} from "../api/transactions";
 
 export interface TdaClientConfig {
   authorizationInterceptor: Interceptor;
@@ -36,8 +36,21 @@ export interface TdaClientBuilderConfig {
 }
 
 export class TdaClient {
+  private accountApi: AccountApi;
+  private ordersApi: OrdersApi;
+  private optionChainApi: OptionChainApi;
+  private quotesApi: QuotesApi;
+  private transactionApi: TransactionsApi;
+
   constructor(private config: TdaClientConfig) {
+    const client = new Client();
     client.addInterceptor(config.authorizationInterceptor);
+
+    this.accountApi = new AccountApi(client);
+    this.ordersApi = new OrdersApi(client);
+    this.optionChainApi = new OptionChainApi(client);
+    this.quotesApi = new QuotesApi(client);
+    this.transactionApi = new TransactionsApi(client);
   }
 
   static from(config: TdaClientBuilderConfig): TdaClient {
@@ -45,38 +58,38 @@ export class TdaClient {
   }
 
   async getAccount(): Promise<SecuritiesAccount[]> {
-    return await getAccount();
+    return await this.accountApi.getAccount();
   }
 
   async placeOrder(config: OrdersConfig): Promise<PlaceOrdersResponse> {
-    return await placeOrder(config);
+    return await this.ordersApi.placeOrder(config);
   }
 
   async getOptionChain(config: OptionChainConfig): Promise<OptionChainResponse> {
-    return await getOptionChain(config);
+    return await this.optionChainApi.getOptionChain(config);
   }
 
   async getQuotes(config: QuotesConfig): Promise<(QuotesIndex | QuotesEtf)[]> {
-    return await getQuotes(config);
+    return await this.quotesApi.getQuotes(config);
   }
 
   async cancelOrder(config: CancelOrderConfig): Promise<any> {
-    return await cancelOrder(config);
+    return await this.ordersApi.cancelOrder(config);
   }
 
   async getOrdersByQuery(config: OrdersByQueryConfig): Promise<OrderGet[]> {
-    return await getOrdersByQuery(config);
+    return await this.ordersApi.getOrdersByQuery(config);
   }
 
   async getOrder(config: GetOrderConfig): Promise<OrderGet> {
-    return await getOrder(config);
+    return await this.ordersApi.getOrder(config);
   }
 
   async getTransactionsByQuery(config: GetTransactionsByQueryConfig): Promise<Transaction[]> {
-    return await getTransactionsByQuery(config);
+    return await this.transactionApi.getTransactionsByQuery(config);
   }
 
   async getTransactions(config: GetTransactionsConfig): Promise<Transaction[]> {
-    return await getTransactions(config);
+    return await this.transactionApi.getTransactions(config);
   }
 }

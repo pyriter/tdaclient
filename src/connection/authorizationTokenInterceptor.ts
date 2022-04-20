@@ -1,9 +1,9 @@
-import { AccessType, GrantType, oauth, OAuthData } from '../api/authenticate';
-import { AUTHENTICATION, OAUTH2_TOKEN } from './routes.config';
-import { CredentialProvider } from '../providers/credentialsProvider';
-import { AxiosError } from 'axios';
-import { Interceptor } from './interceptor';
-import client from './client';
+import {AccessType, GrantType, oauth, OAuthData} from '../api/authenticate';
+import {AUTHENTICATION, OAUTH2_TOKEN} from './routes.config';
+import {CredentialProvider} from '../providers/credentialsProvider';
+import {AxiosError} from 'axios';
+import {Interceptor} from './interceptor';
+import {Client} from "./client";
 
 const MAX_RETRIES = 1;
 
@@ -21,14 +21,14 @@ export class AuthorizationTokenInterceptor extends Interceptor {
     return config;
   }
 
-  async onErrorResponseHandler(error: AxiosError): Promise<any> {
+  async onErrorResponseHandler(error: AxiosError, client: Client): Promise<any> {
     const { config, response } = error;
 
     if (config.url?.includes(OAUTH2_TOKEN) || config.url?.includes(AUTHENTICATION)) return error;
 
     if (response?.status === 401 && this.authTokenRefreshRetries > 0) {
       this.authTokenRefreshRetries--;
-      await this.refreshAccessToken();
+      await this.refreshAccessToken(client);
       const secondResponse = await client.connect(config);
       this.resetAuthTokenRefreshRetries();
       return secondResponse;
@@ -54,7 +54,7 @@ export class AuthorizationTokenInterceptor extends Interceptor {
     else return AccessType.NONE;
   }
 
-  private async refreshAccessToken() {
+  private async refreshAccessToken(client: Client) {
     const { client_id, redirect_uri, refresh_token } = await this.credentialProvider.getCredential();
     const accessType = await this.getAccessType();
     const credential = await oauth({
@@ -63,7 +63,7 @@ export class AuthorizationTokenInterceptor extends Interceptor {
       refresh_token,
       grant_type: GrantType.REFRESH_TOKEN,
       access_type: accessType,
-    } as OAuthData);
+    } as OAuthData, client);
 
     const now = Date.now();
     // need to resolve the modified information here

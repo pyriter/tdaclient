@@ -1,19 +1,21 @@
-import { getAccount } from './accounts';
-import { setupLocalFileCredentialProvider } from '../utils/testUtils';
-import { SecuritiesAccount } from '../models/accounts';
-import { getTransactions, getTransactionsByQuery } from './transactions';
-import { TransactionType } from '../models/transaction';
+import {SecuritiesAccount} from '../models/accounts';
+import {TransactionType} from '../models/transaction';
+import {AccountApi} from "./accounts";
+import {provideClientWithLocalFileCredentialProvider} from "../utils/testUtils";
+import {TransactionsApi} from "./transactions";
 
 describe('Transactions', () => {
   let validAccount: SecuritiesAccount;
+  const client = provideClientWithLocalFileCredentialProvider();
+  const accountApi = new AccountApi(client);
+  const transactionApi = new TransactionsApi(client);
 
   beforeAll(async () => {
-    await setupLocalFileCredentialProvider();
     validAccount = await checkForValidAccount();
   });
 
   xit('should be able to get transactions given an account id', async () => {
-    const response = await getTransactions({
+    const response = await transactionApi.getTransactions({
       accountId: validAccount.accountId,
     });
 
@@ -21,13 +23,13 @@ describe('Transactions', () => {
   });
 
   xit('should be able to get a transaction given transaction id', async () => {
-    const transactions = await getTransactions({
+    const transactions = await transactionApi.getTransactions({
       accountId: validAccount.accountId,
     });
 
     const transaction = transactions.filter((t) => (t.type = TransactionType.MONEY_MARKET)).pop();
 
-    const response = await getTransactions({
+    const response = await transactionApi.getTransactions({
       accountId: validAccount.accountId,
       transactionId: transaction?.transactionId,
     });
@@ -36,7 +38,7 @@ describe('Transactions', () => {
   });
 
   it('should be able to get transactions given type and start date', async () => {
-    const response = await getTransactionsByQuery({
+    const response = await transactionApi.getTransactionsByQuery({
       accountId: validAccount.accountId,
       startDate: '2022-03-01',
     });
@@ -45,7 +47,7 @@ describe('Transactions', () => {
   });
 
   async function checkForValidAccount(): Promise<SecuritiesAccount> {
-    const accountResponse = await getAccount();
+    const accountResponse = await accountApi.getAccount();
     const validAccount = accountResponse.filter((r) => r.currentBalances.buyingPower > 10).pop();
     if (!validAccount) {
       throw Error('Since there is no money in account, we cannot run this test');

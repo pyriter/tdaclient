@@ -1,12 +1,11 @@
-import { getAccount } from './accounts';
-import { setupLocalFileCredentialProvider } from '../utils/testUtils';
+import {AccountApi} from './accounts';
+import {provideClientWithLocalFileCredentialProvider} from "../utils/testUtils";
 
 describe('Accounts', () => {
-  beforeAll(async () => {
-    await setupLocalFileCredentialProvider();
-  });
+  const accountApi = new AccountApi(provideClientWithLocalFileCredentialProvider())
+
   it('should be able to get all accounts', async () => {
-    const response = await getAccount();
+    const response = await accountApi.getAccount();
     expect(response);
   });
 });

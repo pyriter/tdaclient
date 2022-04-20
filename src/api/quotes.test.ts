@@ -1,14 +1,12 @@
-import { setupLocalFileCredentialProvider } from '../utils/testUtils';
-import { getQuotes } from './quotes';
+import {provideClientWithLocalFileCredentialProvider} from "../utils/testUtils";
+import {QuotesApi} from "./quotes";
 
 describe('Quotes', () => {
-  beforeAll(async () => {
-    await setupLocalFileCredentialProvider();
-  });
+  const quotesApi = new QuotesApi(provideClientWithLocalFileCredentialProvider())
 
   it('should get quote of single symbol', async () => {
     const symbol = 'SPX';
-    const quotesResponse = await getQuotes({
+    const quotesResponse = await quotesApi.getQuotes({
       symbols: [symbol],
     });
     expect(quotesResponse);
@@ -18,7 +16,7 @@ describe('Quotes', () => {
   it('should get quote of more than one symbol', async () => {
     const symbol1 = 'SPX';
     const symbol2 = 'SPY';
-    const quotesResponse = await getQuotes({
+    const quotesResponse = await quotesApi.getQuotes({
       symbols: [symbol1, symbol2],
     });
     expect(quotesResponse);

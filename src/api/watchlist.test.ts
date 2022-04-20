@@ -1,13 +1,12 @@
-import { getWatchList } from './watchlist';
-import { setupLocalFileCredentialProvider } from '../utils/testUtils';
+import {AccountApi} from "./accounts";
+import {provideClientWithLocalFileCredentialProvider} from "../utils/testUtils";
+import {WatchlistApi} from "./watchlist";
 
 describe('WatchLists', () => {
-  beforeAll(async () => {
-    await setupLocalFileCredentialProvider();
-  });
+  const watchlistApi = new WatchlistApi(provideClientWithLocalFileCredentialProvider())
 
   it('should be able to get all watchlist for an account', async () => {
-    const response = await getWatchList();
+    const response = await watchlistApi.getWatchList();
     expect(response);
   });
 });

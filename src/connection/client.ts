@@ -1,26 +1,14 @@
-import axios, { AxiosInstance } from 'axios';
+import axios, {AxiosError, AxiosInstance} from 'axios';
 import { Request, ResponseType, RestMethod } from '../models/connect';
 import * as qs from 'qs';
 import { Interceptor } from './interceptor';
 
-class Client {
+export class Client {
   private readonly client: AxiosInstance;
   private static instance: Client;
 
   constructor() {
     this.client = axios.create();
-
-    if (Client.instance) {
-      return Client.instance;
-    } else {
-      Client.instance = this;
-      return this;
-    }
-  }
-
-  static getInstance(): Client {
-    if (!Client.instance) return new Client();
-    return Client.instance;
   }
 
   addInterceptor(interceptor: Interceptor) {
@@ -30,7 +18,9 @@ class Client {
     );
     this.client.interceptors.response.use(
       interceptor.onSuccessResponseHandler.bind(interceptor),
-      interceptor.onErrorResponseHandler.bind(interceptor),
+      (error: AxiosError) => {
+        return interceptor.onErrorResponseHandler(error, this);
+      }
     );
     return this;
   }
@@ -97,5 +87,3 @@ class Client {
     }
   }
 }
-
-export default Client.getInstance();
