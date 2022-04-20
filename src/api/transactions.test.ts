@@ -1,8 +1,8 @@
-import {SecuritiesAccount} from '../models/accounts';
-import {TransactionType} from '../models/transaction';
-import {AccountApi} from "./accounts";
-import {provideClientWithLocalFileCredentialProvider} from "../utils/testUtils";
-import {TransactionsApi} from "./transactions";
+import { SecuritiesAccount } from '../models/accounts';
+import { TransactionType } from '../models/transaction';
+import { AccountApi } from './accounts';
+import { provideClientWithLocalFileCredentialProvider } from '../utils/testUtils';
+import { TransactionsApi } from './transactions';
 
 describe('Transactions', () => {
   let validAccount: SecuritiesAccount;

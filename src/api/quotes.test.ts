@@ -1,8 +1,8 @@
-import {provideClientWithLocalFileCredentialProvider} from "../utils/testUtils";
-import {QuotesApi} from "./quotes";
+import { provideClientWithLocalFileCredentialProvider } from '../utils/testUtils';
+import { QuotesApi } from './quotes';
 
 describe('Quotes', () => {
-  const quotesApi = new QuotesApi(provideClientWithLocalFileCredentialProvider())
+  const quotesApi = new QuotesApi(provideClientWithLocalFileCredentialProvider());
 
   it('should get quote of single symbol', async () => {
     const symbol = 'SPX';

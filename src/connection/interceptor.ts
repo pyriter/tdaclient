@@ -1,5 +1,5 @@
-import {AxiosError, AxiosRequestConfig, AxiosResponse} from 'axios';
-import {Client} from "./client";
+import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { Client } from './client';
 
 export abstract class Interceptor {
   async onSuccessRequestHandler(config: AxiosRequestConfig): Promise<any> {

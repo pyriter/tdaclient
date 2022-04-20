@@ -1,9 +1,9 @@
-import {AccessType, GrantType, oauth, OAuthData} from '../api/authenticate';
-import {AUTHENTICATION, OAUTH2_TOKEN} from './routes.config';
-import {CredentialProvider} from '../providers/credentialsProvider';
-import {AxiosError} from 'axios';
-import {Interceptor} from './interceptor';
-import {Client} from "./client";
+import { AccessType, GrantType, oauth, OAuthData } from '../api/authenticate';
+import { AUTHENTICATION, OAUTH2_TOKEN } from './routes.config';
+import { CredentialProvider } from '../providers/credentialsProvider';
+import { AxiosError } from 'axios';
+import { Interceptor } from './interceptor';
+import { Client } from './client';
 
 const MAX_RETRIES = 1;
 
@@ -57,13 +57,16 @@ export class AuthorizationTokenInterceptor extends Interceptor {
   private async refreshAccessToken(client: Client) {
     const { client_id, redirect_uri, refresh_token } = await this.credentialProvider.getCredential();
     const accessType = await this.getAccessType();
-    const credential = await oauth({
-      client_id,
-      redirect_uri,
-      refresh_token,
-      grant_type: GrantType.REFRESH_TOKEN,
-      access_type: accessType,
-    } as OAuthData, client);
+    const credential = await oauth(
+      {
+        client_id,
+        redirect_uri,
+        refresh_token,
+        grant_type: GrantType.REFRESH_TOKEN,
+        access_type: accessType,
+      } as OAuthData,
+      client,
+    );
 
     const now = Date.now();
     // need to resolve the modified information here

@@ -1,4 +1,4 @@
-import axios, {AxiosError, AxiosInstance} from 'axios';
+import axios, { AxiosError, AxiosInstance } from 'axios';
 import { Request, ResponseType, RestMethod } from '../models/connect';
 import * as qs from 'qs';
 import { Interceptor } from './interceptor';
@@ -20,7 +20,7 @@ export class Client {
       interceptor.onSuccessResponseHandler.bind(interceptor),
       (error: AxiosError) => {
         return interceptor.onErrorResponseHandler(error, this);
-      }
+      },
     );
     return this;
   }

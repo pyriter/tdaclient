@@ -1,13 +1,12 @@
-import {ArrayFormatType, Request, ResponseType} from '../models/connect';
-import {QUOTES} from '../connection/routes.config';
+import { ArrayFormatType, Request, ResponseType } from '../models/connect';
+import { QUOTES } from '../connection/routes.config';
 
-import {QuotesConfig, QuotesEtf, QuotesIndex} from '../models/quotes';
-import {convertToValidSymbols} from '../utils/symbol';
-import {Client} from "../connection/client";
+import { QuotesConfig, QuotesEtf, QuotesIndex } from '../models/quotes';
+import { convertToValidSymbols } from '../utils/symbol';
+import { Client } from '../connection/client';
 
 export class QuotesApi {
-  constructor(private client: Client) {
-  }
+  constructor(private client: Client) {}
 
   /*
  All orders for a specific account or, if account ID isn't specified, orders will be returned for all linked accounts.
@@ -35,5 +34,4 @@ export class QuotesApi {
   processResponse(data: any): (QuotesIndex | QuotesEtf)[] {
     return Object.values(data);
   }
-
 }

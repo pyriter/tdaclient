@@ -1,11 +1,10 @@
 import { ArrayFormatType, Request, ResponseType } from '../models/connect';
 import { AccountConfig, SecuritiesAccount } from '../models/accounts';
 import { ACCOUNTS } from '../connection/routes.config';
-import {Client} from "../connection/client";
+import { Client } from '../connection/client';
 
 export class AccountApi {
-  constructor(private client: Client) {
-  }
+  constructor(private client: Client) {}
 
   async getAccount(config: AccountConfig = {}): Promise<SecuritiesAccount[]> {
     const url = this.generateAccountUrl({ accountId: config.accountId });
@@ -25,4 +24,3 @@ export class AccountApi {
     return `${ACCOUNTS}${accountUIdUrlString}`;
   }
 }
-

@@ -1,10 +1,10 @@
-import {provideClientWithLocalFileCredentialProvider} from '../utils/testUtils';
-import {OptionChainApi} from './optionChain';
-import {ContractType, Month, OptionChainConfig, OptionStrategyType, OptionType} from '../models/optionChain';
+import { provideClientWithLocalFileCredentialProvider } from '../utils/testUtils';
+import { OptionChainApi } from './optionChain';
+import { ContractType, Month, OptionChainConfig, OptionStrategyType, OptionType } from '../models/optionChain';
 
 describe('OptionChain', () => {
   const symbol = 'SPX';
-  const optionChainApi = new OptionChainApi(provideClientWithLocalFileCredentialProvider())
+  const optionChainApi = new OptionChainApi(provideClientWithLocalFileCredentialProvider());
 
   it('should get options chain given strike', async () => {
     const response = await optionChainApi.getOptionChain({
@@ -42,7 +42,7 @@ describe('OptionChain', () => {
       expMonth: Month.JAN,
     } as OptionChainConfig);
 
-    const {monthlyStrategyList} = response;
+    const { monthlyStrategyList } = response;
     const monthlyStrategy = monthlyStrategyList.filter((m) => m.daysToExp == dte).pop();
     const strategy = monthlyStrategy?.optionStrategyList
       .filter((s) => (s.strategyAsk + s.strategyBid) / 2 == 0.25)

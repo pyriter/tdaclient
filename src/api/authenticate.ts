@@ -1,6 +1,6 @@
 import { ArrayFormatType, Request, ResponseType } from '../models/connect';
 import { OAUTH2_TOKEN } from '../connection/routes.config';
-import {Client} from "../connection/client";
+import { Client } from '../connection/client';
 
 export enum GrantType {
   AUTHORIZATION_CODE = 'authorization_code',

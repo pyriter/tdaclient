@@ -1,5 +1,5 @@
-import {ArrayFormatType, Request, ResponseType} from '../models/connect';
-import {ACCOUNTS, ORDERS} from '../connection/routes.config';
+import { ArrayFormatType, Request, ResponseType } from '../models/connect';
+import { ACCOUNTS, ORDERS } from '../connection/routes.config';
 import {
   CancelOrderConfig,
   GetOrderConfig,
@@ -9,15 +9,14 @@ import {
   OrdersConfig,
   PlaceOrdersResponse,
 } from '../models/order';
-import {round} from '../utils/round';
-import {Client} from "../connection/client";
+import { round } from '../utils/round';
+import { Client } from '../connection/client';
 
 export class OrdersApi {
-  constructor(private client: Client) {
-  }
+  constructor(private client: Client) {}
 
   async getOrder(config: GetOrderConfig): Promise<OrderGet> {
-    const {accountId, orderId} = config;
+    const { accountId, orderId } = config;
     const url = `${ACCOUNTS}/${accountId}/orders/${orderId}`;
     const response = await this.client.get({
       url,
@@ -94,5 +93,4 @@ export class OrdersApi {
     if (!orderId || orderId.trim().length === 0) throw new Error('Unable to extract order Id');
     return orderId;
   }
-
 }

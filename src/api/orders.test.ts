@@ -1,4 +1,4 @@
-import {OrdersApi} from './orders';
+import { OrdersApi } from './orders';
 import {
   AssetType,
   ComplexOrderStrategyType,
@@ -13,22 +13,22 @@ import {
   PutCall,
   SessionType,
 } from '../models/order';
-import {provideClientWithLocalFileCredentialProvider} from '../utils/testUtils';
-import {SecuritiesAccount} from '../models/accounts';
-import {ContractType, OptionChainConfig, OptionStrategyType, RangeType} from '../models/optionChain';
-import {QuotesIndex} from '../models/quotes';
-import {convertToMonth} from '../utils/month';
-import {AccountApi} from "./accounts";
-import {OptionChainApi} from "./optionChain";
-import {QuotesApi} from "./quotes";
+import { provideClientWithLocalFileCredentialProvider } from '../utils/testUtils';
+import { SecuritiesAccount } from '../models/accounts';
+import { ContractType, OptionChainConfig, OptionStrategyType, RangeType } from '../models/optionChain';
+import { QuotesIndex } from '../models/quotes';
+import { convertToMonth } from '../utils/month';
+import { AccountApi } from './accounts';
+import { OptionChainApi } from './optionChain';
+import { QuotesApi } from './quotes';
 
 describe('Orders', () => {
   let validAccount;
   const client = provideClientWithLocalFileCredentialProvider();
-  const ordersApi = new OrdersApi(client)
-  const accountApi = new AccountApi(client)
-  const optionChainApi = new OptionChainApi(client)
-  const quotesApi = new QuotesApi(client)
+  const ordersApi = new OrdersApi(client);
+  const accountApi = new AccountApi(client);
+  const optionChainApi = new OptionChainApi(client);
+  const quotesApi = new QuotesApi(client);
 
   beforeAll(async () => {
     validAccount = await checkForValidAccount();
@@ -49,7 +49,7 @@ describe('Orders', () => {
     // Get account
     const accountResponse = await accountApi.getAccount();
     const accountId = accountResponse[0].accountId;
-    const response = await ordersApi.getOrdersByQuery({accountId});
+    const response = await ordersApi.getOrdersByQuery({ accountId });
 
     expect(response);
   });
@@ -109,9 +109,9 @@ describe('Orders', () => {
       range: RangeType.OTM,
       expMonth: convertToMonth(new Date().getMonth()),
     } as OptionChainConfig);
-    const {optionStrategyList} = optionChainResponse.monthlyStrategyList[0];
+    const { optionStrategyList } = optionChainResponse.monthlyStrategyList[0];
 
-    const {primaryLeg, secondaryLeg, strategyBid, strategyAsk} = optionStrategyList[0];
+    const { primaryLeg, secondaryLeg, strategyBid, strategyAsk } = optionStrategyList[0];
 
     const price = (strategyBid + strategyAsk) / 2;
     const order = {

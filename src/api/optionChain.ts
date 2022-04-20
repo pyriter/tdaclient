@@ -4,11 +4,10 @@ import { OPTION_CHAIN } from '../connection/routes.config';
 import { OptionChainConfig, OptionChainResponse } from '../models/optionChain';
 import { convertToValidSymbol } from '../utils/symbol';
 import { round } from '../utils/round';
-import {Client} from "../connection/client";
+import { Client } from '../connection/client';
 
 export class OptionChainApi {
-  constructor(private client: Client) {
-  }
+  constructor(private client: Client) {}
 
   /*
  All orders for a specific account or, if account ID isn't specified, orders will be returned for all linked accounts.
@@ -42,5 +41,4 @@ export class OptionChainApi {
       return response;
     }
   }
-
 }

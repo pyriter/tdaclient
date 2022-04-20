@@ -14,12 +14,12 @@ import { OptionChainConfig, OptionChainResponse } from '../models/optionChain';
 import { QuotesConfig, QuotesEtf, QuotesIndex } from '../models/quotes';
 import { SecuritiesAccount } from '../models/accounts';
 import { GetTransactionsByQueryConfig, GetTransactionsConfig, Transaction } from '../models/transaction';
-import {Client} from "./client";
-import {AccountApi} from "../api/accounts";
-import {OrdersApi} from "../api/orders";
-import {OptionChainApi} from "../api/optionChain";
-import {QuotesApi} from "../api/quotes";
-import {TransactionsApi} from "../api/transactions";
+import { Client } from './client';
+import { AccountApi } from '../api/accounts';
+import { OrdersApi } from '../api/orders';
+import { OptionChainApi } from '../api/optionChain';
+import { QuotesApi } from '../api/quotes';
+import { TransactionsApi } from '../api/transactions';
 
 export interface TdaClientConfig {
   authorizationInterceptor: Interceptor;
