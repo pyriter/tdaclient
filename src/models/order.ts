@@ -340,13 +340,13 @@ export interface Execution {
   executionType: 'FILL';
   quantity: number;
   orderRemainingQuantity: number;
-  executionLegs: [
-    {
-      legId: number;
-      quantity: number;
-      mismarkedQuantity: number;
-      price: number;
-      time: string;
-    },
-  ];
+  executionLegs: ExecutionLeg[];
+}
+
+export interface ExecutionLeg {
+  legId: number;
+  quantity: number;
+  mismarkedQuantity: number;
+  price: number;
+  time: string;
 }
