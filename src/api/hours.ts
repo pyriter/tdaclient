@@ -1,11 +1,10 @@
-import {HOURS} from '../connection/routes.config';
-import {ArrayFormatType, Request, ResponseType} from '../models/connect';
-import {Client} from '../connection/client';
-import {Hour, HoursConfig, HoursResponse} from "../models/hours";
+import { HOURS } from '../connection/routes.config';
+import { ArrayFormatType, Request, ResponseType } from '../models/connect';
+import { Client } from '../connection/client';
+import { Hour, HoursConfig, HoursResponse } from '../models/hours';
 
 export class HoursApi {
-  constructor(private client: Client) {
-  }
+  constructor(private client: Client) {}
 
   async getHours(config?: HoursConfig): Promise<HoursResponse> {
     const url = HOURS;
@@ -14,7 +13,7 @@ export class HoursApi {
       url,
       responseType: ResponseType.JSON,
       arrayFormat: ArrayFormatType.COMMA,
-      params
+      params,
     } as Request);
     return response.data;
   }
@@ -22,7 +21,7 @@ export class HoursApi {
   private static getParamsFromConfig(config?: HoursConfig): object | undefined {
     return {
       date: config?.date,
-      markets: config?.markets?.join(',')
-    }
+      markets: config?.markets?.join(','),
+    };
   }
 }

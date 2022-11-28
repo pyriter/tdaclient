@@ -1,4 +1,4 @@
-import {MarketType} from "../models/hours";
+import { MarketType } from '../models/hours';
 
 const ROUTES = {
   hostname: 'https://api.tdameritrade.com',
@@ -9,7 +9,7 @@ const ROUTES = {
     orders: '/v1/orders',
     optionChain: '/v1/marketdata/chains',
     quotes: '/v1/marketdata/quotes',
-    hours: '/v1/marketdata/hours'
+    hours: '/v1/marketdata/hours',
   },
 };
 
