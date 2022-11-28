@@ -1,4 +1,4 @@
-import { OrdersApi } from './orders';
+import {OrdersApi} from './orders';
 import {
   AssetType,
   ComplexOrderStrategyType,
@@ -12,15 +12,16 @@ import {
   OrderType,
   PutCall,
   SessionType,
+  StatusType,
 } from '../models/order';
-import { provideClientWithLocalFileCredentialProvider } from '../utils/testUtils';
-import { SecuritiesAccount } from '../models/accounts';
-import { ContractType, OptionChainConfig, OptionStrategyType, RangeType } from '../models/optionChain';
-import { QuotesIndex } from '../models/quotes';
-import { convertToMonth } from '../utils/month';
-import { AccountApi } from './accounts';
-import { OptionChainApi } from './optionChain';
-import { QuotesApi } from './quotes';
+import {provideClientWithLocalFileCredentialProvider} from '../utils/testUtils';
+import {SecuritiesAccount} from '../models/accounts';
+import {ContractType, OptionChainConfig, OptionStrategyType, RangeType} from '../models/optionChain';
+import {QuotesIndex} from '../models/quotes';
+import {convertToMonth} from '../utils/month';
+import {AccountApi} from './accounts';
+import {OptionChainApi} from './optionChain';
+import {QuotesApi} from './quotes';
 
 describe('Orders', () => {
   let validAccount;
@@ -49,7 +50,7 @@ describe('Orders', () => {
     // Get account
     const accountResponse = await accountApi.getAccount();
     const accountId = accountResponse[0].accountId;
-    const response = await ordersApi.getOrdersByQuery({ accountId });
+    const response = await ordersApi.getOrdersByQuery({accountId});
 
     expect(response);
   });
@@ -81,13 +82,21 @@ describe('Orders', () => {
     const placeOrdersResponse = await ordersApi.placeOrder(orderConfig);
     const orderId = placeOrdersResponse.orderId;
 
-    const cancelOrderResponse = await ordersApi.cancelOrder({
+    const getOrderResponse = await ordersApi.getOrder({
       accountId,
-      orderId,
+      orderId
     });
 
-    expect(placeOrdersResponse);
-    expect(cancelOrderResponse);
+    if (getOrderResponse.status === StatusType.FILLED) {
+      const cancelOrderResponse = await ordersApi.cancelOrder({
+        accountId,
+        orderId,
+      });
+      expect(cancelOrderResponse);
+    }
+
+    expect(placeOrdersResponse).toBeTruthy();
+    expect(getOrderResponse).toBeTruthy();
   });
 
   it('should be able to place a put credit spread and then cancel it', async () => {
@@ -109,9 +118,9 @@ describe('Orders', () => {
       range: RangeType.OTM,
       expMonth: convertToMonth(new Date().getMonth()),
     } as OptionChainConfig);
-    const { optionStrategyList } = optionChainResponse.monthlyStrategyList[0];
+    const {optionStrategyList} = optionChainResponse.monthlyStrategyList[0];
 
-    const { primaryLeg, secondaryLeg, strategyBid, strategyAsk } = optionStrategyList[0];
+    const {primaryLeg, secondaryLeg, strategyBid, strategyAsk} = optionStrategyList[0];
 
     const price = (strategyBid + strategyAsk) / 2;
     const order = {
