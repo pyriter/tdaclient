@@ -20,8 +20,8 @@ import { OrdersApi } from '../api/orders';
 import { OptionChainApi } from '../api/optionChain';
 import { QuotesApi } from '../api/quotes';
 import { TransactionsApi } from '../api/transactions';
-import { HoursConfig, HoursResponse } from "../models/hours";
-import { HoursApi } from "../api/hours";
+import { HoursConfig, HoursResponse } from '../models/hours';
+import { HoursApi } from '../api/hours';
 
 export interface TdaClientConfig {
   authorizationInterceptor: Interceptor;

@@ -2,7 +2,7 @@ import { TdaClient } from './tdaClient';
 import { LocalFileCredentialProvider } from '../providers/localFileCredentialProvider';
 import { CREDENTIALS_FILE_NAME } from '../utils/constants';
 import { OptionChainConfig } from '../models/optionChain';
-import { HoursConfig } from "../models/hours";
+import { HoursConfig } from '../models/hours';
 
 describe('TdaClient', () => {
   let tdaClient: TdaClient;
@@ -29,7 +29,7 @@ describe('TdaClient', () => {
 
   it('should be able to market hours', async () => {
     const response = await tdaClient.getHours({
-      markets: ['EQUITY', 'OPTION']
+      markets: ['EQUITY', 'OPTION'],
     } as HoursConfig);
 
     expect(response?.equity?.EQ.marketType).toBe('EQUITY');
