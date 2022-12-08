@@ -17,6 +17,7 @@ A Javascript thick client for the TD-Ameritrade Restful API written in Typescrip
 6. Get quote
 7. Manage orders
 8. Get transactions
+9. Get market hours
 
 ## Install
 
@@ -163,6 +164,17 @@ const optionChainResponse = await tdaClient.getOptionChain({
 } as OptionChainConfig)
 
 console.log(optionChainResponse);
+```
+
+### Get Market Hours
+```typescript
+import { HoursConfig } from "tdaClient/dist/models/hours";
+
+const response = await tdaClient.getHours({
+  markets: ['EQUITY', 'OPTION']
+} as HoursConfig);
+
+console.log(response);
 ```
 
 ## Guide to Getting an Access Token

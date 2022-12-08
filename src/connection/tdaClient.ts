@@ -20,6 +20,8 @@ import { OrdersApi } from '../api/orders';
 import { OptionChainApi } from '../api/optionChain';
 import { QuotesApi } from '../api/quotes';
 import { TransactionsApi } from '../api/transactions';
+import { HoursConfig, HoursResponse } from "../models/hours";
+import { HoursApi } from "../api/hours";
 
 export interface TdaClientConfig {
   authorizationInterceptor: Interceptor;
@@ -41,6 +43,7 @@ export class TdaClient {
   private optionChainApi: OptionChainApi;
   private quotesApi: QuotesApi;
   private transactionApi: TransactionsApi;
+  private hoursApi: HoursApi;
 
   constructor(private config: TdaClientConfig) {
     const client = new Client();
@@ -51,6 +54,7 @@ export class TdaClient {
     this.optionChainApi = new OptionChainApi(client);
     this.quotesApi = new QuotesApi(client);
     this.transactionApi = new TransactionsApi(client);
+    this.hoursApi = new HoursApi(client);
   }
 
   static from(config: TdaClientBuilderConfig): TdaClient {
@@ -91,5 +95,9 @@ export class TdaClient {
 
   async getTransactions(config: GetTransactionsConfig): Promise<Transaction[]> {
     return await this.transactionApi.getTransactions(config);
+  }
+
+  async getHours(config: HoursConfig): Promise<HoursResponse> {
+    return await this.hoursApi.getHours(config);
   }
 }

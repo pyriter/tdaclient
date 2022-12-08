@@ -1,62 +1,39 @@
 import { TdaClient } from './tdaClient';
-import { AuthorizationTokenInterceptor } from './authorizationTokenInterceptor';
 import { LocalFileCredentialProvider } from '../providers/localFileCredentialProvider';
 import { CREDENTIALS_FILE_NAME } from '../utils/constants';
+import { OptionChainConfig } from '../models/optionChain';
+import { HoursConfig } from "../models/hours";
 
 describe('TdaClient', () => {
-  let tdaClient;
+  let tdaClient: TdaClient;
   beforeAll(async () => {
     tdaClient = await setupTdaClient();
   });
-  it('should be able to build a tdaClient from interceptor', async () => {
-    const localFileCredentialProvider = new LocalFileCredentialProvider(CREDENTIALS_FILE_NAME);
-    const authorizationInterceptor = new AuthorizationTokenInterceptor(localFileCredentialProvider);
-    const tdaClient = new TdaClient({
-      authorizationInterceptor,
-    });
+  it('should be able to get account information', async () => {
+    const account = (await tdaClient.getAccount()).pop();
 
-    const response = await tdaClient.getAccount();
-
-    expect(response);
+    expect(account).toBeDefined();
+    expect(account?.accountId).toBeDefined();
   });
 
-  it('should be able to create tdaClient from filename and work as expected', async () => {
-    const tdaClient = TdaClient.from({
-      fileName: CREDENTIALS_FILE_NAME,
-    });
+  it('should be able to get options chain', async () => {
+    const response = await tdaClient.getOptionChain({
+      symbol: 'SPY',
+      strike: 470,
+      strikeCount: 10,
+    } as OptionChainConfig);
 
-    const response = await tdaClient.getAccount();
-
-    expect(response);
+    expect(response.symbol).toBe('SPY');
+    expect(response.status).toBe('SUCCESS');
   });
 
-  it('should be able to create tdaclient from access token and work as expected', async () => {
-    const localFileCredentialProvider = new LocalFileCredentialProvider(CREDENTIALS_FILE_NAME);
-    const { access_token, client_id, refresh_token } = await localFileCredentialProvider.getCredential();
-    const tdaClient = TdaClient.from({
-      access_token,
-      client_id,
-      refresh_token,
-    });
+  it('should be able to market hours', async () => {
+    const response = await tdaClient.getHours({
+      markets: ['EQUITY', 'OPTION']
+    } as HoursConfig);
 
-    const response = await tdaClient.getAccount();
-
-    expect(response);
-  });
-
-  // Excluding this test because it creates a new refresh token everytime it runs
-  xit('given an invalid access token, it should use a valid refresh token to get a new access token', async () => {
-    const localFileCredentialProvider = new LocalFileCredentialProvider(CREDENTIALS_FILE_NAME);
-    const { client_id, refresh_token } = await localFileCredentialProvider.getCredential();
-    const tdaClient = TdaClient.from({
-      access_token: 'INVALID_ACCESS_TOKEN',
-      client_id,
-      refresh_token,
-    });
-
-    const response = await tdaClient.getAccount();
-
-    expect(response);
+    expect(response?.equity?.EQ.marketType).toBe('EQUITY');
+    expect(response?.option?.EQO.marketType).toBe('OPTION');
   });
 });
 
