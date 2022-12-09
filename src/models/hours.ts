@@ -24,8 +24,8 @@ export interface SessionHour {
 }
 
 export interface StartEnd {
-  start: Date;
-  end: Date;
+  start: string;
+  end: string;
 }
 
 export interface HoursResponse {
