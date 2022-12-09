@@ -14,7 +14,7 @@ export interface Hour {
   marketType: MarketType;
   product: string;
   productName: string;
-  sessionHours: SessionHour[];
+  sessionHours: SessionHour;
 }
 
 export interface SessionHour {
