@@ -32,8 +32,10 @@ describe('TdaClient', () => {
       markets: ['EQUITY', 'OPTION'],
     } as HoursConfig);
 
-    expect(response?.equity?.EQ.marketType).toBe('EQUITY');
-    expect(response?.option?.EQO.marketType).toBe('OPTION');
+    const expectedEquity = response.equity?.EQ || response.equity?.equity;
+    const expectedOption = response.option?.EQO || response.option?.option;
+    expect(expectedEquity?.marketType).toBe('EQUITY');
+    expect(expectedOption?.marketType).toBe('OPTION');
   });
 });
 

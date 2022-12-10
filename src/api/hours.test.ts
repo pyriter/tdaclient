@@ -8,7 +8,7 @@ describe('Hours', () => {
     const response = await hoursApi.getHours({
       markets: ['EQUITY'],
     });
-    const hour = response.equity?.EQ;
+    const hour = response.equity?.EQ || response.equity?.equity;
     expect(hour?.isOpen).toBeDefined();
     expect(hour?.marketType).toBe('EQUITY');
   });
@@ -17,7 +17,7 @@ describe('Hours', () => {
     const response = await hoursApi.getHours({
       markets: ['OPTION'],
     });
-    const hour = response.option?.EQO;
+    const hour = response.option?.EQO || response.option?.option;
     expect(hour?.isOpen).toBeDefined();
     expect(hour?.marketType).toBe('OPTION');
   });
@@ -26,7 +26,7 @@ describe('Hours', () => {
     const response = await hoursApi.getHours({
       markets: ['FUTURE'],
     });
-    const hour = response.future?.DFE;
+    const hour = response.future?.DFE || response.future?.future;
     expect(hour?.isOpen).toBeDefined();
     expect(hour?.marketType).toBe('FUTURE');
   });
@@ -35,7 +35,7 @@ describe('Hours', () => {
     const response = await hoursApi.getHours({
       markets: ['BOND'],
     });
-    const hour = response.bond?.BON;
+    const hour = response.bond?.BON || response.bond?.bond;
     expect(hour?.isOpen).toBeDefined();
     expect(hour?.marketType).toBe('BOND');
   });

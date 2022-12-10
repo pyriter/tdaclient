@@ -29,9 +29,9 @@ export interface StartEnd {
 }
 
 export interface HoursResponse {
-  equity?: { EQ: Hour };
-  option?: { EQO: Hour; IND: Hour };
+  equity?: { [key: string]: Hour };
+  option?: { [key: string]: Hour };
   future?: { [key: string]: Hour };
-  forex?: { forex: Hour };
-  bond?: { BON: Hour };
+  forex?: { [key: string]: Hour };
+  bond?: { [key: string]: Hour };
 }

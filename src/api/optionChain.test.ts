@@ -23,7 +23,7 @@ describe('OptionChain', () => {
       symbol,
       strike: 4770,
       strikeCount: 1,
-      interval: 1,
+      interval: 5,
       contractType: ContractType.PUT,
       strategy: OptionStrategyType.VERTICAL,
     } as OptionChainConfig);
