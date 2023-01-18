@@ -20,4 +20,4 @@ export const ORDERS = `${ROUTES.hostname}${ROUTES.endpoints.orders}`;
 export const OPTION_CHAIN = `${ROUTES.hostname}${ROUTES.endpoints.optionChain}`;
 export const QUOTES = `${ROUTES.hostname}${ROUTES.endpoints.quotes}`;
 export const HOURS = `${ROUTES.hostname}${ROUTES.endpoints.hours}`;
-export const PRICE_HISTORY = (symbol:string) => `${ROUTES.hostname}/v1/marketdata/${symbol}/pricehistory`;
+export const PRICE_HISTORY = (symbol: string) => `${ROUTES.hostname}/v1/marketdata/${symbol}/pricehistory`;
