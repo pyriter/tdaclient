@@ -18,6 +18,7 @@ A Javascript thick client for the TD-Ameritrade Restful API written in Typescrip
 7. Manage orders
 8. Get transactions
 9. Get market hours
+10. Get price history
 
 ## Install
 
@@ -176,6 +177,22 @@ const response = await tdaClient.getHours({
 
 console.log(response);
 ```
+
+### Get Price History 
+```typescript
+import { PriceHistoryConfig } from "tdaClient/dist/models/priceHistory";
+
+const response = await tdaClient.getPriceHistory({
+  symbol: 'SPX',
+  periodType: 'day',
+  period: 1,
+  needExtendedHoursData: false,
+} as PriceHistoryConfig);
+
+console.log(response);
+```
+
+
 
 ## Guide to Getting an Access Token
 

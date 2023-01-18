@@ -1,5 +1,4 @@
 // https://www.wintick.com/members/symbolGuide/tda
-import { OptionChainConfig } from '../models/optionChain';
 
 export const symbolMap = new Map([['SPX', '$SPX.X']]);
 
