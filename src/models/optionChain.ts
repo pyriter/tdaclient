@@ -134,9 +134,9 @@ export declare type OptionStrategy = {
   strategyStrike: string;
   strategyBid: number;
   strategyAsk: number;
-}
+};
 
-export declare type PutCallInd = "P" | "C";
+export declare type PutCallInd = 'P' | 'C';
 
 export declare type Option = {
   symbol: string;
@@ -147,4 +147,4 @@ export declare type Option = {
   range: string;
   strikePrice: number;
   totalVolume: number;
-}
+};
