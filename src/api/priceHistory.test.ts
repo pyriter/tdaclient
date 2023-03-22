@@ -24,8 +24,7 @@ describe('Quotes', () => {
       symbol,
       needExtendedHoursData: false,
       periodType: 'day',
-      startDate: 1317826080000,
-      endDate: 1673966880000,
+      startDate: 1317826080000
     });
 
     expect(priceHistoryResponse.candles.length).toBeGreaterThan(0);

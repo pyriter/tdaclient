@@ -128,7 +128,7 @@ export interface MonthlyStrategy {
   optionStrategyList: OptionStrategy[];
 }
 
-export interface OptionStrategy {
+export declare type OptionStrategy = {
   primaryLeg: Option;
   secondaryLeg: Option;
   strategyStrike: string;
@@ -136,13 +136,15 @@ export interface OptionStrategy {
   strategyAsk: number;
 }
 
-export interface Option {
+export declare type PutCallInd = "P" | "C";
+
+export declare type Option = {
   symbol: string;
-  putCallInd: string;
+  putCallInd: PutCallInd;
   description: string;
   bid: number;
   ask: number;
   range: string;
   strikePrice: number;
-  totalVolume: string;
+  totalVolume: number;
 }

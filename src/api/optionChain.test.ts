@@ -21,7 +21,7 @@ describe('OptionChain', () => {
   it('should get vertical put spreads with a width of 5', async () => {
     const response = await optionChainApi.getOptionChain({
       symbol,
-      strike: 4770,
+      strike: 3900,
       strikeCount: 1,
       interval: 5,
       contractType: ContractType.PUT,
