@@ -1,11 +1,10 @@
-import axios, { AxiosError, AxiosInstance } from 'axios';
-import { Request, ResponseType, RestMethod } from '../models/connect';
-import * as qs from 'qs';
-import { Interceptor } from './interceptor';
+import axios, { AxiosError, AxiosInstance } from "axios";
+import { Request, ResponseType, RestMethod } from "../models/connect";
+import * as qs from "qs";
+import { Interceptor } from "./interceptor";
 
 export class Client {
   private readonly client: AxiosInstance;
-  private static instance: Client;
 
   constructor() {
     this.client = axios.create();
@@ -14,13 +13,13 @@ export class Client {
   addInterceptor(interceptor: Interceptor) {
     this.client.interceptors.request.use(
       interceptor.onSuccessRequestHandler.bind(interceptor),
-      interceptor.onErrorRequestHandler.bind(interceptor),
+      interceptor.onErrorRequestHandler.bind(interceptor)
     );
     this.client.interceptors.response.use(
       interceptor.onSuccessResponseHandler.bind(interceptor),
       (error: AxiosError) => {
         return interceptor.onErrorResponseHandler(error, this);
-      },
+      }
     );
     return this;
   }
@@ -29,7 +28,7 @@ export class Client {
     const config = {
       ...request,
       method: RestMethod.GET,
-      paramsSerializer: (params) => qs.stringify(params, { arrayFormat: request.arrayFormat }),
+      paramsSerializer: (params) => qs.stringify(params, { arrayFormat: request.arrayFormat })
     };
     return await this.connect(config);
   }
@@ -37,7 +36,7 @@ export class Client {
   async post(request: Request) {
     const config = {
       ...request,
-      method: RestMethod.POST,
+      method: RestMethod.POST
     };
 
     Client.handleResponseType(config);
@@ -48,7 +47,7 @@ export class Client {
   async put(request: Request) {
     const config = {
       ...request,
-      method: RestMethod.PUT,
+      method: RestMethod.PUT
     };
 
     Client.handleResponseType(config);
@@ -59,7 +58,7 @@ export class Client {
   async del(request: Request) {
     const config = {
       ...request,
-      method: RestMethod.DELETE,
+      method: RestMethod.DELETE
     };
 
     Client.handleResponseType(config);
@@ -74,8 +73,8 @@ export class Client {
     } catch (error: any) {
       let message = `Failed to ${config.method} ${config.url}.\n${error}.`;
       if (error && error.response && error.response.data)
-        message += `\nResponse from server ${JSON.stringify(error.response.data, null, '\t')}`;
-      message += `\nRequest config: ${JSON.stringify(config, null, '\t')}`;
+        message += `\nResponse from server ${JSON.stringify(error.response.data, null, "\t")}`;
+      message += `\nRequest config: ${JSON.stringify(config, null, "\t")}`;
 
       // @ts-ignore
       throw new Error(message, { cause: error });
@@ -87,12 +86,12 @@ export class Client {
     switch (requestType) {
       case ResponseType.URL_FORM_ENCODED:
         const header = {
-          'Content-Type': 'application/x-www-form-urlencoded',
+          "Content-Type": "application/x-www-form-urlencoded"
         };
         config.headers = config.headers || {};
         config.headers = {
           ...config.headers,
-          ...header,
+          ...header
         };
         config.data = qs.stringify(config.data);
     }
