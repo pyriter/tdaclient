@@ -56,7 +56,6 @@ export class Client {
     return await this.connect(config);
   }
 
-
   async del(request: Request) {
     const config = {
       ...request,

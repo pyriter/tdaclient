@@ -3,11 +3,13 @@ import { CredentialProvider } from '../providers/credentialsProvider';
 import { TdaClientBuilder } from './tdaClientBuilder';
 import {
   CancelOrderConfig,
-  GetOrderConfig, Order,
+  GetOrderConfig,
+  Order,
   OrdersByQueryConfig,
   OrdersConfig,
-  PlaceOrderResponse, ReplaceOrdersConfig
-} from "../models/order";
+  PlaceOrderResponse,
+  ReplaceOrdersConfig,
+} from '../models/order';
 import { AuthorizationTokenInterceptor } from './authorizationTokenInterceptor';
 import { OptionChainConfig, OptionChainResponse } from '../models/optionChain';
 import { QuotesConfig, QuotesEtf, QuotesIndex } from '../models/quotes';

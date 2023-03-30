@@ -6,8 +6,9 @@ import {
   Order,
   OrdersByQueryConfig,
   OrdersConfig,
-  PlaceOrderResponse, ReplaceOrdersConfig
-} from "../models/order";
+  PlaceOrderResponse,
+  ReplaceOrdersConfig,
+} from '../models/order';
 import { round } from '../utils/round';
 import { Client } from '../connection/client';
 

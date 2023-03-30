@@ -23,7 +23,7 @@ declare type InitialBalances = {
   pendingDeposits: number;
   accountValue: number;
   availableFundsNonMarginableTrade: number;
-}
+};
 
 export interface CurrentBalances {
   accruedInterest: number;
