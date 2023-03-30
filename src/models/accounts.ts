@@ -3,7 +3,7 @@ export interface AccountConfig {
   fields?: any;
 }
 
-export interface InitialBalances {
+declare type InitialBalances = {
   accruedInterest: number;
   cashAvailableForTrading: number;
   cashAvailableForWithdrawal: number;
@@ -22,6 +22,7 @@ export interface InitialBalances {
   cashDebitCallValue: number;
   pendingDeposits: number;
   accountValue: number;
+  availableFundsNonMarginableTrade: number;
 }
 
 export interface CurrentBalances {

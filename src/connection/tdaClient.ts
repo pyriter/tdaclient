@@ -3,12 +3,11 @@ import { CredentialProvider } from '../providers/credentialsProvider';
 import { TdaClientBuilder } from './tdaClientBuilder';
 import {
   CancelOrderConfig,
-  GetOrderConfig,
-  OrderGet,
+  GetOrderConfig, Order,
   OrdersByQueryConfig,
   OrdersConfig,
-  PlaceOrdersResponse,
-} from '../models/order';
+  PlaceOrderResponse, ReplaceOrdersConfig
+} from "../models/order";
 import { AuthorizationTokenInterceptor } from './authorizationTokenInterceptor';
 import { OptionChainConfig, OptionChainResponse } from '../models/optionChain';
 import { QuotesConfig, QuotesEtf, QuotesIndex } from '../models/quotes';
@@ -69,8 +68,12 @@ export class TdaClient {
     return await this.accountApi.getAccount();
   }
 
-  async placeOrder(config: OrdersConfig): Promise<PlaceOrdersResponse> {
+  async placeOrder(config: OrdersConfig): Promise<PlaceOrderResponse> {
     return await this.ordersApi.placeOrder(config);
+  }
+
+  async replaceOrder(config: ReplaceOrdersConfig): Promise<PlaceOrderResponse> {
+    return await this.ordersApi.replaceOrder(config);
   }
 
   async getOptionChain(config: OptionChainConfig): Promise<OptionChainResponse> {
@@ -85,11 +88,11 @@ export class TdaClient {
     return await this.ordersApi.cancelOrder(config);
   }
 
-  async getOrdersByQuery(config: OrdersByQueryConfig): Promise<OrderGet[]> {
+  async getOrdersByQuery(config: OrdersByQueryConfig): Promise<Order[]> {
     return await this.ordersApi.getOrdersByQuery(config);
   }
 
-  async getOrder(config: GetOrderConfig): Promise<OrderGet> {
+  async getOrder(config: GetOrderConfig): Promise<Order> {
     return await this.ordersApi.getOrder(config);
   }
 

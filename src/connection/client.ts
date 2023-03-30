@@ -45,6 +45,18 @@ export class Client {
     return await this.connect(config);
   }
 
+  async put(request: Request) {
+    const config = {
+      ...request,
+      method: RestMethod.PUT,
+    };
+
+    Client.handleResponseType(config);
+
+    return await this.connect(config);
+  }
+
+
   async del(request: Request) {
     const config = {
       ...request,

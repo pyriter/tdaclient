@@ -1,4 +1,4 @@
-import { OrdersApi } from './orders';
+import { OrdersApi } from "./orders";
 import {
   AssetType,
   ComplexOrderStrategyType,
@@ -12,18 +12,18 @@ import {
   OrderType,
   PutCall,
   SessionType,
-  StatusType,
-} from '../models/order';
-import { provideClientWithLocalFileCredentialProvider } from '../utils/testUtils';
-import { SecuritiesAccount } from '../models/accounts';
-import { ContractType, OptionChainConfig, OptionStrategyType, RangeType } from '../models/optionChain';
-import { QuotesIndex } from '../models/quotes';
-import { convertToMonth } from '../utils/month';
-import { AccountApi } from './accounts';
-import { OptionChainApi } from './optionChain';
-import { QuotesApi } from './quotes';
+  StatusType
+} from "../models/order";
+import { provideClientWithLocalFileCredentialProvider } from "../utils/testUtils";
+import { SecuritiesAccount } from "../models/accounts";
+import { ContractType, OptionChainConfig, OptionStrategyType, RangeType } from "../models/optionChain";
+import { QuotesIndex } from "../models/quotes";
+import { convertToMonth } from "../utils/month";
+import { AccountApi } from "./accounts";
+import { OptionChainApi } from "./optionChain";
+import { QuotesApi } from "./quotes";
 
-describe('Orders', () => {
+describe("Orders", () => {
   let validAccount;
   const client = provideClientWithLocalFileCredentialProvider();
   const ordersApi = new OrdersApi(client);
@@ -35,9 +35,9 @@ describe('Orders', () => {
     validAccount = await checkForValidAccount();
   });
 
-  it('should be able to get orders after a certain date', async () => {
+  it("should be able to get orders after a certain date", async () => {
     const response = await ordersApi.getOrdersByQuery({
-      fromEnteredTime: '2022-02-22',
+      fromEnteredTime: "2022-02-22"
     });
 
     expect(response.length).toBeGreaterThanOrEqual(0);
@@ -46,7 +46,7 @@ describe('Orders', () => {
     });
   });
 
-  it('should be able to get orders for a specific account given an account id', async () => {
+  it("should be able to get orders for a specific account given an account id", async () => {
     // Get account
     const accountResponse = await accountApi.getAccount();
     const accountId = accountResponse[0].accountId;
@@ -55,7 +55,7 @@ describe('Orders', () => {
     expect(response);
   });
 
-  it('should be able to place a stock order and then cancel it', async () => {
+  it("should be able to place a stock order and then cancel it", async () => {
     const accountId = validAccount.accountId;
     const order = {
       orderType: OrderType.LIMIT,
@@ -68,15 +68,15 @@ describe('Orders', () => {
           instruction: InstructionType.BUY,
           quantity: 1,
           instrument: {
-            symbol: 'PLTR',
-            assetType: AssetType.EQUITY,
-          },
-        },
-      ],
+            symbol: "AAPL",
+            assetType: AssetType.EQUITY
+          }
+        }
+      ]
     } as Order;
     const orderConfig = {
       accountId,
-      order,
+      order
     } as OrdersConfig;
 
     const placeOrdersResponse = await ordersApi.placeOrder(orderConfig);
@@ -84,13 +84,13 @@ describe('Orders', () => {
 
     const getOrderResponse = await ordersApi.getOrder({
       accountId,
-      orderId,
+      orderId
     });
 
     if (getOrderResponse.status === StatusType.FILLED) {
       const cancelOrderResponse = await ordersApi.cancelOrder({
         accountId,
-        orderId,
+        orderId
       });
       expect(cancelOrderResponse);
     }
@@ -99,16 +99,76 @@ describe('Orders', () => {
     expect(getOrderResponse).toBeTruthy();
   });
 
-  it('should be able to place a put credit spread and then cancel it', async () => {
-    const symbol = 'SPX';
+  it("should be able to place a put credit spread and then cancel it", async () => {
+    const symbol = "SPX";
+
+    const accountId = validAccount.accountId;
+
+    const optionOrder = await generateOptionsOrder(symbol);
+
+    const orderConfig = {
+      accountId,
+      order: optionOrder
+    } as OrdersConfig;
+
+    const placeOrdersResponse = await ordersApi.placeOrder(orderConfig);
+    const orderId = placeOrdersResponse.orderId;
+
+    await ordersApi.cancelOrder({
+      accountId,
+      orderId
+    });
+
+    expect(placeOrdersResponse.orderId).toBeTruthy();
+  });
+
+  it("should be able to place a put credit spread, replace it, and then cancel it", async () => {
+    const symbol = "SPX";
+
+    const accountId = validAccount.accountId;
+
+    const optionOrder = await generateOptionsOrder(symbol);
+
+    const orderConfig = {
+      accountId,
+      order: optionOrder
+    } as OrdersConfig;
+
+    const { orderId: placedOrderId } = await ordersApi.placeOrder(orderConfig);
+
+    optionOrder.price = optionOrder.price + 0.5;
+    const { orderId: replacedOrderId } = await ordersApi.replaceOrder({
+      accountId,
+      order: optionOrder,
+      orderId: placedOrderId
+    });
+
+    await ordersApi.cancelOrder({
+      accountId,
+      orderId: replacedOrderId
+    });
+
+    expect(placedOrderId).toBeTruthy();
+    expect(replacedOrderId).toBeTruthy();
+  });
+
+  async function checkForValidAccount(): Promise<SecuritiesAccount> {
+    const accountResponse = await accountApi.getAccount();
+    const account = accountResponse.filter((r) => r.currentBalances.buyingPower > 10).pop();
+    if (!account) {
+      throw Error("Since there is no money in account, we cannot run this test");
+    }
+    return account;
+  }
+
+  async function generateOptionsOrder(symbol: string) {
     const quotesResponse = await quotesApi.getQuotes({
-      symbols: [symbol],
+      symbols: [symbol]
     });
 
     const spx = quotesResponse[0] as QuotesIndex;
-
     console.log(spx.lastPrice);
-    const accountId = validAccount.accountId;
+
     const optionChainResponse = await optionChainApi.getOptionChain({
       symbol,
       strike: spx.closePrice - 50, // TODO: Get the price by querying the market
@@ -116,16 +176,16 @@ describe('Orders', () => {
       contractType: ContractType.PUT,
       strategy: OptionStrategyType.VERTICAL,
       range: RangeType.OTM,
-      expMonth: convertToMonth(new Date().getMonth()),
+      expMonth: convertToMonth(new Date().getMonth())
     } as OptionChainConfig);
     const { optionStrategyList } = optionChainResponse.monthlyStrategyList[0];
 
     const { primaryLeg, secondaryLeg, strategyBid, strategyAsk } = optionStrategyList[0];
 
     const price = (strategyBid + strategyAsk) / 2;
-    const order = {
+    return {
       orderType: OrderType.NET_CREDIT,
-      price: price,
+      price,
       session: SessionType.NORMAL,
       duration: DurationType.DAY,
       orderStrategyType: OrderStrategyType.SINGLE,
@@ -138,8 +198,8 @@ describe('Orders', () => {
           instrument: {
             assetType: AssetType.OPTION,
             putCall: PutCall.PUT,
-            symbol: primaryLeg.symbol,
-          } as OptionInstrument,
+            symbol: primaryLeg.symbol
+          } as OptionInstrument
         },
         {
           orderLegType: OrderLegType.OPTION,
@@ -148,33 +208,10 @@ describe('Orders', () => {
           instrument: {
             assetType: AssetType.OPTION,
             putCall: PutCall.PUT,
-            symbol: secondaryLeg.symbol,
-          },
-        },
-      ],
+            symbol: secondaryLeg.symbol
+          }
+        }
+      ]
     } as Order;
-    const orderConfig = {
-      accountId,
-      order,
-    } as OrdersConfig;
-
-    const placeOrdersResponse = await ordersApi.placeOrder(orderConfig);
-    const orderId = placeOrdersResponse.orderId;
-
-    await ordersApi.cancelOrder({
-      accountId,
-      orderId,
-    });
-
-    expect(placeOrdersResponse.orderId).toBeTruthy();
-  });
-
-  async function checkForValidAccount(): Promise<SecuritiesAccount> {
-    const accountResponse = await accountApi.getAccount();
-    const validAccount = accountResponse.filter((r) => r.currentBalances.buyingPower > 10).pop();
-    if (!validAccount) {
-      throw Error('Since there is no money in account, we cannot run this test');
-    }
-    return validAccount;
   }
 });

@@ -3,7 +3,7 @@ export interface GetOrderConfig {
   orderId: string;
 }
 
-export interface PlaceOrdersResponse {
+export interface PlaceOrderResponse {
   orderId: string;
 }
 
@@ -17,71 +17,74 @@ export interface CancelOrderConfig {
   orderId: string;
 }
 
+export interface ReplaceOrdersConfig {
+  accountId: string;
+  orderId: string;
+  order: Order;
+}
+
 export interface CancelTime {
   date: string;
   shortFormat: boolean;
 }
 
 export enum RequestedDestination {
-  INET = 'INET',
-  ECN_ARCA = 'ECN_ARCA',
-  CBOE = 'CBOE',
-  AMEX = 'AMEX',
-  PHLX = 'PHLX',
-  ISE = 'ISE',
-  BOX = 'BOX',
-  NYSE = 'NYSE',
-  NASDAQ = 'NASDAQ',
-  BATS = 'BATS',
-  C2 = 'C2',
-  AUTO = 'AUTO',
+  INET = "INET",
+  ECN_ARCA = "ECN_ARCA",
+  CBOE = "CBOE",
+  AMEX = "AMEX",
+  PHLX = "PHLX",
+  ISE = "ISE",
+  BOX = "BOX",
+  NYSE = "NYSE",
+  NASDAQ = "NASDAQ",
+  BATS = "BATS",
+  C2 = "C2",
+  AUTO = "AUTO",
 }
 
 export enum StopPriceLinkBasis {
-  MANUAL = 'MANUAL',
-  BASE = 'BASE',
-  TRIGGER = 'TRIGGER',
-  LAST = 'LAST',
-  BID = 'BID',
-  ASK = 'ASK',
-  ASK_BID = 'ASK_BID',
-  MARK = 'MARK',
-  AVERAGE = 'AVERAGE',
+  MANUAL = "MANUAL",
+  BASE = "BASE",
+  TRIGGER = "TRIGGER",
+  LAST = "LAST",
+  BID = "BID",
+  ASK = "ASK",
+  ASK_BID = "ASK_BID",
+  MARK = "MARK",
+  AVERAGE = "AVERAGE",
 }
 
 export enum StopPriceLinkType {
-  VALUE = 'VALUE',
-  PERCENT = 'PERCENT',
-  TICK = 'TICK',
+  VALUE = "VALUE",
+  PERCENT = "PERCENT",
+  TICK = "TICK",
 }
 
 export enum StopType {
-  STANDARD = 'STANDARD',
-  BID = 'BID',
-  ASK = 'ASK',
-  LAST = 'LAST',
-  MARK = 'MARK',
+  STANDARD = "STANDARD",
+  BID = "BID",
+  ASK = "ASK",
+  LAST = "LAST",
+  MARK = "MARK",
 }
 
 export enum PriceLinkBasis {
-  MANUAL = 'MANUAL',
-  BASE = 'BASE',
-  TRIGGER = 'TRIGGER',
-  LAST = 'LAST',
-  BID = 'BID',
-  ASK = 'ASK',
-  ASK_BID = 'ASK_BID',
-  MARK = 'MARK',
-  AVERAGE = 'AVERAGE',
+  MANUAL = "MANUAL",
+  BASE = "BASE",
+  TRIGGER = "TRIGGER",
+  LAST = "LAST",
+  BID = "BID",
+  ASK = "ASK",
+  ASK_BID = "ASK_BID",
+  MARK = "MARK",
+  AVERAGE = "AVERAGE",
 }
 
 export interface Order {
-  orderType: OrderType;
-  price: number;
   session: SessionType;
   duration: DurationType;
-  orderStrategyType: OrderStrategyType;
-  orderLegCollection: OrderLeg[];
+  orderType: OrderType;
   cancelTime?: CancelTime;
   complexOrderStrategyType: ComplexOrderStrategyType;
   quantity?: number;
@@ -97,65 +100,83 @@ export interface Order {
   stopType?: StopType;
   priceLinkBasis?: PriceLinkBasis;
   priceLinkType?: PriceLinkType;
+  price: number;
   taxLotMethod?: TaxLotMethod;
+  orderLegCollection: OrderLeg[];
+  activationPrice: number,
+  specialInstruction: SpecialInstruction,
+  orderStrategyType: OrderStrategyType;
+  orderId: number,
+  cancelable: boolean,
+  editable: boolean,
+  status: StatusType,
+  enteredTime: string,
+  closeTime: string,
+  accountId: number,
+  orderActivityCollection: Execution[],
+  replacingOrderCollection: object[],
+  childOrderStrategies: object[ ],
+  statusDescription: string
 }
 
+export declare type SpecialInstruction = "ALL_OR_NONE" | "DO_NOT_REDUCE" | "ALL_OR_NONE_DO_NOT_REDUCE";
+
 export enum TaxLotMethod {
-  FIFO = '',
-  LIFO = '',
-  HIGH_COST = '',
-  LOW_COST = '',
-  AVERAGE_COST = '',
-  SPECIFIC_LOT = '',
+  FIFO = "",
+  LIFO = "",
+  HIGH_COST = "",
+  LOW_COST = "",
+  AVERAGE_COST = "",
+  SPECIFIC_LOT = "",
 }
 
 export enum PriceLinkType {
-  VALUE = 'VALUE',
-  PERCENT = 'PERCENT',
-  TICK = 'TICK',
+  VALUE = "VALUE",
+  PERCENT = "PERCENT",
+  TICK = "TICK",
 }
 
 export enum OrderType {
-  MARKET = 'MARKET',
-  LIMIT = 'LIMIT',
-  STOP = 'STOP',
-  STOP_LIMIT = 'STOP_LIMIT',
-  TRAILING_STOP = 'TRAILING_STOP',
-  MARKET_ON_CLOSE = 'MARKET_ON_CLOSE',
-  EXERCISE = 'EXERCISE',
-  TRAILING_STOP_LIMIT = 'TRAILING_STOP_LIMIT',
-  NET_DEBIT = 'NET_DEBIT',
-  NET_CREDIT = 'NET_CREDIT',
-  NET_ZERO = 'NET_ZERO',
+  MARKET = "MARKET",
+  LIMIT = "LIMIT",
+  STOP = "STOP",
+  STOP_LIMIT = "STOP_LIMIT",
+  TRAILING_STOP = "TRAILING_STOP",
+  MARKET_ON_CLOSE = "MARKET_ON_CLOSE",
+  EXERCISE = "EXERCISE",
+  TRAILING_STOP_LIMIT = "TRAILING_STOP_LIMIT",
+  NET_DEBIT = "NET_DEBIT",
+  NET_CREDIT = "NET_CREDIT",
+  NET_ZERO = "NET_ZERO",
 }
 
 export enum SessionType {
-  NORMAL = 'NORMAL',
-  AM = 'AM',
-  PM = 'PM',
-  SEAMLESS = 'SEAMLESS',
+  NORMAL = "NORMAL",
+  AM = "AM",
+  PM = "PM",
+  SEAMLESS = "SEAMLESS",
 }
 
 export enum DurationType {
-  DAY = 'DAY',
-  GOOD_TILL_CANCEL = 'GOOD_TILL_CANCEL',
-  FILL_OR_KILL = 'FILL_OR_KILL',
+  DAY = "DAY",
+  GOOD_TILL_CANCEL = "GOOD_TILL_CANCEL",
+  FILL_OR_KILL = "FILL_OR_KILL",
 }
 
 export enum OrderStrategyType {
-  SINGLE = 'SINGLE',
-  OCO = 'OCO',
-  TRIGGER = 'TRIGGER',
+  SINGLE = "SINGLE",
+  OCO = "OCO",
+  TRIGGER = "TRIGGER",
 }
 
 export enum OrderLegType {
-  EQUITY = 'EQUITY',
-  OPTION = 'OPTION',
-  INDEX = 'INDEX',
-  MUTUAL_FUND = 'MUTUAL_FUND',
-  CASH_EQUIVALENT = 'CASH_EQUIVALENT',
-  FIXED_INCOME = 'FIXED_INCOME',
-  CURRENCY = 'CURRENCY',
+  EQUITY = "EQUITY",
+  OPTION = "OPTION",
+  INDEX = "INDEX",
+  MUTUAL_FUND = "MUTUAL_FUND",
+  CASH_EQUIVALENT = "CASH_EQUIVALENT",
+  FIXED_INCOME = "FIXED_INCOME",
+  CURRENCY = "CURRENCY",
 }
 
 export interface OrderLeg {
@@ -169,24 +190,24 @@ export interface OrderLeg {
 }
 
 export enum AssetType {
-  EQUITY = 'EQUITY',
-  OPTION = 'OPTION',
-  INDEX = 'INDEX',
-  MUTUAL_FUND = 'MUTUAL_FUND',
-  CASH_EQUIVALENT = 'CASH_EQUIVALENT',
-  FIXED_INCOME = 'FIXED_INCOME',
-  CURRENCY = 'CURRENCY',
+  EQUITY = "EQUITY",
+  OPTION = "OPTION",
+  INDEX = "INDEX",
+  MUTUAL_FUND = "MUTUAL_FUND",
+  CASH_EQUIVALENT = "CASH_EQUIVALENT",
+  FIXED_INCOME = "FIXED_INCOME",
+  CURRENCY = "CURRENCY",
 }
 
 export enum OptionInstrumentType {
-  VANILLA = 'VANILLA',
-  BINARY = 'BINARY',
-  BARRIER = 'BARRIER',
+  VANILLA = "VANILLA",
+  BINARY = "BINARY",
+  BARRIER = "BARRIER",
 }
 
 export enum PutCall {
-  PUT = 'PUT',
-  CALL = 'CALL',
+  PUT = "PUT",
+  CALL = "CALL",
 }
 
 export interface OptionInstrument {
@@ -209,34 +230,34 @@ export interface OptionDeliverable {
 }
 
 export enum CurrencyType {
-  USD = 'USD',
-  CAD = 'CAD',
-  EUR = 'EUR',
-  JPY = 'JPY',
+  USD = "USD",
+  CAD = "CAD",
+  EUR = "EUR",
+  JPY = "JPY",
 }
 
 export enum QuantityType {
-  ALL_SHARES = 'ALL_SHARES',
-  DOLLARS = 'DOLLARS',
-  SHARES = 'SHARES',
+  ALL_SHARES = "ALL_SHARES",
+  DOLLARS = "DOLLARS",
+  SHARES = "SHARES",
 }
 
 export enum PositionEffect {
-  OPENING = 'OPENING',
-  CLOSING = 'CLOSING',
-  AUTOMATIC = 'AUTOMATIC',
+  OPENING = "OPENING",
+  CLOSING = "CLOSING",
+  AUTOMATIC = "AUTOMATIC",
 }
 
 export enum InstructionType {
-  BUY = 'BUY',
-  SELL = 'SELL',
-  BUY_TO_COVER = 'BUY_TO_COVER',
-  SELL_SHORT = 'SELL_SHORT',
-  BUY_TO_OPEN = 'BUY_TO_OPEN',
-  BUY_TO_CLOSE = 'BUY_TO_CLOSE',
-  SELL_TO_OPEN = 'SELL_TO_OPEN',
-  SELL_TO_CLOSE = 'SELL_TO_CLOSE',
-  EXCHANGE = 'EXCHANGE',
+  BUY = "BUY",
+  SELL = "SELL",
+  BUY_TO_COVER = "BUY_TO_COVER",
+  SELL_SHORT = "SELL_SHORT",
+  BUY_TO_OPEN = "BUY_TO_OPEN",
+  BUY_TO_CLOSE = "BUY_TO_CLOSE",
+  SELL_TO_OPEN = "SELL_TO_OPEN",
+  SELL_TO_CLOSE = "SELL_TO_CLOSE",
+  EXCHANGE = "EXCHANGE",
 }
 
 export interface Instrument {
@@ -253,91 +274,51 @@ export interface OrdersByQueryConfig {
 }
 
 export enum ComplexOrderStrategyType {
-  NONE = 'NONE',
-  COVERED = 'COVERED',
-  VERTICAL = 'VERTICAL',
-  BACK_RATIO = 'BACK_RATIO',
-  CALENDAR = 'CALENDAR',
-  DIAGONAL = 'DIAGONAL',
-  STRADDLE = 'STRADDLE',
-  STRANGLE = 'STRANGLE',
-  COLLAR_SYNTHETIC = 'COLLAR_SYNTHETIC',
-  BUTTERFLY = 'BUTTERFLY',
-  CONDOR = 'CONDOR',
-  IRON_CONDOR = 'IRON_CONDOR',
-  VERTICAL_ROLL = 'VERTICAL_ROLL',
-  COLLAR_WITH_STOCK = 'COLLAR_WITH_STOCK',
-  DOUBLE_DIAGONAL = 'DOUBLE_DIAGONAL',
-  UNBALANCED_BUTTERFLY = 'UNBALANCED_BUTTERFLY',
-  UNBALANCED_CONDOR = 'UNBALANCED_CONDOR',
-  UNBALANCED_IRON_CONDOR = 'UNBALANCED_IRON_CONDOR',
-  UNBALANCED_VERTICAL_ROLL = 'UNBALANCED_VERTICAL_ROLL',
-  CUSTOM = 'CUSTOM',
+  NONE = "NONE",
+  COVERED = "COVERED",
+  VERTICAL = "VERTICAL",
+  BACK_RATIO = "BACK_RATIO",
+  CALENDAR = "CALENDAR",
+  DIAGONAL = "DIAGONAL",
+  STRADDLE = "STRADDLE",
+  STRANGLE = "STRANGLE",
+  COLLAR_SYNTHETIC = "COLLAR_SYNTHETIC",
+  BUTTERFLY = "BUTTERFLY",
+  CONDOR = "CONDOR",
+  IRON_CONDOR = "IRON_CONDOR",
+  VERTICAL_ROLL = "VERTICAL_ROLL",
+  COLLAR_WITH_STOCK = "COLLAR_WITH_STOCK",
+  DOUBLE_DIAGONAL = "DOUBLE_DIAGONAL",
+  UNBALANCED_BUTTERFLY = "UNBALANCED_BUTTERFLY",
+  UNBALANCED_CONDOR = "UNBALANCED_CONDOR",
+  UNBALANCED_IRON_CONDOR = "UNBALANCED_IRON_CONDOR",
+  UNBALANCED_VERTICAL_ROLL = "UNBALANCED_VERTICAL_ROLL",
+  CUSTOM = "CUSTOM",
 }
 
-export interface OrderGet {
-  session: SessionType;
-  duration: DurationType;
-  orderType: OrderType;
-  cancelTime: {
-    date: string;
-    shortFormat: boolean;
-  };
-  complexOrderStrategyType: ComplexOrderStrategyType;
-  quantity: number;
-  filledQuantity: number;
-  remainingQuantity: number;
-  requestedDestination: RequestedDestination;
-  destinationLinkName: string;
-  releaseTime: string;
-  stopPrice: number;
-  stopPriceLinkBasis: StopPriceLinkBasis;
-  stopPriceLinkType: StopPriceLinkType;
-  stopPriceOffset: number;
-  stopType: StopType;
-  priceLinkBasis: PriceLinkBasis;
-  priceLinkType: PriceLinkType;
-  price: number;
-  taxLotMethod: TaxLotMethod;
-  orderLegCollection: OrderLeg[];
-  activationPrice: number;
-  specialInstruction: 'ALL_OR_NONE' | 'DO_NOT_REDUCE' | 'ALL_OR_NONE_DO_NOT_REDUCE';
-  orderStrategyType: OrderStrategyType;
-  orderId: number;
-  cancelable: boolean;
-  editable: boolean;
-  status: StatusType;
-  enteredTime: string;
-  closeTime: string;
-  tag: string;
-  accountId: number;
-  orderActivityCollection: Execution[];
-  replacingOrderCollection: object[];
-  childOrderStrategies: object[];
-  statusDescription: string;
-}
+
 
 export enum StatusType {
-  AWAITING_PARENT_ORDER = 'AWAITING_PARENT_ORDER',
-  AWAITING_CONDITION = 'AWAITING_CONDITION',
-  AWAITING_MANUAL_REVIEW = 'AWAITING_MANUAL_REVIEW',
-  ACCEPTED = 'ACCEPTED',
-  AWAITING_UR_OUT = 'AWAITING_UR_OUT',
-  PENDING_ACTIVATION = 'PENDING_ACTIVATION',
-  QUEUED = 'QUEUED',
-  WORKING = 'WORKING',
-  REJECTED = 'REJECTED',
-  PENDING_CANCEL = 'PENDING_CANCEL',
-  CANCELED = 'CANCELED',
-  PENDING_REPLACE = 'PENDING_REPLACE',
-  REPLACED = 'REPLACED',
-  FILLED = 'FILLED',
-  EXPIRED = 'EXPIRED',
+  AWAITING_PARENT_ORDER = "AWAITING_PARENT_ORDER",
+  AWAITING_CONDITION = "AWAITING_CONDITION",
+  AWAITING_MANUAL_REVIEW = "AWAITING_MANUAL_REVIEW",
+  ACCEPTED = "ACCEPTED",
+  AWAITING_UR_OUT = "AWAITING_UR_OUT",
+  PENDING_ACTIVATION = "PENDING_ACTIVATION",
+  QUEUED = "QUEUED",
+  WORKING = "WORKING",
+  REJECTED = "REJECTED",
+  PENDING_CANCEL = "PENDING_CANCEL",
+  CANCELED = "CANCELED",
+  PENDING_REPLACE = "PENDING_REPLACE",
+  REPLACED = "REPLACED",
+  FILLED = "FILLED",
+  EXPIRED = "EXPIRED",
 }
 
 export interface Execution {
-  activityType: 'EXECUTION' | 'ORDER_ACTION';
-  executionType: 'FILL';
+  activityType: "EXECUTION" | "ORDER_ACTION";
+  executionType: "FILL";
   quantity: number;
   orderRemainingQuantity: number;
   executionLegs: ExecutionLeg[];
@@ -350,3 +331,6 @@ export interface ExecutionLeg {
   price: number;
   time: string;
 }
+
+
+

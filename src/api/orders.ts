@@ -4,18 +4,17 @@ import {
   CancelOrderConfig,
   GetOrderConfig,
   Order,
-  OrderGet,
   OrdersByQueryConfig,
   OrdersConfig,
-  PlaceOrdersResponse,
-} from '../models/order';
+  PlaceOrderResponse, ReplaceOrdersConfig
+} from "../models/order";
 import { round } from '../utils/round';
 import { Client } from '../connection/client';
 
 export class OrdersApi {
   constructor(private client: Client) {}
 
-  async getOrder(config: GetOrderConfig): Promise<OrderGet> {
+  async getOrder(config: GetOrderConfig): Promise<Order> {
     const { accountId, orderId } = config;
     const url = `${ACCOUNTS}/${accountId}/orders/${orderId}`;
     const response = await this.client.get({
@@ -29,7 +28,7 @@ export class OrdersApi {
   /*
   All orders for a specific account or, if account ID isn't specified, orders will be returned for all linked accounts.
    */
-  async getOrdersByQuery(config?: OrdersByQueryConfig): Promise<OrderGet[]> {
+  async getOrdersByQuery(config?: OrdersByQueryConfig): Promise<Order[]> {
     const url = ORDERS;
     const response = await this.client.get({
       url,
@@ -47,10 +46,29 @@ export class OrdersApi {
   for to see our Place Order Samples Guide for more information around order
   throttles and examples of orders.
    */
-  async placeOrder(config: OrdersConfig): Promise<PlaceOrdersResponse> {
+  async placeOrder(config: OrdersConfig): Promise<PlaceOrderResponse> {
     const url = this.generateOrderUrl(config.accountId);
     const order = this.processOrder(config.order);
     const response = await this.client.post({
+      url,
+      data: order,
+      responseType: ResponseType.JSON,
+      arrayFormat: ArrayFormatType.COMMA,
+    } as Request);
+    const orderId = this.extractOrderIdFromUrl(response.headers.location);
+    return {
+      orderId,
+    };
+  }
+
+  /*
+   Replace an existing order for an account. The existing order will be replaced by the new order.
+   Once replaced, the old order will be canceled and a new order will be created.
+   */
+  async replaceOrder(config: ReplaceOrdersConfig): Promise<PlaceOrderResponse> {
+    const url = this.generateOrderUrl(config.accountId, config.orderId);
+    const order = this.processOrder(config.order);
+    const response = await this.client.put({
       url,
       data: order,
       responseType: ResponseType.JSON,
