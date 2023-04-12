@@ -3,29 +3,7 @@ export interface AccountConfig {
   fields?: any;
 }
 
-declare type InitialBalances = {
-  accruedInterest: number;
-  cashAvailableForTrading: number;
-  cashAvailableForWithdrawal: number;
-  cashBalance: number;
-  bondValue: number;
-  cashReceipts: number;
-  liquidationValue: number;
-  longOptionMarketValue: number;
-  longStockValue: number;
-  moneyMarketFund: number;
-  mutualFundValue: number;
-  shortOptionMarketValue: number;
-  shortStockValue: number;
-  isInCall: boolean;
-  unsettledCash: number;
-  cashDebitCallValue: number;
-  pendingDeposits: number;
-  accountValue: number;
-  availableFundsNonMarginableTrade: number;
-};
-
-export interface CurrentBalances {
+export interface Balances {
   accruedInterest: number;
   cashBalance: number;
   cashReceipts: number;
@@ -78,7 +56,7 @@ export interface SecuritiesAccount {
   roundTrips: number;
   isDayTrader: boolean;
   isClosingOnlyRestricted: boolean;
-  initialBalances: InitialBalances;
-  currentBalances: CurrentBalances;
+  initialBalances: Balances;
+  currentBalances: Balances;
   projectBalances: ProjectBalances;
 }
