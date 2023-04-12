@@ -4,39 +4,39 @@ export interface AccountConfig {
 }
 
 export interface InitialBalances {
-  accruedInterest: number,
-  availableFundsNonMarginableTrade: number,
-  bondValue: number,
-  buyingPower: number,
-  cashBalance: number,
-  cashAvailableForTrading: number,
-  cashReceipts: number,
-  dayTradingBuyingPower: number,
-  dayTradingBuyingPowerCall: number,
-  dayTradingEquityCall: number,
-  equity: number,
-  equityPercentage: number,
-  liquidationValue: number,
-  longMarginValue: number,
-  longOptionMarketValue: number,
-  longStockValue: number,
-  maintenanceCall: number,
-  maintenanceRequirement: number,
-  margin: number,
-  marginEquity: number,
-  moneyMarketFund: number,
-  mutualFundValue: number,
-  regTCall: number,
-  shortMarginValue: number,
-  shortOptionMarketValue: number,
-  shortStockValue: number,
-  totalCash: number,
-  isInCall: boolean,
-  unsettledCash: number,
-  pendingDeposits: number,
-  marginBalance: number,
-  shortBalance: number,
-  accountValue: number
+  accruedInterest: number;
+  availableFundsNonMarginableTrade: number;
+  bondValue: number;
+  buyingPower: number;
+  cashBalance: number;
+  cashAvailableForTrading: number;
+  cashReceipts: number;
+  dayTradingBuyingPower: number;
+  dayTradingBuyingPowerCall: number;
+  dayTradingEquityCall: number;
+  equity: number;
+  equityPercentage: number;
+  liquidationValue: number;
+  longMarginValue: number;
+  longOptionMarketValue: number;
+  longStockValue: number;
+  maintenanceCall: number;
+  maintenanceRequirement: number;
+  margin: number;
+  marginEquity: number;
+  moneyMarketFund: number;
+  mutualFundValue: number;
+  regTCall: number;
+  shortMarginValue: number;
+  shortOptionMarketValue: number;
+  shortStockValue: number;
+  totalCash: number;
+  isInCall: boolean;
+  unsettledCash: number;
+  pendingDeposits: number;
+  marginBalance: number;
+  shortBalance: number;
+  accountValue: number;
 }
 
 export interface Balances {
