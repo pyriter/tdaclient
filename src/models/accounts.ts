@@ -3,6 +3,42 @@ export interface AccountConfig {
   fields?: any;
 }
 
+export interface InitialBalances {
+  accruedInterest: number,
+  availableFundsNonMarginableTrade: number,
+  bondValue: number,
+  buyingPower: number,
+  cashBalance: number,
+  cashAvailableForTrading: number,
+  cashReceipts: number,
+  dayTradingBuyingPower: number,
+  dayTradingBuyingPowerCall: number,
+  dayTradingEquityCall: number,
+  equity: number,
+  equityPercentage: number,
+  liquidationValue: number,
+  longMarginValue: number,
+  longOptionMarketValue: number,
+  longStockValue: number,
+  maintenanceCall: number,
+  maintenanceRequirement: number,
+  margin: number,
+  marginEquity: number,
+  moneyMarketFund: number,
+  mutualFundValue: number,
+  regTCall: number,
+  shortMarginValue: number,
+  shortOptionMarketValue: number,
+  shortStockValue: number,
+  totalCash: number,
+  isInCall: boolean,
+  unsettledCash: number,
+  pendingDeposits: number,
+  marginBalance: number,
+  shortBalance: number,
+  accountValue: number
+}
+
 export interface Balances {
   accruedInterest: number;
   cashBalance: number;
@@ -45,18 +81,13 @@ export interface Balances {
   optionBuyingPower: number;
 }
 
-export interface ProjectBalances {
-  cashAvailableForTrading: number;
-  cashAvailableForWithdrawal: number;
-}
-
 export interface SecuritiesAccount {
   type: string;
   accountId: string;
   roundTrips: number;
   isDayTrader: boolean;
   isClosingOnlyRestricted: boolean;
-  initialBalances: Balances;
+  initialBalances: InitialBalances;
   currentBalances: Balances;
-  projectBalances: ProjectBalances;
+  projectedBalances: Balances;
 }
