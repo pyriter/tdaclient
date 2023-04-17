@@ -1,6 +1,6 @@
 import { AccessType, GrantType, oauth, OAuthData } from '../api/authenticate';
 import { AUTHENTICATION, OAUTH2_TOKEN } from './routes.config';
-import { CredentialProvider } from '../providers/credentialsProvider';
+import { CredentialProvider, TdaCredential } from '../providers/credentialsProvider';
 import { AxiosError } from 'axios';
 import { Interceptor } from './interceptor';
 import { Client } from './client';
@@ -42,12 +42,12 @@ export class AuthorizationTokenInterceptor extends Interceptor {
   }
 
   private async getAccessToken(): Promise<string> {
-    const { access_token } = await this.credentialProvider.getCredential();
+    const { access_token } = await this.getCredential();
     return access_token;
   }
 
   private async getAccessType(): Promise<AccessType> {
-    const { refresh_token_modified_date, refresh_token_expires_in } = await this.credentialProvider.getCredential();
+    const { refresh_token_modified_date, refresh_token_expires_in } = await this.getCredential();
     const expiredDate = refresh_token_modified_date + refresh_token_expires_in * 1000 * 0.9;
     const now = Date.now();
     if (!expiredDate || now >= expiredDate) return AccessType.OFFLINE;
@@ -55,7 +55,7 @@ export class AuthorizationTokenInterceptor extends Interceptor {
   }
 
   private async refreshAccessToken(client: Client) {
-    const { client_id, redirect_uri, refresh_token } = await this.credentialProvider.getCredential();
+    const { client_id, redirect_uri, refresh_token } = await this.getCredential();
     const accessType = await this.getAccessType();
     const credential = await oauth(
       {
@@ -72,18 +72,26 @@ export class AuthorizationTokenInterceptor extends Interceptor {
     // need to resolve the modified information here
     switch (accessType) {
       case AccessType.OFFLINE:
-        await this.credentialProvider.updateCredential({
+        await this.updateCredential({
           ...credential,
           access_token_modified_date: now,
           refresh_token_modified_date: now,
         });
         break;
       case AccessType.NONE:
-        await this.credentialProvider.updateCredential({
+        await this.updateCredential({
           ...credential,
           access_token_modified_date: now,
         });
         break;
     }
+  }
+
+  private async getCredential(): Promise<TdaCredential> {
+    return await this.credentialProvider.getCredential.bind(this.credentialProvider)();
+  }
+
+  private async updateCredential(tdaCredential: TdaCredential): Promise<void> {
+    await this.credentialProvider.updateCredential.bind(this.credentialProvider)(tdaCredential);
   }
 }
