@@ -92,6 +92,6 @@ export class AuthorizationTokenInterceptor extends Interceptor {
   }
 
   private async updateCredential(tdaCredential: TdaCredential): Promise<void> {
-    await this.credentialProvider.updateCredential.bind(this.credentialProvider)(tdaCredential);
+    await this.credentialProvider.updateCredential.bind(this.credentialProvider, tdaCredential)();
   }
 }
