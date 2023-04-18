@@ -33,7 +33,13 @@ export abstract class CredentialProvider {
   }
 
   async updateCredential(tdaCredential: TdaCredential): Promise<void> {
-    this.cachedCredential = tdaCredential;
-    await this.update(tdaCredential);
+    const originalCredential = await this.getCredential();
+    const credential = {
+      ...originalCredential,
+      ...tdaCredential,
+      modified_date: Date.now(),
+    };
+    this.cachedCredential = credential;
+    await this.update(credential);
   }
 }
