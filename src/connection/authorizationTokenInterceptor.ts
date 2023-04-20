@@ -1,6 +1,6 @@
 import { AccessType, GrantType, oauth, OAuthData } from '../api/authenticate';
 import { AUTHENTICATION, OAUTH2_TOKEN } from './routes.config';
-import { CredentialProvider, TdaCredential } from '../providers/credentialsProvider';
+import { CredentialProvider, TdaCredential } from '../providers/credentialProvider';
 import { AxiosError } from 'axios';
 import { Interceptor } from './interceptor';
 import { Client } from './client';

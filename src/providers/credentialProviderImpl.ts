@@ -1,3 +1,5 @@
+import { CredentialProvider } from './credentialProvider';
+
 export interface TdaCredential {
   access_token: string;
   refresh_token: string;
@@ -11,25 +13,13 @@ export interface TdaCredential {
   redirect_uri?: string;
 }
 
-export abstract class CredentialProvider {
-  private cachedCredential?: TdaCredential;
-
+export abstract class CredentialProviderImpl implements CredentialProvider {
   async fetch(): Promise<TdaCredential> {
     throw Error('You must implement a function to get the credential information and return it');
   }
 
   async update(tdaCredential: TdaCredential): Promise<void> {
     throw Error('You must implement a function to store the given credential');
-  }
-
-  async getCredential(): Promise<TdaCredential> {
-    if (!this.cachedCredential) {
-      const credential = await this.fetch();
-      this.cachedCredential = {
-        ...credential,
-      };
-    }
-    return this.cachedCredential;
   }
 
   async updateCredential(tdaCredential: TdaCredential): Promise<void> {
@@ -39,7 +29,10 @@ export abstract class CredentialProvider {
       ...tdaCredential,
       modified_date: Date.now(),
     };
-    this.cachedCredential = credential;
     await this.update(credential);
+  }
+
+  async getCredential(): Promise<TdaCredential> {
+    return await this.fetch();
   }
 }

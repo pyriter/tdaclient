@@ -1,5 +1,5 @@
 import { Interceptor } from './interceptor';
-import { CredentialProvider } from '../providers/credentialsProvider';
+import { CredentialProvider } from '../providers/credentialProvider';
 import { TdaClientBuilder } from './tdaClientBuilder';
 import {
   CancelOrderConfig,

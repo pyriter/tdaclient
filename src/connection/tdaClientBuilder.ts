@@ -1,7 +1,7 @@
 import { AuthorizationTokenInterceptor } from './authorizationTokenInterceptor';
 import { LocalFileCredentialProvider } from '../providers/localFileCredentialProvider';
 import { LocalCacheCredentialProvider } from '../providers/localCacheCrendentialProvider';
-import { TdaCredential } from '../providers/credentialsProvider';
+import { TdaCredential } from '../providers/credentialProvider';
 import { TdaClient, TdaClientBuilderConfig } from './tdaClient';
 
 export class TdaClientBuilder {
