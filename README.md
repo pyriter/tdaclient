@@ -1,5 +1,7 @@
 # TD Ameritrade Client for Nodejs
 
+> :warning: We are aware of the migration from TDA to Schwab and will update this client as soon as the api information is made available. [link](https://developer.tdameritrade.com/content/trader-api-schwab-integration-guide)
+
 ## Overview
 
 A Javascript thick client for the TD-Ameritrade Restful API written in Typescript for nodejs.
