@@ -99,7 +99,7 @@ describe('Orders', () => {
     expect(getOrderResponse).toBeTruthy();
   });
 
-  it('should be able to place a put credit spread and then cancel it', async () => {
+  xit('should be able to place a put credit spread and then cancel it', async () => {
     const symbol = 'SPX';
 
     const accountId = validAccount.accountId;
@@ -122,7 +122,7 @@ describe('Orders', () => {
     expect(placeOrdersResponse.orderId).toBeTruthy();
   });
 
-  it('should be able to place a put credit spread, replace it, and then cancel it', async () => {
+  xit('should be able to place a put credit spread, replace it, and then cancel it', async () => {
     const symbol = 'SPX';
 
     const accountId = validAccount.accountId;

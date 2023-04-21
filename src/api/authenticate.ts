@@ -14,9 +14,9 @@ export enum AccessType {
 
 export interface OAuthData {
   grant_type: GrantType;
-  refresh_token: string;
+  refresh_token?: string;
   access_type: AccessType; // = AccessType.OFFLINE;
-  code: string;
+  code?: string;
   client_id: string;
   redirect_uri: string;
 }

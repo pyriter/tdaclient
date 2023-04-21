@@ -70,14 +70,17 @@ export class Client {
     config = config || {};
     try {
       return await this.client(config);
-    } catch (error: any) {
-      let message = `Failed to ${config.method} ${config.url}.\n${error}.`;
-      if (error && error.response && error.response.data)
-        message += `\nResponse from server ${JSON.stringify(error.response.data, null, '\t')}`;
-      message += `\nRequest config: ${JSON.stringify(config, null, '\t')}`;
-
-      // @ts-ignore
-      throw new Error(message, { cause: error });
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        let message = `Failed to ${config.method} ${config.url}.\n${error}.`;
+        if (error && error.response && error.response.data)
+          message += `\nResponse from server ${JSON.stringify(error.response.data, null, '\t')}`;
+        message += `\nRequest config: ${JSON.stringify(config, null, '\t')}`;
+        // @ts-ignore
+        throw new Error(message, { cause: error });
+      } else {
+        throw error;
+      }
     }
   }
 

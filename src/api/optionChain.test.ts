@@ -1,19 +1,33 @@
-import { provideClientWithLocalFileCredentialProvider } from '../utils/testUtils';
+import { provideClientWithLocalCacheCredentialProvider } from '../utils/testUtils';
 import { OptionChainApi } from './optionChain';
 import { ContractType, Month, OptionChainConfig, OptionStrategyType, OptionType } from '../models/optionChain';
+import { QuotesApi } from './quotes';
+import { QuotesIndex } from '../models/quotes';
 
 describe('OptionChain', () => {
   const symbol = 'SPX';
-  const optionChainApi = new OptionChainApi(provideClientWithLocalFileCredentialProvider());
+  let optionChainApi: OptionChainApi;
+  let quotesApi: QuotesApi;
+  let spx: QuotesIndex;
+
+  beforeAll(async () => {
+    const provider = await provideClientWithLocalCacheCredentialProvider();
+    optionChainApi = new OptionChainApi(provider);
+    quotesApi = new QuotesApi(provider);
+    const quotesResponse = await quotesApi.getQuotes({
+      symbols: [symbol],
+    });
+    spx = quotesResponse[0];
+  });
 
   it('should get options chain given strike', async () => {
     const response = await optionChainApi.getOptionChain({
       symbol,
-      strike: 4770,
+      strike: spx.closePrice,
       strikeCount: 10,
       optionType: OptionType.ALL,
     } as OptionChainConfig);
-    let options = values(values(response.callExpDateMap).pop());
+    const options = values(values(response.callExpDateMap).pop());
 
     expect(options.length).toEqual(10);
   });
@@ -21,8 +35,8 @@ describe('OptionChain', () => {
   it('should get vertical put spreads with a width of 5', async () => {
     const response = await optionChainApi.getOptionChain({
       symbol,
-      strike: 3900,
-      strikeCount: 1,
+      strike: spx.closePrice - 100,
+      strikeCount: 10,
       interval: 5,
       contractType: ContractType.PUT,
       strategy: OptionStrategyType.VERTICAL,

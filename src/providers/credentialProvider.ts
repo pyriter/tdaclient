@@ -8,7 +8,7 @@ export interface TdaCredential {
   access_token_modified_date: number;
   refresh_token_modified_date: number;
   client_id: string;
-  redirect_uri?: string;
+  redirect_uri: string;
 }
 
 export interface CredentialProvider {

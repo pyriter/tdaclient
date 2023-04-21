@@ -14,7 +14,7 @@ describe('Authenticate', () => {
         redirect_uri,
         refresh_token,
         grant_type: GrantType.REFRESH_TOKEN,
-        access_type: AccessType.OFFLINE,
+        access_type: AccessType.NONE,
       } as OAuthData,
       new Client(),
     );

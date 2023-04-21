@@ -27,6 +27,7 @@ export class AuthorizationTokenInterceptor extends Interceptor {
     if (config.url?.includes(OAUTH2_TOKEN) || config.url?.includes(AUTHENTICATION)) return error;
 
     if (response?.status === 401 && this.authTokenRefreshRetries > 0) {
+      console.error(`Response is 401: ${JSON.stringify(error)}`);
       this.authTokenRefreshRetries--;
       await this.refreshAccessToken(client);
       const secondResponse = await client.connect(config);
@@ -46,31 +47,34 @@ export class AuthorizationTokenInterceptor extends Interceptor {
     return access_token;
   }
 
-  private async getAccessType(): Promise<AccessType> {
-    const { refresh_token_modified_date, refresh_token_expires_in } = await this.getCredential();
+  private getAccessType(tdaCredential: TdaCredential): AccessType {
+    const { refresh_token_modified_date, refresh_token_expires_in } = tdaCredential;
     const expiredDate = refresh_token_modified_date + refresh_token_expires_in * 1000 * 0.9;
     const now = Date.now();
     if (!expiredDate || now >= expiredDate) return AccessType.OFFLINE;
     else return AccessType.NONE;
   }
 
+  private async generateOAuthData(): Promise<OAuthData> {
+    const tdaCredential = await this.getCredential();
+    const { client_id, redirect_uri, refresh_token } = tdaCredential;
+    const accessType = this.getAccessType(tdaCredential);
+    return {
+      client_id,
+      redirect_uri,
+      refresh_token,
+      grant_type: GrantType.REFRESH_TOKEN,
+      access_type: accessType,
+    };
+  }
+
   private async refreshAccessToken(client: Client) {
-    const { client_id, redirect_uri, refresh_token } = await this.getCredential();
-    const accessType = await this.getAccessType();
-    const credential = await oauth(
-      {
-        client_id,
-        redirect_uri,
-        refresh_token,
-        grant_type: GrantType.REFRESH_TOKEN,
-        access_type: accessType,
-      } as OAuthData,
-      client,
-    );
+    const oAuthData = await this.generateOAuthData();
+    const credential = await oauth(oAuthData, client);
 
     const now = Date.now();
     // need to resolve the modified information here
-    switch (accessType) {
+    switch (oAuthData.access_type) {
       case AccessType.OFFLINE:
         await this.updateCredential({
           ...credential,
