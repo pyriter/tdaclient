@@ -1,3 +1,5 @@
+import { PutCall } from './order';
+
 export interface OptionChainConfig {
   symbol: string;
   contractType?: ContractType; // Default ALL
@@ -81,9 +83,67 @@ export interface OptionChainResponse {
   interestRate: number;
   underlyingPrice: number;
   volatility: number;
-  callExpDateMap: any;
-  putExpDateMap: any;
+  callExpDateMap: ExpDateMap;
+  putExpDateMap: ExpDateMap;
   monthlyStrategyList: MonthlyStrategy[];
+}
+
+export interface ExpDateMap {
+  [key: string]: {
+    [key: string]: SingleOption;
+  };
+}
+
+export interface SingleOption {
+  putCall: PutCall;
+  symbol: string;
+  description: string;
+  exchangeName: string;
+  bid: number;
+  ask: number;
+  last: number;
+  mark: number;
+  bidSize: number;
+  askSize: number;
+  bidAskSize: string;
+  lastSize: number;
+  highPrice: number;
+  lowPrice: number;
+  openPrice: number;
+  closePrice: number;
+  totalVolume: number;
+  tradeDate?: string;
+  tradeTimeInLong: number;
+  quoteTimeInLong: number;
+  netChange: number;
+  volatility: number;
+  delta: number;
+  gamma: number;
+  theta: number;
+  vega: number;
+  rho: number;
+  openInterest: number;
+  timeValue: number;
+  theoreticalOptionValue: number;
+  theoreticalVolatility: number;
+  optionDeliverablesList?: any[];
+  strikePrice: number;
+  expirationDate: number;
+  daysToExpiration: number;
+  expirationType: string;
+  lastTradingDay: number;
+  multiplier: number;
+  settlementType: string;
+  deliverableNote: string;
+  isIndexOption?: any;
+  percentChange: number;
+  markChange: number;
+  markPercentChange: number;
+  intrinsicValue: number;
+  inTheMoney: boolean;
+  mini: boolean;
+  nonStandard: boolean;
+  pennyPilot: boolean;
 }
 
 export interface Underlying {

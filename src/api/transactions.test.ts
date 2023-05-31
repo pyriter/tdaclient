@@ -48,10 +48,10 @@ describe('Transactions', () => {
 
   async function checkForValidAccount(): Promise<SecuritiesAccount> {
     const accountResponse = await accountApi.getAccount();
-    const validAccount = accountResponse.filter((r) => r.currentBalances.buyingPower > 10).pop();
-    if (!validAccount) {
+    const valid = accountResponse.filter((r) => r.currentBalances.buyingPower > 10).pop();
+    if (!valid) {
       throw Error('Since there is no money in account, we cannot run this test');
     }
-    return validAccount;
+    return valid;
   }
 });
