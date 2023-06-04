@@ -90,7 +90,7 @@ export interface OptionChainResponse {
 
 export interface ExpDateMap {
   [key: string]: {
-    [key: string]: SingleOption;
+    [key: string]: SingleOption[];
   };
 }
 
