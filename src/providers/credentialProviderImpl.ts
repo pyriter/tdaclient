@@ -1,17 +1,4 @@
-import { CredentialProvider } from './credentialProvider';
-
-export interface TdaCredential {
-  access_token: string;
-  refresh_token: string;
-  scope?: string;
-  expires_in: number;
-  refresh_token_expires_in: number;
-  token_type?: string;
-  access_token_modified_date: number;
-  refresh_token_modified_date: number;
-  client_id: string;
-  redirect_uri: string;
-}
+import { CredentialProvider, TdaCredential } from "./credentialProvider";
 
 export abstract class CredentialProviderImpl implements CredentialProvider {
   async fetch(): Promise<TdaCredential> {
