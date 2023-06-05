@@ -1,4 +1,4 @@
-import { CredentialProvider, TdaCredential } from "./credentialProvider";
+import { CredentialProvider, TdaCredential } from './credentialProvider';
 
 export abstract class CredentialProviderImpl implements CredentialProvider {
   async fetch(): Promise<TdaCredential> {
