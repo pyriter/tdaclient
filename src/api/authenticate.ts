@@ -21,14 +21,23 @@ export interface OAuthData {
   redirect_uri: string;
 }
 
-/*
-The token endpoint returns an access token along with an optional refresh token.
+export interface OAuthResponse {
+  access_token: string;
+  refresh_token: string;
+  token_type: string;
+  expires_in: 0;
+  scope: string;
+  refresh_token_expires_in: 0;
+}
 
-The purpose of this function is to get an access token which can be used to authorize calls
-Or if you have a refresh token, it can be used to get another access token
+/*
+ The token endpoint returns an access token along with an optional refresh token.
+
+ The purpose of this function is to get an access token which can be used to authorize calls
+ Or if you have a refresh token, it can be used to get another access token
  */
 
-export async function oauth(oAuthData: OAuthData, client: Client) {
+export async function oauth(oAuthData: OAuthData, client: Client): Promise<OAuthResponse> {
   const response = await client.post({
     url: OAUTH2_TOKEN,
     data: oAuthData,

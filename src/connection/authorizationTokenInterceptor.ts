@@ -76,6 +76,7 @@ export class AuthorizationTokenInterceptor extends Interceptor {
     // need to resolve the modified information here
     switch (oAuthData.access_type) {
       case AccessType.OFFLINE:
+        // @ts-ignore
         await this.updateCredential({
           ...credential,
           access_token_modified_date: now,
@@ -83,6 +84,7 @@ export class AuthorizationTokenInterceptor extends Interceptor {
         });
         break;
       case AccessType.NONE:
+        // @ts-ignore
         await this.updateCredential({
           ...credential,
           access_token_modified_date: now,

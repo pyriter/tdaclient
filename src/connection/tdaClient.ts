@@ -25,6 +25,7 @@ import { HoursConfig, HoursResponse } from '../models/hours';
 import { HoursApi } from '../api/hours';
 import { PriceHistoryConfig, PriceHistoryResponse } from '../models/priceHistory';
 import { PriceHistoryApi } from '../api/priceHistory';
+import { oauth, OAuthData, OAuthResponse } from '../api/authenticate';
 
 export interface TdaClientConfig {
   authorizationInterceptor: Interceptor;
@@ -48,6 +49,7 @@ export class TdaClient {
   private transactionApi: TransactionsApi;
   private hoursApi: HoursApi;
   private priceHistoryApi: PriceHistoryApi;
+  private client: Client;
 
   constructor(private config: TdaClientConfig) {
     const client = new Client();
@@ -60,6 +62,7 @@ export class TdaClient {
     this.transactionApi = new TransactionsApi(client);
     this.hoursApi = new HoursApi(client);
     this.priceHistoryApi = new PriceHistoryApi(client);
+    this.client = client;
   }
 
   static from(config: TdaClientBuilderConfig): TdaClient {
@@ -112,5 +115,9 @@ export class TdaClient {
 
   async getPriceHistory(config: PriceHistoryConfig): Promise<PriceHistoryResponse> {
     return await this.priceHistoryApi.getPriceHistory(config);
+  }
+
+  async authenticate(config: OAuthData): Promise<OAuthResponse> {
+    return await oauth(config, this.client);
   }
 }
