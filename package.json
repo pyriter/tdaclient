@@ -7,6 +7,7 @@
   "scripts": {
     "test": "jest --silent --detectOpenHandles --coverage --runInBand",
     "test-dev": "jest --watch --silent --detectOpenHandles --coverage",
+    "clean": "jest --clearCache && rimraf dist",
     "build": "tsc",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "tslint -p tsconfig.json",
